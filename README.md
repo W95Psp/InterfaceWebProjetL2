@@ -2,8 +2,7 @@
 Interface Web de consultation / gestion de projets de S3
 
 # Cahier des charges
-Je viens de penser, peut-être que un wiki c'est pas forcément super pratique, un Google Docs ça pourrait être sympathique ! (C'est vraiment super bien foutu pour bosser sur un doc à plusieurs :D)
-Si vous êtes ok et que tout le monde à un compte Google :)
+
 
 # Pour utiliser Git sur son PC
 ## En gros
