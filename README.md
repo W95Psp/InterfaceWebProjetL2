@@ -1,3 +1,5 @@
+[Note : j'ai mis le cahier des charges et des idées dans le wiki]
+
 # InterfaceWebProjetL2
 Interface Web de consultation / gestion de projets de S3
 
