@@ -1,0 +1,85 @@
+mixin ProjectList(draggable)
+	table.projectList
+		tr
+			if draggable
+				th
+			th.titleColumn
+				img.icon(src='images/icons/title.png')
+				span Intitulé
+			th.teacherColumn
+				img.icon(src='images/icons/teacher.png')
+				span Encadrant
+			th.langColumn
+				img.icon(src='images/icons/languages.png')
+				span Langages
+			th.studentsColumn
+				img.icon(src='images/icons/students.png')
+				span Affecté(s)
+		tr
+			if draggable
+				th
+			th.titleColumn
+				input(ng-model='search.title')
+			th.teacherColumn
+				input(ng-model='search.author')
+			th.langColumn
+				input(ng-model='search.languages')
+			th.studentsColumn
+				input(ng-model='search.title')
+
+		tr.content(ng-repeat='project in projects | filter:search')
+			if draggable
+				td ###
+			td {{project.title}}
+			td {{project.author}}
+			td
+				img.language(ng-repeat='lang in project.languages', src='images/languages/{{lang}}.svg')
+			td.empty Aucun étudiant pour le moment
+
+
+
+
+
+
+
+
+html(ng-app='ProjetsL2')
+	head
+		title Idea-2
+		script(src='scripts/angular.min.js')
+		script(src='scripts/script.js')
+		link(href='http://fonts.googleapis.com/css?family=Open+Sans:300', rel='stylesheet', type='text/css')
+		link(rel="stylesheet", type="text/css", href='style/main.css')
+		meta(charset='UTF-8')
+		script(src='scripts/ng-sortable/ng-sortable.js')
+		link(rel="stylesheet" type="text/css" href="scripts/ng-sortable/ng-sortable.min.css")
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	body(ng-controller='main')
+		header
+			.ban
+				.content
+					.left
+						.imageBox
+							img.title(		src='images/head/title.png')
+						.menu
+							a.item(href='?les-encadrants') Les encadrants
+							a.item(href='?presentation').active Présentation
+					.right
+						.imageBox
+							img.description(src='images/head/description.png')
+						.menu
+							a(href='?liste-des-projets').item Liste des projets
+							a(href='?connexion').item Connexion
+					img.um2(		src='images/head/logo_UM2.png')
+		div.page.presentation
+			h1 Présentation
+			img.fds(src='images/logo_fds.png', style='float: left;')
+			.text
+				p Lorem ipsum In consequat enim culpa irure adipisicing commodo enim deserunt dolore dolor ex minim in reprehenderit ut sit reprehenderit qui ea elit Excepteur adipisicing Duis consectetur amet ut dolor consequat.
+				p Lorem ipsum In consequat enim culpa irure adipisicing commodo enim deserunt dolore dolor ex minim in reprehenderit ut sit reprehenderit qui ea elit Excepteur adipisicing Duis consectetur amet ut dolor consequat.
+				p Lorem ipsum In consequat enim culpa irure adipisicing commodo enim deserunt dolore dolor ex minim in reprehenderit ut sit reprehenderit qui ea elit Excepteur adipisicing Duis consectetur amet ut dolor consequat.
+		div.page.liste-des-projets
+			h1 Liste des projets
+				+ProjectList(false)
