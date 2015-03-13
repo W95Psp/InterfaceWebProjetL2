@@ -85,73 +85,114 @@ body .page.presentation .text {
   margin-top: 0px;
   padding-top: 1px;
 }
-table.projectList {
-  margin-top: 20px;
-  width: 95%;
-  margin: auto;
-  border: 1px solid #ddd;
-  border-collapse: collapse;
+.row {
+  display: block;
 }
-table.projectList img.language {
-  width: 18px;
-  opacity: 0.4;
+.row .titleColumn {
+  width: 300px;
 }
-table.projectList img.language:hover {
-  opacity: 1;
+.row .teacherColumn {
+  width: 140px;
 }
-table.projectList .titleColumn {
-  width: 40%;
+.row .langColumn {
+  width: 140px;
 }
-table.projectList .teacherColumn {
-  width: 20%;
+.row .studentsColumn {
+  width: 120px;
 }
-table.projectList .langColumn {
-  width: 25%;
+.row div {
+  padding: 5px;
+  display: table-cell;
+  vertical-align: middle;
 }
-table.projectList .studentsColumn {
-  width: 15%;
+.row img {
+  width: 20px;
 }
-table.projectList tr th {
-  background-color: #eee;
-  border-bottom: 1px solid #ddd;
+.row:hover .row {
+  border-bottom: 1px solid #95a5a6;
 }
-table.projectList tr th .icon {
-  width: 18px;
-  padding: 3px;
-  padding-top: 8px;
-  padding-right: 10px;
+.row:hover .handle {
+  opacity: 1 !important;
+}
+.row[included='false'] .titleColumn {
+  background: none !important;
+}
+.row[included='true'] {
+  transition: background-color 100ms ease-out;
+  background-color: rgba(46,204,113,0.2);
+}
+.row[included='true'] .titleColumn {
+  background-repeat: no-repeat;
+  background-position: -20px center;
+  padding-left: 50px;
+  width: 250px;
+}
+.body .row {
+  transition: background-color 800ms ease-in;
+  position: relative;
+  border-bottom: 1px dotted #95a5a6;
+}
+.body .row > div {
+  height: 50px;
+}
+.body .row .handle {
+  transition: opacity 100ms ease-in;
+  opacity: 0.1;
+  position: absolute;
+  left: -15px;
+  top: 28px;
+}
+.body .row .handle img {
+  width: 12px;
+}
+.projectList {
+  border: 1px solid #95a5a6;
+  border-radius: 5px;
+}
+.projectList > .head div img {
+  width: 20px;
   opacity: 0.6;
 }
-table.projectList tr th span {
+.projectList > .head div span {
   display: inline-block;
   position: relative;
+  margin-left: 5px;
   top: -5px;
 }
-table.projectList tr th input {
-  width: 100%;
-  border: none;
+.projectList > .head .row:first-child {
+  background-color: #bdc3c7;
 }
-table.projectList tr.content:hover td {
-  border-bottom: 1px solid #aaa;
+.projectList > .head .row:first-child div {
+  padding-top: 10px;
 }
-table.projectList tr:nth-child(2n) td {
-  background-color: #f3fafe;
+.projectList > .head .row:first-child div {
+  border-right: 1px dotted #95a5a6;
 }
-table.projectList tr:nth-child(2n+1) td {
+.projectList > .head .row:first-child div:last-child {
+  border-right: 0px solid #000 !important;
+}
+.projectList > .head .row.search {
   background-color: #fff;
 }
-table.projectList td {
-  padding: 2px;
-  padding-left: 6px;
-  padding-right: 6px;
-  border-bottom: 1px dotted #eee;
+.projectList > .head input {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  background-image: url("../images/search.png");
+  background-repeat: no-repeat;
+  background-position: right center;
+  opacity: 0.3;
+  height: 16px;
+  transition: opacity 50ms ease-in;
 }
-table.projectList td.empty {
-  font-size: 9px;
+.projectList > .head input:hover,
+.projectList > .head input:focus {
+  transition: opacity 100ms ease-out;
+  opacity: 0.8;
+}
+.projectList .noRowToDisplay {
   text-align: center;
-  color: #aaa;
+  color: #ccc;
   font-style: italic;
-}
-table.projectList tr:last-child td {
-  border-bottom: 1px solid #ddd;
+  padding: 20px;
 }

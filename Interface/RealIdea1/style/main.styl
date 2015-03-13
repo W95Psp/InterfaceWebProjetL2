@@ -71,61 +71,92 @@ body
 				margin-top 0px
 				padding-top 1px
 
-table.projectList
-	img.language
-		width 18px
-		opacity 0.4
-		&:hover
-			opacity 1
-	width 95%
-	margin auto
-	border 1px solid #DDD
-	border-collapse collapse
+.row
+	display block
 	.titleColumn
-		width 40%
+		width 300px
 	.teacherColumn
-		width 20%
+		width 140px
 	.langColumn
-		width 25%
+		width 140px
 	.studentsColumn
-		width 15%
-	tr
-		th
-			background-color #EEE
-			border-bottom 1px solid #DDD
-			.icon
-				width 18px
-				padding 3px
-				padding-top 8px
-				padding-right 10px
+		width 120px
+	div
+		padding 5px
+		display table-cell
+		vertical-align middle
+	img
+		width 20px
+	&:hover
+		.row
+			border-bottom 1px solid #95a5a6
+		.handle
+			opacity 1!important
+	&[included='false']
+		.titleColumn
+			background none!important
+	&[included='true']
+		transition background-color 100ms ease-out
+		background-color alpha(#2ecc71, 20%)
+		.titleColumn
+			background-repeat no-repeat
+			background-position -20px center
+			padding-left 50px
+			width (300px - 50px)
+.body
+	.row
+		transition background-color 800ms ease-in
+		position relative
+		> div
+			height 50px
+		border-bottom 1px dotted #95a5a6
+		.handle
+			transition opacity 100ms ease-in
+			opacity 0.1
+			position absolute
+			left -15px
+			top ((76px / 2) - 10px)
+			img
+				width 12px
+
+.projectList
+	border 1px solid #95a5a6
+	border-radius 5px
+	> .head
+		div
+			img
+				width 20px
 				opacity 0.6
 			span
 				display inline-block
 				position relative
+				margin-left 5px
 				top -5px
-		th
-			input
-				width 100%
-				border none
-	tr.content:hover
-		td
-			border-bottom 1px solid #AAA
-	tr:nth-child(2n)
-		td
-			background-color #f3fafe
-	tr:nth-child(2n+1)
-		td
+		.row:first-child
+			div
+				padding-top 10px
+			div
+				border-right 1px dotted #95a5a6
+			div:last-child
+				border-right 0px solid black!important
+			background-color #bdc3c7
+		.row.search
 			background-color white
-	td
-		padding 2px
-		padding-left	6px
-		padding-right	6px
-		border-bottom 1px dotted #EEE
-		&.empty
-			font-size 9px
-			text-align center
-			color #AAA
-			font-style italic
-	tr:last-child
-		td
-			border-bottom 1px solid #DDD
+		input
+			width 100%
+			border none
+			background-color transparent
+			background-image url('../images/search.png')
+			background-repeat no-repeat
+			background-position right center
+			opacity 0.3
+			height 16px
+			&:hover, &:focus
+				transition opacity 100ms ease-out
+				opacity 0.8
+			transition opacity 50ms ease-in
+	.noRowToDisplay
+		text-align center
+		color #CCC
+		font-style italic
+		padding 20px

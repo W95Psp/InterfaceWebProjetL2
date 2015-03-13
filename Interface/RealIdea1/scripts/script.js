@@ -1,4 +1,4 @@
-var app = angular.module('ProjetsL2', ['ui']);
+var app = angular.module('ProjetsL2', ['ui.sortable']);
 
 app.controller('main', function($scope, $parse) {
 	var authors;
@@ -33,33 +33,63 @@ app.controller('main', function($scope, $parse) {
 		{
 			title: 'Retrogaming: Arkanoid',
 			author: authors[1],
-			languages: ['any']
+			languages: ['any', 'php', 'cpp']
 		},
 		{
 			title: 'Implémentation et évaluation d’un prouveur en logique des propositions',
 			author: authors[9],
-			languages: ['any']
+			languages: ['any', 'cpp']
 		},
 		{
 			title: 'Bubble Shooter',
 			author: authors[2],
-			languages: ['any']
+			languages: ['any', 'cpp', 'java']
 		},
 		{
 			title: 'Le Takuzu',
 			author: authors[3],
-			languages: ['any']
+			languages: ['any', 'java']
+		},
+		{
+			title: 'Le Tazadkuzu',
+			author: authors[3],
+			languages: ['any', 'java']
+		},
+		{
+			title: 'Le Tazadazkuzu',
+			author: authors[3],
+			languages: ['any', 'java']
+		},
+		{
+			title: 'Le Tsqddakuzu',
+			author: authors[3],
+			languages: ['any', 'java']
+		},
+		{
+			title: 'Le Takzdauzu',
+			author: authors[3],
+			languages: ['any', 'java']
+		},
+		{
+			title: 'Le Takzdauzu',
+			author: authors[3],
+			languages: ['any', 'java']
+		},
+		{
+			title: 'Le Takzdauzu',
+			author: authors[3],
+			languages: ['any', 'java']
 		},
 		{
 			title: 'Editeur SKOS et application aux paysages urbains',
 			author: authors[4],
-			languages: ['any']
+			languages: ['any', 'java']
 		}
 	];
 
 	$scope.dragControlListeners = {
-	    accept: function (sourceItemHandleScope, destSortableScope) {return true},
-	    itemMoved: function (event){},
-	    orderChanged: function(event){}
+	    accept: function (sourceItemHandleScope, destSortableScope) {return true;},
+	    itemMoved: function (event){return true;},
+	    orderChanged: function(event){return true;}
 	};
 });

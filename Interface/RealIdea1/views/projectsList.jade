@@ -1,5 +1,75 @@
 
 mixin ProjectsList(draggable)
+	if(draggable)
+		div(style='font-style: italic; width: 70%; margin: auto; text-align: center; margin-bottom: 8px;')
+			| Pour choisir établir votre liste de sujets préférés, glissez les sujet au devant de la liste.
+	.projectList(ng-init='nbChoice = 6;')
+		.head
+			.row
+				.titleColumn
+					img.icon(src='images/icons/title.png')
+					span Intitulé
+				.teacherColumn
+					img.icon(src='images/icons/teacher.png')
+					span Encadrant
+				.langColumn
+					img.icon(src='images/icons/languages.png')
+					span Langages
+				.studentsColumn
+					img.icon(src='images/icons/students.png')
+					span Affecté(s)
+			if !draggable
+				.row.search
+					.titleColumn
+						input(ng-model='search.title')
+					.teacherColumn
+						input(ng-model='search.author')
+					.langColumn
+						input(ng-model='search.languages')
+					.studentsColumn
+						input(ng-model='search.title')
+
+		.body(data-as-sortable="dragControlListeners", data-ng-model='projects')
+			.row(included=(draggable?"{{k<nbChoice}}":"false"), data-ng-repeat="(k,project) in projects | filter:search", data-as-sortable-item)
+				.titleColumn(style='background-image: url("images/icons/order/{{k}}.png")')
+					if draggable
+						span.handle(data-as-sortable-item-handle)
+							img(src='images/grip.png')
+					span {{project.title}}
+				.teacherColumn {{project.author}}
+				.langColumn
+					img.language(ng-repeat='lang in project.languages', src='images/languages/{{lang}}.svg')
+				.studentsColumn.empty Aucun étudiant pour le moment
+
+
+
+		.body(data-as-sortable="dragControlListeners", data-ng-model='projects')
+			.row(included=(draggable?"{{k<nbChoice}}":"false"), data-ng-repeat="(k,project) in projects | filter:search", data-as-sortable-item)
+				.titleColumn(style='background-image: url("images/icons/order/{{k}}.png")')
+					if draggable
+						span.handle(data-as-sortable-item-handle)
+							img(src='images/grip.png')
+					span {{project.title}}
+				.teacherColumn {{project.author}}
+				.langColumn
+					img.language(ng-repeat='lang in project.languages', src='images/languages/{{lang}}.svg')
+				.studentsColumn.empty Aucun étudiant pour le moment
+			.span(ng-init='filtredProjects = (projects | filter:search)')
+			{{filtredProjects.length}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+mixin ProjectsList_old(draggable)
 	if draggable
 		div(style='font-style: italic; width: 70%; margin: auto; text-align: center; margin-bottom: 8px;')
 			| Pour choisir établir votre liste de sujets préférés, glissez les sujet au devant de la liste.
