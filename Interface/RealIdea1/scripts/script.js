@@ -1,6 +1,7 @@
 var app = angular.module('ProjetsL2', ['ui.sortable']);
 
 app.controller('main', function($scope, $parse) {
+	window.SC = $scope;
 	var authors;
 	$scope.languages = [
 		'any', 			'dot-net',	'html5',	'java',
@@ -19,11 +20,9 @@ app.controller('main', function($scope, $parse) {
 		'Abdelhak-Damel Seriai',	// 8
 		'Michel Leclère'			// 9
 	];
+
 	$scope.search = {title: "", author:"", languages:""};
-	$scope.filterBySearch = function(o) {
-        console.log(o);
-        return true;
-    };
+
 	$scope.projects = [
 		{
 			title: 'Le carré empoisonné de la tablette de chocolat',
@@ -46,37 +45,37 @@ app.controller('main', function($scope, $parse) {
 			languages: ['any', 'cpp', 'java']
 		},
 		{
-			title: 'Le Takuzu',
+			title: 'Le AA',
 			author: authors[3],
 			languages: ['any', 'java']
 		},
 		{
-			title: 'Le Tazadkuzu',
+			title: 'Le BB',
 			author: authors[3],
 			languages: ['any', 'java']
 		},
 		{
-			title: 'Le Tazadazkuzu',
+			title: 'Le CC',
 			author: authors[3],
 			languages: ['any', 'java']
 		},
 		{
-			title: 'Le Tsqddakuzu',
+			title: 'Le DD',
 			author: authors[3],
 			languages: ['any', 'java']
 		},
 		{
-			title: 'Le Takzdauzu',
+			title: 'Le EE',
 			author: authors[3],
 			languages: ['any', 'java']
 		},
 		{
-			title: 'Le Takzdauzu',
+			title: 'Le FF',
 			author: authors[3],
 			languages: ['any', 'java']
 		},
 		{
-			title: 'Le Takzdauzu',
+			title: 'Le GG',
 			author: authors[3],
 			languages: ['any', 'java']
 		},

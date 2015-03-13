@@ -27,20 +27,7 @@ mixin ProjectsList(draggable)
 					.langColumn
 						input(ng-model='search.languages')
 					.studentsColumn
-						input(ng-model='search.title')
-
-		.body(data-as-sortable="dragControlListeners", data-ng-model='projects')
-			.row(included=(draggable?"{{k<nbChoice}}":"false"), data-ng-repeat="(k,project) in projects | filter:search", data-as-sortable-item)
-				.titleColumn(style='background-image: url("images/icons/order/{{k}}.png")')
-					if draggable
-						span.handle(data-as-sortable-item-handle)
-							img(src='images/grip.png')
-					span {{project.title}}
-				.teacherColumn {{project.author}}
-				.langColumn
-					img.language(ng-repeat='lang in project.languages', src='images/languages/{{lang}}.svg')
-				.studentsColumn.empty Aucun étudiant pour le moment
-
+						//- input(ng-model='search.title')
 
 
 		.body(data-as-sortable="dragControlListeners", data-ng-model='projects')
@@ -54,8 +41,8 @@ mixin ProjectsList(draggable)
 				.langColumn
 					img.language(ng-repeat='lang in project.languages', src='images/languages/{{lang}}.svg')
 				.studentsColumn.empty Aucun étudiant pour le moment
-			.span(ng-init='filtredProjects = (projects | filter:search)')
-			{{filtredProjects.length}}
+			.span(ng-repeat='a in filtredProjects = (projects | filter:search)')
+			.row.noRowToDisplay(ng-show='filtredProjects.length==0') Aucun résultat.
 
 
 

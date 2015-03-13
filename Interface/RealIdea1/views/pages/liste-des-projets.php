@@ -11,6 +11,8 @@
 				<div class="studentsColumn"><img src="images/icons/students.png" class="icon"/><span>Affecté(s)</span></div>
 			</div>
 		</div>
+		
+		
 		<div data-as-sortable="dragControlListeners" data-ng-model="projects" class="body">
 			<div included="{{k&lt;nbChoice}}" data-ng-repeat="(k,project) in projects | filter:search" data-as-sortable-item="data-as-sortable-item" class="row">
 				<div style="background-image: url(&quot;images/icons/order/{{k}}.png&quot;)" class="titleColumn"><span data-as-sortable-item-handle="data-as-sortable-item-handle" class="handle"><img src="images/grip.png"/></span><span>{{project.title}}</span>
@@ -19,15 +21,8 @@
 				<div class="langColumn"><img ng-repeat="lang in project.languages" src="images/languages/{{lang}}.svg" class="language"/></div>
 				<div class="studentsColumn empty">Aucun étudiant pour le moment</div>
 			</div>
-		</div>
-		<div data-as-sortable="dragControlListeners" data-ng-model="projects" class="body">
-			<div included="{{k&lt;nbChoice}}" data-ng-repeat="(k,project) in projects | filter:search" data-as-sortable-item="data-as-sortable-item" class="row">
-				<div style="background-image: url(&quot;images/icons/order/{{k}}.png&quot;)" class="titleColumn"><span data-as-sortable-item-handle="data-as-sortable-item-handle" class="handle"><img src="images/grip.png"/></span><span>{{project.title}}</span>
-				</div>
-				<div class="teacherColumn">{{project.author}}</div>
-				<div class="langColumn"><img ng-repeat="lang in project.languages" src="images/languages/{{lang}}.svg" class="language"/></div>
-				<div class="studentsColumn empty">Aucun étudiant pour le moment</div>
-			</div>
+			<div ng-repeat="a in filtredProjects = (projects | filter:search)" class="span"></div>
+			<div ng-show="filtredProjects.length==0" class="row noRowToDisplay">Aucun résultat.</div>
 		</div>
 	</div><?php }else{ ?><a href="/?liste-des-projets/drag-drop-enabled">[Se mettre en mode "Etudiant-qui-choisit-ses-sujets" (c'est la classe comme nom de mode !)]</a><br/><br/>
 	<div ng-init="nbChoice = 6;" class="projectList">
@@ -49,10 +44,11 @@
 					<input ng-model="search.languages"/>
 				</div>
 				<div class="studentsColumn">
-					<input ng-model="search.title"/>
 				</div>
 			</div>
 		</div>
+		
+		
 		<div data-as-sortable="dragControlListeners" data-ng-model="projects" class="body">
 			<div included="false" data-ng-repeat="(k,project) in projects | filter:search" data-as-sortable-item="data-as-sortable-item" class="row">
 				<div style="background-image: url(&quot;images/icons/order/{{k}}.png&quot;)" class="titleColumn"><span>{{project.title}}</span>
@@ -61,15 +57,8 @@
 				<div class="langColumn"><img ng-repeat="lang in project.languages" src="images/languages/{{lang}}.svg" class="language"/></div>
 				<div class="studentsColumn empty">Aucun étudiant pour le moment</div>
 			</div>
-		</div>
-		<div data-as-sortable="dragControlListeners" data-ng-model="projects" class="body">
-			<div included="false" data-ng-repeat="(k,project) in projects | filter:search" data-as-sortable-item="data-as-sortable-item" class="row">
-				<div style="background-image: url(&quot;images/icons/order/{{k}}.png&quot;)" class="titleColumn"><span>{{project.title}}</span>
-				</div>
-				<div class="teacherColumn">{{project.author}}</div>
-				<div class="langColumn"><img ng-repeat="lang in project.languages" src="images/languages/{{lang}}.svg" class="language"/></div>
-				<div class="studentsColumn empty">Aucun étudiant pour le moment</div>
-			</div>
+			<div ng-repeat="a in filtredProjects = (projects | filter:search)" class="span"></div>
+			<div ng-show="filtredProjects.length==0" class="row noRowToDisplay">Aucun résultat.</div>
 		</div>
 	</div><?php } ?>
 </div>
