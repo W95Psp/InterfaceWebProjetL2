@@ -20,7 +20,4 @@ html(ng-app='ProjetsL2')
 		header
 			+header
 		:php
-			$pages = ['presentation', 'liste-des-projets'];
-			if(!in_array($page, $pages))
-				$page = $pages[0];
 			include('views/pages/'.$page.'.php');

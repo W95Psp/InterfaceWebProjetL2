@@ -11,8 +11,6 @@
 				<div class="studentsColumn"><img src="images/icons/students.png" class="icon"/><span>Affecté(s)</span></div>
 			</div>
 		</div>
-		
-		
 		<div data-as-sortable="dragControlListeners" data-ng-model="projects" class="body">
 			<div included="{{k&lt;nbChoice}}" data-ng-repeat="(k,project) in projects | filter:search" data-as-sortable-item="data-as-sortable-item" class="row">
 				<div style="background-image: url(&quot;images/icons/order/{{k}}.png&quot;)" class="titleColumn"><span data-as-sortable-item-handle="data-as-sortable-item-handle" class="handle"><img src="images/grip.png"/></span><span>{{project.title}}</span>
@@ -44,11 +42,10 @@
 					<input ng-model="search.languages"/>
 				</div>
 				<div class="studentsColumn">
+					
 				</div>
 			</div>
 		</div>
-		
-		
 		<div data-as-sortable="dragControlListeners" data-ng-model="projects" class="body">
 			<div included="false" data-ng-repeat="(k,project) in projects | filter:search" data-as-sortable-item="data-as-sortable-item" class="row">
 				<div style="background-image: url(&quot;images/icons/order/{{k}}.png&quot;)" class="titleColumn"><span>{{project.title}}</span>

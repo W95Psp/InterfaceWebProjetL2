@@ -37,9 +37,6 @@ echo '<a class="item '.$D.'" href=\'?connexion\'>Connexion</a>'; ?>
 					</div>
 				</div>
 			</header>
-		</header><?php $pages = ['presentation', 'liste-des-projets'];
-if(!in_array($page, $pages))
-	$page = $pages[0];
-include('views/pages/'.$page.'.php'); ?>
+		</header><?php include('views/pages/'.$page.'.php'); ?>
 	</body>
 </html>
