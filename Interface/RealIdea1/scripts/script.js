@@ -1,4 +1,4 @@
-var app = angular.module('ProjetsL2',[]);
+var app = angular.module('ProjetsL2', ['ui']);
 
 app.controller('main', function($scope, $parse) {
 	var authors;
@@ -56,4 +56,10 @@ app.controller('main', function($scope, $parse) {
 			languages: ['any']
 		}
 	];
+
+	$scope.dragControlListeners = {
+	    accept: function (sourceItemHandleScope, destSortableScope) {return true},
+	    itemMoved: function (event){},
+	    orderChanged: function(event){}
+	};
 });

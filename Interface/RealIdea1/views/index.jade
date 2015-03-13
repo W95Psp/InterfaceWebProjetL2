@@ -1,0 +1,26 @@
+
+include ./projectsList.jade
+include ./header.jade
+
+html(ng-app='ProjetsL2')
+	head
+		title Idea-2
+		script(src='scripts/angular.min.js')
+		script(src='scripts/ng-sortable/ng-sortable.js')
+		script(src='//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js')
+		script(src='scripts/script.js')
+		link(href='http://fonts.googleapis.com/css?family=Open+Sans:300', rel='stylesheet', type='text/css')
+		link(rel="stylesheet", type="text/css", href='style/main.css')
+		meta(charset='UTF-8')
+		link(rel="stylesheet" type="text/css" href="scripts/ng-sortable/ng-sortable.min.css")
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	body(ng-controller='main')
+		header
+			+header
+		:php
+			$pages = ['presentation', 'liste-des-projets'];
+			if(!in_array($page, $pages))
+				$page = $pages[0];
+			include('views/pages/'.$page.'.php');
