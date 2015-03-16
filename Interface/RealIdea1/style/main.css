@@ -128,6 +128,8 @@ body .page.presentation .text {
   width: 250px;
 }
 .body .row {
+  color: #000;
+  text-decoration: none;
   transition: background-color 800ms ease-in;
   position: relative;
   border-bottom: 1px dotted #95a5a6;
@@ -144,6 +146,60 @@ body .page.presentation .text {
 }
 .body .row .handle img {
   width: 12px;
+}
+.details-project h1 {
+  text-align: center;
+  border-radius: 5px;
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background-color: #60c7ff;
+  box-shadow: 0px 0px 5px rgba(96,199,255,0.5);
+  color: #fff;
+  padding: 5px;
+}
+.details-project .author {
+  display: block;
+  text-align: center;
+}
+.details-project h2 {
+  background-repeat: no-repeat;
+  padding-left: 45px;
+}
+.details-project h2.h2Lang {
+  background-image: url("../images/icons/languages.png");
+}
+.details-project h2.h2Desc {
+  background-image: url("../images/icons/desc.png");
+}
+.details-project h2.h2Complete {
+  background-image: url("../images/icons/pdf.png");
+}
+.details-project h2.h2Contact {
+  background-image: url("../images/icons/mail.png");
+}
+.details-project .languages .lang {
+  padding: 7px;
+  padding-bottom: 0px;
+  margin-right: 5px;
+  color: #000;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: background-color 40ms linear;
+}
+.details-project .languages .lang img {
+  width: 20px;
+}
+.details-project .languages .lang span {
+  display: inline-block;
+  position: relative;
+  top: -5px;
+  padding-left: 5px;
+}
+.details-project .languages .lang:hover {
+  background-color: #ccc;
+  transition: background-color 100ms ease-out;
 }
 .projectList {
   border: 1px solid #95a5a6;

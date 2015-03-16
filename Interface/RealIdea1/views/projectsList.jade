@@ -31,7 +31,7 @@ mixin ProjectsList(draggable)
 
 
 		.body(data-as-sortable="dragControlListeners", data-ng-model='projects')
-			.row(included=(draggable?"{{k<nbChoice}}":"false"), data-ng-repeat="(k,project) in projects | filter:search", data-as-sortable-item)
+			a.row(href='/?liste-des-projets/{{project.id | fillZero}}-{{project | getLinkFromTitle}}', target="_blank", included=(draggable?"{{k<nbChoice}}":"false"), data-ng-repeat="(k,project) in projects | filter:search", data-as-sortable-item)
 				.titleColumn(style='background-image: url("images/icons/order/{{k}}.png")')
 					if draggable
 						span.handle(data-as-sortable-item-handle)

@@ -37,6 +37,15 @@ echo '<a class="item '.$D.'" href=\'?connexion\'>Connexion</a>'; ?>
 					</div>
 				</div>
 			</header>
-		</header><?php include('views/pages/'.$page.'.php'); ?>
+		</header><?php if(
+	isset($parseParam[0]) &&
+	isset($parseParam[1]) &&
+	$parseParam[0]=="liste-des-projets" &&
+	is_numeric(substr($parseParam[1], 0, 4))
+){
+	$idProject = intval(substr($parseParam[1], 0, 4));
+	include('views/pages/details-project.php');
+}else
+	include('views/pages/'.$page.'.php'); ?>
 	</body>
 </html>

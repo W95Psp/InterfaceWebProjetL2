@@ -1,5 +1,19 @@
 var app = angular.module('ProjetsL2', ['ui.sortable']);
 
+app.filter('getLinkFromTitle', function() {
+    return function(input) {
+        return input.title.replace(/ /g, "-").replace(/[^a-z\-]/gi, "").toLowerCase();
+    }
+});
+app.filter('fillZero', function() {
+    return function(r) {
+        r = r+'';
+		while(r.length<4)
+			r='0'+r;
+		return r;
+    }
+});
+
 app.controller('main', function($scope, $parse) {
 	window.SC = $scope;
 	var authors;
@@ -27,62 +41,62 @@ app.controller('main', function($scope, $parse) {
 		{
 			title: 'Le carré empoisonné de la tablette de chocolat',
 			author: authors[0],
-			languages: ['javascript', 'dot-net', 'html5', 'java', 'php', 'any']
+			languages: ['javascript', 'dot-net', 'html5', 'java', 'php', 'any'], id: 0
 		},
 		{
 			title: 'Retrogaming: Arkanoid',
 			author: authors[1],
-			languages: ['any', 'php', 'cpp']
+			languages: ['any', 'php', 'cpp'], id: 1
 		},
 		{
 			title: 'Implémentation et évaluation d’un prouveur en logique des propositions',
 			author: authors[9],
-			languages: ['any', 'cpp']
+			languages: ['any', 'cpp'], id: 2
 		},
 		{
 			title: 'Bubble Shooter',
 			author: authors[2],
-			languages: ['any', 'cpp', 'java']
+			languages: ['any', 'cpp', 'java'], id: 3
 		},
 		{
 			title: 'Le AA',
 			author: authors[3],
-			languages: ['any', 'java']
+			languages: ['any', 'java'], id:4
 		},
 		{
 			title: 'Le BB',
 			author: authors[3],
-			languages: ['any', 'java']
+			languages: ['any', 'java'], id: 5
 		},
 		{
 			title: 'Le CC',
 			author: authors[3],
-			languages: ['any', 'java']
+			languages: ['any', 'java'], id: 6
 		},
 		{
 			title: 'Le DD',
 			author: authors[3],
-			languages: ['any', 'java']
+			languages: ['any', 'java'], id: 7
 		},
 		{
 			title: 'Le EE',
 			author: authors[3],
-			languages: ['any', 'java']
+			languages: ['any', 'java'], id: 8
 		},
 		{
 			title: 'Le FF',
 			author: authors[3],
-			languages: ['any', 'java']
+			languages: ['any', 'java'], id: 9
 		},
 		{
 			title: 'Le GG',
 			author: authors[3],
-			languages: ['any', 'java']
+			languages: ['any', 'java'], id: 10
 		},
 		{
 			title: 'Editeur SKOS et application aux paysages urbains',
 			author: authors[4],
-			languages: ['any', 'java']
+			languages: ['any', 'java'], id: 11
 		}
 	];
 
