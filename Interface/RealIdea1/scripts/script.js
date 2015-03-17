@@ -2,7 +2,7 @@ var app = angular.module('ProjetsL2', ['ui.sortable']);
 
 app.filter('getLinkFromTitle', function() {
     return function(input) {
-        return input.title.replace(/ /g, "-").replace(/[^a-z\-]/gi, "").toLowerCase();
+        return input.nomProj.replace(/ /g, "-").replace(/[^a-z\-]/gi, "").toLowerCase();
     }
 });
 app.filter('fillZero', function() {
@@ -14,8 +14,25 @@ app.filter('fillZero', function() {
     }
 });
 
+var importStuff = {};
+
 app.controller('main', function($scope, $parse) {
 	window.SC = $scope;
+	SC.importStuff = importStuff;
+	SC.$watch('importStuff', function(newval){
+		if(!newval.projects)
+			return 0;
+		while(newval.projects.length>0){
+			var o = newval.projects.shift();
+			o.author = 'LinkedTeacher';
+			o.languages = [];
+			$scope.languages.forEach(function(lang){
+				if(Math.random()>0.5)
+					o.languages.push(lang);
+			});
+			$scope.projects.push(o);
+		}
+	}, true);
 	var authors;
 	$scope.languages = [
 		'any', 			'dot-net',	'html5',	'java',
@@ -35,70 +52,9 @@ app.controller('main', function($scope, $parse) {
 		'Michel Leclère'			// 9
 	];
 
-	$scope.search = {title: "", author:"", languages:""};
+	$scope.search = {nomProj: "", languages: "", author: ""};
 
-	$scope.projects = [
-		{
-			title: 'Le carré empoisonné de la tablette de chocolat',
-			author: authors[0],
-			languages: ['javascript', 'dot-net', 'html5', 'java', 'php', 'any'], id: 0
-		},
-		{
-			title: 'Retrogaming: Arkanoid',
-			author: authors[1],
-			languages: ['any', 'php', 'cpp'], id: 1
-		},
-		{
-			title: 'Implémentation et évaluation d’un prouveur en logique des propositions',
-			author: authors[9],
-			languages: ['any', 'cpp'], id: 2
-		},
-		{
-			title: 'Bubble Shooter',
-			author: authors[2],
-			languages: ['any', 'cpp', 'java'], id: 3
-		},
-		{
-			title: 'Le AA',
-			author: authors[3],
-			languages: ['any', 'java'], id:4
-		},
-		{
-			title: 'Le BB',
-			author: authors[3],
-			languages: ['any', 'java'], id: 5
-		},
-		{
-			title: 'Le CC',
-			author: authors[3],
-			languages: ['any', 'java'], id: 6
-		},
-		{
-			title: 'Le DD',
-			author: authors[3],
-			languages: ['any', 'java'], id: 7
-		},
-		{
-			title: 'Le EE',
-			author: authors[3],
-			languages: ['any', 'java'], id: 8
-		},
-		{
-			title: 'Le FF',
-			author: authors[3],
-			languages: ['any', 'java'], id: 9
-		},
-		{
-			title: 'Le GG',
-			author: authors[3],
-			languages: ['any', 'java'], id: 10
-		},
-		{
-			title: 'Editeur SKOS et application aux paysages urbains',
-			author: authors[4],
-			languages: ['any', 'java'], id: 11
-		}
-	];
+	$scope.projects = [];
 
 	$scope.dragControlListeners = {
 	    accept: function (sourceItemHandleScope, destSortableScope) {return true;},

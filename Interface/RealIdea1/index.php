@@ -1,14 +1,18 @@
 <?php
-	system('node jade.js');
-	$params = $_SERVER['REQUEST_URI'];
-	$params = (substr($params, 1, 9)=='index.php') ? substr($params, 11) : substr($params, 2);
-	$parseParam = explode('/', $params);
+	//Connect to db (variable : $db)
+	include("php_functions/mysql.php");
 
-	$page = $parseParam[0];
+	//Parse url to array ($parseParam, i.e. "/page1/cat2/blurp" => $parseParam = new Array("/page1", "cat2", "blurp"))
+	include("php_functions/page_manager.php");
 
-	$pages = ['presentation', 'liste-des-projets', 'les-encadrants'];
-	if(!in_array($page, $pages))
-		$page = $pages[0];
+	//Compile jade files to php ones
+	if(gethostname()=="SurfaceLucas"){
+		system('node jade.js');
+	}
 	
+	//Include main view
 	include("views/index.php");
+
+	//Close db connection
+	$db->close();
 ?>

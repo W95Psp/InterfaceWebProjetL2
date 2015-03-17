@@ -1,5 +1,21 @@
-
 mixin ProjectsList(draggable)
+	:php
+		echo '<script>';
+		echo 'importStuff.projects = [';
+		$res = $db->query('SELECT * FROM projet');
+		while (NULL !== ($row = $res->fetch_array())) {
+		    echo '{';
+		    echo 'idProj:'.$row['idProj'].',';
+		    echo 'nomProj:'.json_encode($row['nomProj']).',';
+		    echo 'descProj:'.json_encode($row['descProj']).',';
+		    echo 'lien:'.json_encode($row['lien']).',';
+		    echo 'nbMini:'.$row['nbMini'].',';
+		    echo 'nbMax:'.$row['nbMax'].',';
+		    echo 'nbInscri:'.$row['nbInscri'].'}';
+		    echo ',';
+		}
+		echo ']';
+		echo '</script>';
 	if(draggable)
 		div(style='font-style: italic; width: 70%; margin: auto; text-align: center; margin-bottom: 8px;')
 			| Pour choisir établir votre liste de sujets préférés, glissez les sujet au devant de la liste.
@@ -21,7 +37,7 @@ mixin ProjectsList(draggable)
 			if !draggable
 				.row.search
 					.titleColumn
-						input(ng-model='search.title')
+						input(ng-model='search.nomProj')
 					.teacherColumn
 						input(ng-model='search.author')
 					.langColumn
@@ -31,12 +47,12 @@ mixin ProjectsList(draggable)
 
 
 		.body(data-as-sortable="dragControlListeners", data-ng-model='projects')
-			a.row(href='/?liste-des-projets/{{project.id | fillZero}}-{{project | getLinkFromTitle}}', target="_blank", included=(draggable?"{{k<nbChoice}}":"false"), data-ng-repeat="(k,project) in projects | filter:search", data-as-sortable-item)
+			a.row(href='/?liste-des-projets/{{project.idProj | fillZero}}-{{project | getLinkFromTitle}}', target="_blank", included=(draggable?"{{k<nbChoice}}":"false"), data-ng-repeat="(k,project) in projects | filter:search", data-as-sortable-item)
 				.titleColumn(style='background-image: url("images/icons/order/{{k}}.png")')
 					if draggable
 						span.handle(data-as-sortable-item-handle)
 							img(src='images/grip.png')
-					span {{project.title}}
+					span {{project.nomProj}}
 				.teacherColumn {{project.author}}
 				.langColumn
 					img.language(ng-repeat='lang in project.languages', src='images/languages/{{lang}}.svg')
