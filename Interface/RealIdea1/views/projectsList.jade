@@ -2,7 +2,7 @@ mixin ProjectsList(draggable)
 	:php
 		echo '<script>';
 		echo 'importStuff.projects = [';
-		$res = $db->query('SELECT * FROM projet');
+		$res = $db->query('SELECT * FROM Projet') or die(mysqli_error($db));
 		while (NULL !== ($row = $res->fetch_array())) {
 		    echo '{';
 		    echo 'idProj:'.$row['idProj'].',';
