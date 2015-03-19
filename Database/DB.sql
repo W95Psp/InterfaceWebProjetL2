@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: pdb9.awardspace.net
--- Généré le : Lun 16 Mars 2015 à 07:10
+-- Généré le : Jeu 19 Mars 2015 à 10:11
 -- Version du serveur: 5.5.38
 -- Version de PHP: 5.3.27
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `Candidature` (
   `idC` int(11) NOT NULL AUTO_INCREMENT,
-  `dateC` date DEFAULT NULL,
+  `dateC` datetime DEFAULT NULL,
   `idProj_C` int(11) DEFAULT NULL,
   `idGr_C` int(11) DEFAULT NULL,
   `valide` tinyint(1) DEFAULT '0',
@@ -40,12 +40,12 @@ CREATE TABLE IF NOT EXISTS `Candidature` (
 --
 
 INSERT INTO `Candidature` (`idC`, `dateC`, `idProj_C`, `idGr_C`, `valide`) VALUES
-(123, '2015-02-09', 2, 2, 0),
-(127, '2015-02-17', 2, 2, 0),
-(129, '2015-02-21', 2, 2, 0),
-(650, '2015-02-19', 1, 1, 0),
-(651, '2015-02-11', 1, 1, 0),
-(654, '2015-02-04', 1, 1, 0);
+(123, '2015-02-09 00:00:00', 2, 2, 0),
+(127, '2015-02-17 00:00:00', 2, 2, 0),
+(129, '2015-02-21 00:00:00', 2, 2, 0),
+(650, '2015-02-19 00:00:00', 1, 1, 0),
+(651, '2015-02-11 00:00:00', 1, 1, 0),
+(654, '2015-02-04 00:00:00', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -228,7 +228,8 @@ INSERT INTO `Etudiant` (`idEtu`, `nomEtu`, `prenomEtu`, `emailEtu`, `telEtu`, `m
 
 CREATE TABLE IF NOT EXISTS `Groupe` (
   `idG` int(11) NOT NULL AUTO_INCREMENT,
-  `alias` varchar(45) DEFAULT NULL,
+  `Nom_Groupe` varchar(45) DEFAULT NULL,
+  `EstBloqué?` tinyint(1) NOT NULL,
   PRIMARY KEY (`idG`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
@@ -236,28 +237,28 @@ CREATE TABLE IF NOT EXISTS `Groupe` (
 -- Contenu de la table `Groupe`
 --
 
-INSERT INTO `Groupe` (`idG`, `alias`) VALUES
-(1, 'GR1'),
-(2, 'GR2'),
-(3, 'GR3'),
-(4, 'GR4'),
-(5, 'GR5'),
-(6, 'GR6'),
-(7, 'GR7'),
-(8, 'GR8'),
-(9, 'GR9'),
-(10, 'GR10'),
-(11, 'GR11'),
-(12, 'GR12'),
-(13, 'GR13'),
-(14, 'GR14'),
-(15, 'GR15'),
-(16, 'GR16'),
-(17, 'GR17'),
-(18, 'GR18'),
-(19, 'GR19'),
-(20, 'GR20'),
-(21, 'GR21');
+INSERT INTO `Groupe` (`idG`, `Nom_Groupe`, `EstBloqué?`) VALUES
+(1, 'GR1', 0),
+(2, 'GR2', 0),
+(3, 'GR3', 0),
+(4, 'GR4', 0),
+(5, 'GR5', 0),
+(6, 'GR6', 0),
+(7, 'GR7', 0),
+(8, 'GR8', 0),
+(9, 'GR9', 0),
+(10, 'GR10', 0),
+(11, 'GR11', 0),
+(12, 'GR12', 0),
+(13, 'GR13', 0),
+(14, 'GR14', 0),
+(15, 'GR15', 0),
+(16, 'GR16', 0),
+(17, 'GR17', 0),
+(18, 'GR18', 0),
+(19, 'GR19', 0),
+(20, 'GR20', 0),
+(21, 'GR21', 0);
 
 -- --------------------------------------------------------
 
@@ -353,6 +354,48 @@ INSERT INTO `Projet` (`idProj`, `nomProj`, `descProj`, `preProj`, `lien`, `nbMin
 (20, 'Interface Internet pour la    base de    donnees    des    projets    de licence deuxieme    annee', 'L’objectif de ce stage est de realiser    une    interface Web pour gerer la    base de    donnees des    projets    de L2.', 'pre20', 'http://www.lirmm.fr/~retore/projetsL2/WEBprojetsL2.pdf', 2, 4, 0),
 (21, 'Ouvertures    et    Finales    d’Eternity II', 'Eternity 2    est    un    jeu    combinatoire, equivalent a un puzzle 2D    où    il    faut assembler un ensemble de pièces afin de construire     un     carre    complet de    16x16.', 'pre20', 'http://www.lirmm.fr/~retore/projetsL2/eternity.pdf', 2, 4, 0),
 (22, 'Extraction    de    relations en art culinaire', 'Un    reseau lexical est    une    collection    de termes relies entre    eux    par    des    arc    orientees,    typees    (et    eventuellement    ponderees).', 'pre20', 'http://www.lirmm.fr/~retore/projetsL2/culinaire.pdf', 2, 4, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Responsable`
+--
+
+CREATE TABLE IF NOT EXISTS `Responsable` (
+  `ProjectL2_idPro` int(11) NOT NULL,
+  `Enseignant_idEns` int(11) NOT NULL,
+  PRIMARY KEY (`ProjectL2_idPro`,`Enseignant_idEns`),
+  KEY `fk_ProjectL2_has_Enseignant_Enseignant1_idx` (`Enseignant_idEns`),
+  KEY `fk_ProjectL2_has_Enseignant_ProjectL21_idx` (`ProjectL2_idPro`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `Responsable`
+--
+
+INSERT INTO `Responsable` (`ProjectL2_idPro`, `Enseignant_idEns`) VALUES
+(1, 1001),
+(2, 1002),
+(3, 1003),
+(4, 1004),
+(5, 1005),
+(6, 1006),
+(7, 1007),
+(8, 1007),
+(9, 1008),
+(10, 1009),
+(11, 1009),
+(12, 1009),
+(13, 1010),
+(14, 1010),
+(15, 1010),
+(16, 1010),
+(17, 1011),
+(18, 1011),
+(19, 1012),
+(20, 1012),
+(21, 1014),
+(22, 1015);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
