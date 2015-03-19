@@ -1,0 +1,14 @@
+div.page.les-encadrants
+	h1 Liste des encadrants
+	:php
+		$res = $db->query('SELECT * FROM Enseignent') or die(mysqli_error($db));
+		while (NULL !== ($row = $res->fetch_array())){
+	a.encadrant(href=!{'<?php echo $row["webEns"]; ?>'}, target='_blank', style='color: black; text-decoration: none; padding: 8px; display: inline-block; width: 40%;')
+		.surname
+			:php
+				echo $row['nomEns'];
+		.name
+			:php
+				echo $row['prenomEns'];
+	:php
+		}

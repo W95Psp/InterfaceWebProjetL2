@@ -1,0 +1,25 @@
+style
+	| .details-project img{
+	| 	width: 20px;
+	| }
+
+.page.details-project(ng-init='project = 0')
+	:php
+		echo '<span ng-init="project=projects[';
+		echo $idProject;
+		echo ']"></span>';
+	h1 {{project.title}}
+	.author {{project.author}}
+	h2.h2Lang Langages authorisés
+	div.languages
+		a.lang(ng-repeat='lang in project.languages', target='_blank', href='http://fr.wikipedia.org/wiki/{{lang}}')
+			img(src='images/languages/{{lang}}.svg')
+			span {{lang}}
+	h2.h2Desc Description
+	| Lorem ipsum Magna amet veniam est labore ut aliqua nostrud eu culpa aliqua voluptate in ut quis esse mollit Ut pariatur fugiat.
+	br
+	br
+	h2.h2Complete Descriptif complet
+	a(href='/?liste-des-projets/{{project.id | fillZero}}-{{project | getLinkFromTitle}}/download-pdf') Télécharger en PDF
+	h2.h2Contact Contact
+	a(href='mailto:example@example.ext') Envoyer un e-mail
