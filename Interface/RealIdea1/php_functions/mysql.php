@@ -1,3 +1,3 @@
 <?php
-	$db = new MySQLi('localhost','root','root','projet');
+	$db = new MySQLi('websimp.fr','root','ProjetsL2_566z9fbg','Projet');
 ?>
