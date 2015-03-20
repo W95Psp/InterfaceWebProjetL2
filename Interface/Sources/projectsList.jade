@@ -1,21 +1,6 @@
 mixin ProjectsList(draggable)
 	:php
-		echo '<script>';
-		echo 'importStuff.projects = [';
-		$res = $db->query('SELECT * FROM Projet') or die(mysqli_error($db));
-		while (NULL !== ($row = $res->fetch_array())) {
-		    echo '{';
-		    echo 'idProj:'.$row['idProj'].',';
-		    echo 'nomProj:'.json_encode($row['nomProj']).',';
-		    echo 'descProj:'.json_encode($row['descProj']).',';
-		    echo 'lien:'.json_encode($row['lien']).',';
-		    echo 'nbMini:'.$row['nbMini'].',';
-		    echo 'nbMax:'.$row['nbMax'].',';
-		    echo 'nbInscri:'.$row['nbInscri'].'}';
-		    echo ',';
-		}
-		echo ']';
-		echo '</script>';
+		echo exportProjectsToJS($db);
 	if(draggable)
 		div(style='font-style: italic; width: 70%; margin: auto; text-align: center; margin-bottom: 8px;')
 			| Pour choisir établir votre liste de sujets préférés, glissez les sujet au devant de la liste.

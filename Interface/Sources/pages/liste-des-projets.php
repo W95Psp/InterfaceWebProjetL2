@@ -1,21 +1,6 @@
 
 <div class="page liste-des-projets">
-	<h1>Liste des projets</h1><?php if(isset($parseParam[1]) && $parseParam[1]=='drag-drop-enabled'){ ?><a href="/?liste-des-projets">[Se mettre en mode visiteur]</a><br/><br/><?php echo '<script>';
-echo 'importStuff.projects = [';
-$res = $db->query('SELECT * FROM Projet') or die(mysqli_error($db));
-while (NULL !== ($row = $res->fetch_array())) {
-    echo '{';
-    echo 'idProj:'.$row['idProj'].',';
-    echo 'nomProj:'.json_encode($row['nomProj']).',';
-    echo 'descProj:'.json_encode($row['descProj']).',';
-    echo 'lien:'.json_encode($row['lien']).',';
-    echo 'nbMini:'.$row['nbMini'].',';
-    echo 'nbMax:'.$row['nbMax'].',';
-    echo 'nbInscri:'.$row['nbInscri'].'}';
-    echo ',';
-}
-echo ']';
-echo '</script>'; ?>
+	<h1>Liste des projets</h1><?php if(isset($parseParam[1]) && $parseParam[1]=='drag-drop-enabled'){ ?><a href="/?liste-des-projets">[Se mettre en mode visiteur]</a><br/><br/><?php echo exportProjectsToJS($db); ?>
 	<div style="font-style: italic; width: 70%; margin: auto; text-align: center; margin-bottom: 8px;">Pour choisir établir votre liste de sujets préférés, glissez les sujet au devant de la liste.</div>
 	<div ng-init="nbChoice = 6;" class="projectList">
 		<div class="head">
@@ -35,22 +20,7 @@ echo '</script>'; ?>
 			<div ng-repeat="a in filtredProjects = (projects | filter:search)" class="span"></div>
 			<div ng-show="filtredProjects.length==0" class="row noRowToDisplay">Aucun résultat.</div>
 		</div>
-	</div><?php }else{ ?><a href="/?liste-des-projets/drag-drop-enabled">[Se mettre en mode "Etudiant-qui-choisit-ses-sujets" (c'est la classe comme nom de mode !)]</a><br/><br/><?php echo '<script>';
-echo 'importStuff.projects = [';
-$res = $db->query('SELECT * FROM Projet') or die(mysqli_error($db));
-while (NULL !== ($row = $res->fetch_array())) {
-    echo '{';
-    echo 'idProj:'.$row['idProj'].',';
-    echo 'nomProj:'.json_encode($row['nomProj']).',';
-    echo 'descProj:'.json_encode($row['descProj']).',';
-    echo 'lien:'.json_encode($row['lien']).',';
-    echo 'nbMini:'.$row['nbMini'].',';
-    echo 'nbMax:'.$row['nbMax'].',';
-    echo 'nbInscri:'.$row['nbInscri'].'}';
-    echo ',';
-}
-echo ']';
-echo '</script>'; ?>
+	</div><?php }else{ ?><a href="/?liste-des-projets/drag-drop-enabled">[Se mettre en mode "Etudiant-qui-choisit-ses-sujets" (c'est la classe comme nom de mode !)]</a><br/><br/><?php echo exportProjectsToJS($db); ?>
 	<div ng-init="nbChoice = 6;" class="projectList">
 		<div class="head">
 			<div class="row">
