@@ -5,7 +5,27 @@
 
 	$page = $parseParam[0];
 
-	$pages = ['presentation', 'liste-des-projets', 'les-encadrants'];
-	if(!in_array($page, $pages))
-		$page = $pages[0];
+	$pages = array(
+		'les-encadrants' => 'Les encadrants',
+		'presentation' => 'Présentation',
+		'liste-des-projets' => 'Liste des projets',
+		'connexion' => 'Connexion'
+	);
+
+	if(!isset($pages[$page]))
+		$page = array_keys($pages)[0];
+
+	function displayPages($part, $currentPage){
+		global $pages;
+		$count = 0;
+		foreach ($pages as $link => $name) {
+			if($count>=$part*2 && ($count)<$part*2+2){
+				echo '<a class="item';
+				if($link==$currentPage)
+					echo ' active';
+				echo '" href=\'?'.$link.'\'>'.$name.'</a>';
+			}
+			$count++;
+		}
+	}
 ?>

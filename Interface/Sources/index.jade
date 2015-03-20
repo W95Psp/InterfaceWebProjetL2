@@ -48,19 +48,13 @@ html(ng-app='ProjetsL2')
 							img.title(		src='images/head/title.png')
 						.menu
 							:php
-								$A = ($page=='les-encadrants') ? 'active':'';
-								$B = ($page=='presentation') ? 'active':'';
-								$C = ($page=='liste-des-projets') ? 'active':'';
-								$D = ($page=='connexion') ? 'active':'';
-								echo '<a class="item '.$A.'" href=\'?les-encadrants\'>Les encadrants</a>';
-								echo '<a class="item '.$B.'" href=\'?presentation\'>Présentation</a>';
+								displayPages(0, $page);
 					.right
 						.imageBox
 							img.description(src='images/head/description.png')
 						.menu
 							:php
-								echo '<a class="item '.$C.'" href=\'?liste-des-projets\'>Liste des projets</a>';
-								echo '<a class="item '.$D.'" href=\'?connexion\'>Connexion</a>';
+								displayPages(1, $page);
 					img.um2(		src='images/head/logo_UM2.png')
 		:php
 			//Basic route :

@@ -35,18 +35,12 @@ if(gethostname()=="SurfaceLucas"){
 				<div class="content">
 					<div class="left">
 						<div class="imageBox"><img src="images/head/title.png" class="title"/></div>
-						<div class="menu"><?php $A = ($page=='les-encadrants') ? 'active':'';
-$B = ($page=='presentation') ? 'active':'';
-$C = ($page=='liste-des-projets') ? 'active':'';
-$D = ($page=='connexion') ? 'active':'';
-echo '<a class="item '.$A.'" href=\'?les-encadrants\'>Les encadrants</a>';
-echo '<a class="item '.$B.'" href=\'?presentation\'>Présentation</a>'; ?>
+						<div class="menu"><?php displayPages(0, $page); ?>
 						</div>
 					</div>
 					<div class="right">
 						<div class="imageBox"><img src="images/head/description.png" class="description"/></div>
-						<div class="menu"><?php echo '<a class="item '.$C.'" href=\'?liste-des-projets\'>Liste des projets</a>';
-echo '<a class="item '.$D.'" href=\'?connexion\'>Connexion</a>'; ?>
+						<div class="menu"><?php displayPages(1, $page); ?>
 						</div>
 					</div><img src="images/head/logo_UM2.png" class="um2"/>
 				</div>
