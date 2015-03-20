@@ -11,10 +11,7 @@ include("php_functions/connect.php");
 require("php_functions/projectsToJS.php");
 
 
-//Compile jade files to php ones
-if(gethostname()=="SurfaceLucas"){
-	system('node jade.js');
-}
+
  ?>
 <html ng-app="ProjetsL2">
 	<head>
@@ -30,6 +27,19 @@ if(gethostname()=="SurfaceLucas"){
 		<![endif]-->
 	</head>
 	<body ng-controller="main">
+		<div style="text-align: center; width: 90px;position: absolute; padding: 4px; top: 10px; left: 10px; font-size: 8px; border-radius: 4px; background-color: rgba(0,0,0,0.2); opacity: 0.8;">
+			<div style=" padding-bottom: 3px;">Profil utilisateur</div>
+			<select style="font-size: 8px;" onchange="window.location = window.location.href+&quot;/@force-user-type=&quot;+this.value"><option value=0 <?php if(getUserType()==ANONYME)
+	echo ' selected'; ?>> Anonyme</option>
+				<option value=1 <?php if(getUserType()==ELEVE)
+	echo ' selected'; ?>> Etudiant</option>
+				<option value=2 <?php if(getUserType()==ENCADRANT)
+	echo ' selected'; ?>> Encadrant</option>
+				<option value=3 <?php if(getUserType()==ADMIN)
+	echo ' selected'; ?>> Administrateur</option>
+			</select>
+			<div style="font-size: 7px;">[Module temporaire pour essayer différents profils utilisateur]</div>
+		</div>
 		<header>
 			<div class="ban">
 				<div class="content">

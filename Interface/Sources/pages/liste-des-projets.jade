@@ -2,16 +2,17 @@ include ../projectsList.jade
 div.page.liste-des-projets
 	h1 Liste des projets
 	:php
-		if(isset($parseParam[1]) && $parseParam[1]=='drag-drop-enabled'){
-	a(href="/?liste-des-projets") [Se mettre en mode visiteur]
-	br
-	br
-	+ProjectsList(true)
+		if(getUserType()==ANONYME){
+	+ProjectsList(false, false, false)
 	:php
-		}else{
+		}else if(getUserType()==ELEVE){
 	a(href="/?liste-des-projets/drag-drop-enabled") [Se mettre en mode "Etudiant-qui-choisit-ses-sujets" (c'est la classe comme nom de mode !)]
-	br
-	br
-	+ProjectsList(false)
+	+ProjectsList(true, false, false)
+	:php
+		}else if(getUserType()==ENCADRANT){
+	+ProjectsList(false, true, false)
+	:php
+		}else if(getUserType()==ADMIN){
+	+ProjectsList(false, true, true)
 	:php
 		}

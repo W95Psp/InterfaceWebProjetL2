@@ -15,4 +15,10 @@
 	function getUserType(){
 		return (isset($_SESSION["userType"]))?$_SESSION["userType"] : ANONYME;
 	}
+
+
+	if(substr($parseParam[count($parseParam)-1], 0, 17)=='@force-user-type='){
+		$idUserType = intval(substr($parseParam[count($parseParam)-1], 17));
+		setUser(1234, "TEST", $idUserType);
+	}
 ?>

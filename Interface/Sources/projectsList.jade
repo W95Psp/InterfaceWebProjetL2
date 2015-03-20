@@ -1,4 +1,4 @@
-mixin ProjectsList(draggable)
+mixin ProjectsList(draggable, isProf, isAdmin)
 	:php
 		echo exportProjectsToJS($db);
 	if(draggable)
@@ -7,6 +7,8 @@ mixin ProjectsList(draggable)
 	.projectList(ng-init='nbChoice = 6;')
 		.head
 			.row
+				if(isProf)
+					.tools 
 				.titleColumn
 					img.icon(src='images/icons/title.png')
 					span Intitulé
@@ -21,6 +23,8 @@ mixin ProjectsList(draggable)
 					span Affecté(s)
 			if !draggable
 				.row.search
+					if(isProf)
+						.tools 
 					.titleColumn
 						input(ng-model='search.nomProj')
 					.teacherColumn
@@ -32,15 +36,21 @@ mixin ProjectsList(draggable)
 
 
 		.body(data-as-sortable="dragControlListeners", data-ng-model='projects')
-			a.row(href='/?liste-des-projets/{{project.idProj | fillZero}}-{{project | getLinkFromTitle}}', target="_blank", included=(draggable?"{{k<nbChoice}}":"false"), data-ng-repeat="(k,project) in projects | filter:search", data-as-sortable-item)
-				.titleColumn(style='background-image: url("images/icons/order/{{k}}.png")')
-					if draggable
-						span.handle(data-as-sortable-item-handle)
-							img(src='images/grip.png')
-					span {{project.nomProj}}
-				.teacherColumn {{project.author}}
-				.langColumn
-					img.language(ng-repeat='lang in project.languages', src='images/languages/{{lang}}.svg')
-				.studentsColumn.empty Aucun étudiant pour le moment
+			div(data-as-sortable-item=(draggable==true), data-ng-repeat="(k,project) in projects | filter:search")
+				div.row(data-as-sortable-item-handle=(draggable==true), href='/?liste-des-projets/{{project.idProj | fillZero}}-{{project | getLinkFromTitle}}', target="_blank", included=(draggable?"{{k<nbChoice}}":"false"))
+
+					if(isProf)
+						.tools
+							img(src='images/icons/edit.png')
+							img(src='images/icons/delete.png')
+					a.titleColumn(style='background-image: url("images/icons/order/{{k}}.png")')
+						if draggable
+							span.handle()
+								img(src='images/grip.png')
+						span {{project.nomProj}}
+					.teacherColumn {{project.author}}
+					.langColumn
+						img.language(ng-repeat='lang in project.languages', src='images/languages/{{lang}}.svg')
+					.studentsColumn.empty Aucun étudiant pour le moment
 			.span(ng-repeat='a in filtredProjects = (projects | filter:search)')
 			.row.noRowToDisplay(ng-show='filtredProjects.length==0') Aucun résultat.
