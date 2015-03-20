@@ -2,7 +2,7 @@
 <div class="page liste-des-projets">
 	<h1>Liste des projets</h1><?php if(isset($parseParam[1]) && $parseParam[1]=='drag-drop-enabled'){ ?><a href="/?liste-des-projets">[Se mettre en mode visiteur]</a><br/><br/><?php echo '<script>';
 echo 'importStuff.projects = [';
-$res = $db->query('SELECT * FROM projet');
+$res = $db->query('SELECT * FROM Projet') or die(mysqli_error($db));
 while (NULL !== ($row = $res->fetch_array())) {
     echo '{';
     echo 'idProj:'.$row['idProj'].',';
@@ -37,7 +37,7 @@ echo '</script>'; ?>
 		</div>
 	</div><?php }else{ ?><a href="/?liste-des-projets/drag-drop-enabled">[Se mettre en mode "Etudiant-qui-choisit-ses-sujets" (c'est la classe comme nom de mode !)]</a><br/><br/><?php echo '<script>';
 echo 'importStuff.projects = [';
-$res = $db->query('SELECT * FROM projet');
+$res = $db->query('SELECT * FROM Projet') or die(mysqli_error($db));
 while (NULL !== ($row = $res->fetch_array())) {
     echo '{';
     echo 'idProj:'.$row['idProj'].',';
