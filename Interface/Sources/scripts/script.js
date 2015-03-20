@@ -24,7 +24,8 @@ app.controller('main', function($scope, $parse) {
 			return 0;
 		while(newval.projects.length>0){
 			var o = newval.projects.shift();
-			o.author = 'LinkedTeacher';
+			o.author = o.prenomEns+" "+o.nomEns;
+			o.authorLink = '?les-encadrants/'+o.idEns+'/';
 			o.languages = [];
 			$scope.languages.forEach(function(lang){
 				if(Math.random()>0.5)
@@ -39,19 +40,7 @@ app.controller('main', function($scope, $parse) {
 		'javascript',	'mysql',	'nodejs',	'php',
 		'postgresql',	'python'
 	];
-	$scope.authors = authors = [
-		'Hervé Dicky',				// 0
-		'Mickael Montassier',		// 1
-		'Stéphane Bessy',			// 2
-		'Nicolas Briot',			// 3
-		'Isabelle Mougenot',		// 4
-		'Vincent Boudet',			// 5
-		'Lionel Ramadier',			// 6
-		'Philippe Janssen',			// 7
-		'Abdelhak-Damel Seriai',	// 8
-		'Michel Leclère'			// 9
-	];
-
+	
 	$scope.search = {nomProj: "", languages: "", author: ""};
 
 	$scope.projects = [];
