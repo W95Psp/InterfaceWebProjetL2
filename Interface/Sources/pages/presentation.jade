@@ -2,6 +2,5 @@ div.page.presentation
 	h1 Présentation
 	img.fds(src='images/logo_fds.png', style='float: left;')
 	.text
-		p Lorem ipsum In consequat enim culpa irure adipisicing commodo enim deserunt dolore dolor ex minim in reprehenderit ut sit reprehenderit qui ea elit Excepteur adipisicing Duis consectetur amet ut dolor consequat.
-		p Lorem ipsum In consequat enim culpa irure adipisicing commodo enim deserunt dolore dolor ex minim in reprehenderit ut sit reprehenderit qui ea elit Excepteur adipisicing Duis consectetur amet ut dolor consequat.
-		p Lorem ipsum In consequat enim culpa irure adipisicing commodo enim deserunt dolore dolor ex minim in reprehenderit ut sit reprehenderit qui ea elit Excepteur adipisicing Duis consectetur amet ut dolor consequat.
+		:php
+			echo file_get_contents('pages/presentation-content.html');

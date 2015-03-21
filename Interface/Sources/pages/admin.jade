@@ -35,18 +35,59 @@ style.
 	.panel{
 		float: left;
 		width: 760px;
-		height: 500px;
 	}
-div.page.interface-admin(ng-controller='admin', ng-init='currentPage = 0; pages = ["Encadrants", "Groupes", "Présentation", "Modalité notes"];')
-	h1(ng-repeat='(k,page) in pages', state='{{currentPage==k}}', ng-click='$parent.currentPage=k') {{page}}
-	br
-	.view
-		.panels(state='{{currentPage}}')
-			.panel
-				h2 [Page à inclure ici] ~T1
-			.panel 
-				h2 [Page à inclure ici] ~T2
-			.panel 
-				h2 [Page à inclure ici] ~T3
-			.panel 
-				h2 [Page à inclure ici] ~T4
+script(type="text/javascript", src="TinyEditor/packed.js")
+link(rel="stylesheet", href="TinyEditor/style.css")
+:php
+	if(isset($parseParam[1], $parseParam[2], $_POST['content']) && $parseParam[1]=='presentation' && $parseParam[2]=='update'){
+		$html = explode('<style>*{font-family: \'Open Sans\';}</style>', $_POST['content'], 2)[1];
+		file_put_contents('pages/presentation-content.html', $html);
+	}
+	echo '<div class=\'page interface-admin\' ng-controller=\'admin\' ng-init=\'';
+	echo 'pages = ["Encadrants", "Groupes", "Présentation", "Modalité notes"]; currentPage = 0;';
+	if(isset($parseParam[1]) && $parseParam[1]=='presentation')
+		echo 'currentPage = 2;';
+	echo '\'>';
+
+h1(ng-repeat='(k,page) in pages', state='{{currentPage==k}}', ng-click='$parent.currentPage=k') {{page}}
+br
+.view
+	.panels(state='{{currentPage}}')
+		.panel
+			h2 [Page à inclure ici] ~T1
+		.panel 
+			h2 [Page à inclure ici] ~T2
+		.panel 
+			h2 Page de présentation
+			form(method='POST', action='/?admin/presentation/update')
+				textarea(id="input", name='content', style="width:760px; height:400px; margin: auto;")
+					link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Open+Sans:300")
+					style *{font-family: 'Open Sans';}
+					:php
+						echo file_get_contents('pages/presentation-content.html');
+				script.
+					var editor = new TINY.editor.edit('editor',{
+						id:'input',
+						width:660,
+						height:300,
+						cssclass:'te',
+						controlclass:'tecontrol',
+						rowclass:'teheader',
+						dividerclass:'tedivider',
+						controls:['bold','italic','underline','strikethrough','|','subscript','superscript','|',
+								  'orderedlist','unorderedlist','|','outdent','indent','|','leftalign',
+								  'centeralign','rightalign','blockjustify','|','unformat','|','undo','redo','n',
+								  'image','hr','link','unlink','|','cut','copy','paste','print'],
+						footer:true,
+						fonts:['Open Sans','Arial','Georgia','Trebuchet MS'],
+						xhtml:true,
+						cssfile:'style.css',
+						bodyid:'editor',
+						footerclass:'tefooter',
+						resize:{cssclass:'resize'}
+					});
+				button(onclick='editor.post();') Mettre à jour
+		.panel 
+			h2 [Page à inclure ici] ~T4
+:php
+	echo '</div>';
