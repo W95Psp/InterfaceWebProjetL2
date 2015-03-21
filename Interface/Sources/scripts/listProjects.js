@@ -34,13 +34,17 @@ app.controller('main', function($scope, $parse) {
 			$scope.projects.push(o);
 		}
 	}, true);
+
+	
 	var authors;
 	$scope.languages = [
 		'any', 			'dot-net',	'html5',	'java',
 		'javascript',	'mysql',	'nodejs',	'php',
 		'postgresql',	'python'
 	];
-	
+
+	$scope.errorSpotted = [false];
+
 	$scope.search = {nomProj: "", languages: "", author: ""};
 
 	$scope.projects = [];
@@ -48,6 +52,23 @@ app.controller('main', function($scope, $parse) {
 	$scope.dragControlListeners = {
 	    accept: function (sourceItemHandleScope, destSortableScope) {return true;},
 	    itemMoved: function (event){return true;},
-	    orderChanged: function(event){return true;}
+	    orderChanged: function(event){
+	    	var order = '';
+	    	for(var i in $scope.projects)
+	    		order += ';'+$scope.projects[i].idProj;
+	    	$.post( "ajax.php", {action: "update-order", order: order.substr(1)}).done(function(data) {
+				if(data!=''){
+					$scope.errorSpotted = [true, "La synchronisation a échouée. Message d'erreur : "+data];
+					$scope.$apply();
+				}
+			});
+	    	return true;
+	   	}
+	};
+
+	$scope.putThisFirst = function(position){
+		var elem = $scope.projects.splice(position, 1)[0];
+		console.log(elem);
+		$scope.projects.unshift(elem);
 	};
 });

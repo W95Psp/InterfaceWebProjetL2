@@ -74,6 +74,17 @@ body
 .row
 	display block
 	.titleColumn
+		.tools
+			display inline-block
+			height 40px
+			width 22px
+			float right
+			img
+				width 19px
+				padding-top 3px
+				opacity 0.5
+				&:hover
+					opacity 1
 		width 300px
 	.teacherColumn
 		width 140px
@@ -90,8 +101,8 @@ body
 	&:hover
 		.row
 			border-bottom 1px solid #95a5a6
-		.handle
-			opacity 1!important
+		.arrow-up
+			opacity 0.8!important
 	&[included='false']
 		.titleColumn
 			background none!important
@@ -112,9 +123,10 @@ body
 		> div
 			height 50px
 		border-bottom 1px dotted #95a5a6
-		.handle
+		.arrow-up
+			cursor hand
 			transition opacity 100ms ease-in
-			opacity 0.1
+			opacity 0.04
 			position absolute
 			left -15px
 			top ((76px / 2) - 10px)
@@ -208,3 +220,57 @@ body
 		color #CCC
 		font-style italic
 		padding 20px
+
+
+#disp-error
+	position fixed
+	top 0px
+	left 0px
+	right 0px
+	bottom 0px
+	background-color rgba(0, 0, 0, 0.5)
+	.content
+		position relative
+		top 60px
+		margin auto
+		width 700px
+		height 270px
+		box-shadow 0px 0px 10px rgba(0, 0, 0, 0.5)
+		border-radius 20px
+		background-color white
+		color black
+		padding 20px
+		opacity 1
+		.title
+			color red
+			display block
+			text-align center
+			
+button
+	color black
+	background-color color1
+	vertical-align top
+	border-bottom 
+	text-align center
+	text-shadow 0 1px rgba(0, 0, 0, 0.3)
+	color #fff
+	border 0
+	font-size 14px
+	padding 8px
+	padding-left 30px
+	padding-right 30px
+	border-radius 3px
+	border-bottom 2px solid darken(color1, 34%)
+	outline 0 none
+	&:hover
+		transition background-color 100ms ease-out
+		background-color darken(color1, 12%)
+	&:active
+		padding-top 7px
+		margin-bottom -1px
+.page.mes-projets
+	position relative
+	button.add
+		position absolute
+		right 30px
+		top 60px

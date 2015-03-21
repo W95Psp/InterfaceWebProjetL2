@@ -1,9 +1,10 @@
 script(src='/scripts/listProjects.js')
-div.page.liste-des-projets
-	h1 Liste des projets
+div.page.mes-projets
+	h1 Mes projets
+	button.add Ajouter
 	:php
 		include('php_functions/projectsList.php');
-		DisplayListProjects();
+		DisplayListProjects('encadrant');
 	div#disp-error(ng-if='errorSpotted[0]')
 		.content
 			.title Erreur !

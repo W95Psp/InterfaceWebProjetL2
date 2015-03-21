@@ -91,6 +91,20 @@ body .page.presentation .text {
 .row .titleColumn {
   width: 300px;
 }
+.row .titleColumn .tools {
+  display: inline-block;
+  height: 40px;
+  width: 22px;
+  float: right;
+}
+.row .titleColumn .tools img {
+  width: 19px;
+  padding-top: 3px;
+  opacity: 0.5;
+}
+.row .titleColumn .tools img:hover {
+  opacity: 1;
+}
 .row .teacherColumn {
   width: 140px;
 }
@@ -111,8 +125,8 @@ body .page.presentation .text {
 .row:hover .row {
   border-bottom: 1px solid #95a5a6;
 }
-.row:hover .handle {
-  opacity: 1 !important;
+.row:hover .arrow-up {
+  opacity: 0.8 !important;
 }
 .row[included='false'] .titleColumn {
   background: none !important;
@@ -137,14 +151,15 @@ body .page.presentation .text {
 .body .row > div {
   height: 50px;
 }
-.body .row .handle {
+.body .row .arrow-up {
+  cursor: hand;
   transition: opacity 100ms ease-in;
-  opacity: 0.1;
+  opacity: 0.04;
   position: absolute;
   left: -15px;
   top: 28px;
 }
-.body .row .handle img {
+.body .row .arrow-up img {
   width: 12px;
 }
 .details-project h1 {
@@ -251,4 +266,63 @@ body .page.presentation .text {
   color: #ccc;
   font-style: italic;
   padding: 20px;
+}
+#disp-error {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(0,0,0,0.5);
+}
+#disp-error .content {
+  position: relative;
+  top: 60px;
+  margin: auto;
+  width: 700px;
+  height: 270px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+  border-radius: 20px;
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+  opacity: 1;
+}
+#disp-error .content .title {
+  color: #f00;
+  display: block;
+  text-align: center;
+}
+button {
+  color: #000;
+  background-color: #60c7ff;
+  vertical-align: top;
+border-bottom
+  text-align: center;
+  text-shadow: 0 1px rgba(0,0,0,0.3);
+  color: #fff;
+  border: 0;
+  font-size: 14px;
+  padding: 8px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 3px;
+  border-bottom: 2px solid #0096e8;
+  outline: 0 none;
+}
+button:hover {
+  transition: background-color 100ms ease-out;
+  background-color: #36b8ff;
+}
+button:active {
+  padding-top: 7px;
+  margin-bottom: -1px;
+}
+.page.mes-projets {
+  position: relative;
+}
+.page.mes-projets button.add {
+  position: absolute;
+  right: 30px;
+  top: 60px;
 }

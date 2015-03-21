@@ -7,8 +7,6 @@ mixin ProjectsList(draggable, isProf, isAdmin)
 	.projectList(ng-init='nbChoice = 6;')
 		.head
 			.row
-				if(isProf)
-					.tools 
 				.titleColumn
 					img.icon(src='images/icons/title.png')
 					span Intitulé
@@ -23,8 +21,6 @@ mixin ProjectsList(draggable, isProf, isAdmin)
 					span Affecté(s)
 			if !draggable
 				.row.search
-					if(isProf)
-						.tools 
 					.titleColumn
 						input(ng-model='search.nomProj')
 					.teacherColumn
@@ -38,12 +34,21 @@ mixin ProjectsList(draggable, isProf, isAdmin)
 		.body(data-as-sortable="dragControlListeners", data-ng-model='projects')
 			div(data-as-sortable-item=(draggable==true), data-ng-repeat="(k,project) in projects | filter:search")
 				div.row(data-as-sortable-item-handle=(draggable==true), href='/?liste-des-projets/{{project.idProj | fillZero}}-{{project | getLinkFromTitle}}', target="_blank", included=(draggable?"{{k<nbChoice}}":"false"))
-
-					if(isProf)
-						.tools
+					.titleColumn(style='background-image: url("images/icons/order/{{k}}.png")')
+						if(isProf || isAdmin)
+							:php
+								echo '<div class="tools" ng-init="';
+								echo 'uType = '+getUserType();
+								echo 'uId = '+getUserId();
+								echo '"';
+								echo 'ng-if="uType+(project.idEns==uId)>=3" >';
 							img(src='images/icons/edit.png')
 							img(src='images/icons/delete.png')
-					a.titleColumn(style='background-image: url("images/icons/order/{{k}}.png")')
+							:php
+								echo '</div>'
+							| {{uType}} - 
+							| {{uId}} - 
+							| {{project.idEns}}
 						if draggable
 							span.handle()
 								img(src='images/grip.png')

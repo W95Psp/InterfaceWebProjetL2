@@ -5,12 +5,36 @@
 
 	$page = $parseParam[0];
 
-	$pages = array(
-		'les-encadrants' => 'Les encadrants',
-		'presentation' => 'Présentation',
-		'liste-des-projets' => 'Liste des projets',
-		'connexion' => 'Connexion'
+	tempFunction_toDelete_enableForceUserTypeStuff();
+
+	$pagesByMode = array(
+		ANONYME => array(
+			'les-encadrants' => 'Les encadrants',
+			'presentation' => 'Présentation',
+			'liste-des-projets' => 'Liste des projets',
+			'connexion' => 'Connexion'
+		),
+		ELEVE => array(
+			'les-encadrants' => 'Les encadrants',
+			'liste-des-projets' => 'Liste des projets',
+			'groupe' => 'Groupe',
+			'deconnexion' => 'Déonnexion'
+		),
+		ENCADRANT => array(
+			'les-encadrants' => 'Les encadrants',
+			'mes-projets' => 'Mes projets',
+			'liste-des-projets' => 'Liste des projets',
+			'deconnexion' => 'Déconnexion'
+		),
+		ADMIN => array(
+			'admin' => 'Administration',
+			'mes-projets' => 'Mes projets',
+			'liste-des-projets' => 'Liste des projets',
+			'deconnexion' => 'Déconnexion'
+		)
 	);
+
+	$pages = $pagesByMode[getUserType()];
 
 	if(!isset($pages[$page]))
 		$page = array_keys($pages)[0];

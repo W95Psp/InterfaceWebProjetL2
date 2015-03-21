@@ -1,17 +1,14 @@
 <?php //Connect to db (variable : $db)
 include("php_functions/mysql.php");
 
-//Parse url to array ($parseParam, i.e. "/page1/cat2/blurp" => $parseParam = new Array("/page1", "cat2", "blurp"))
-include("php_functions/page_manager.php");
-
 //Connection related functions
 include("php_functions/connect.php");
 
+//Parse url to array ($parseParam, i.e. "/page1/cat2/blurp" => $parseParam = new Array("/page1", "cat2", "blurp"))
+include("php_functions/page_manager.php");
+
 //Function for project2js
 require("php_functions/projectsToJS.php");
-
-
-
  ?>
 <html ng-app="ProjetsL2">
 	<head>
@@ -21,7 +18,6 @@ require("php_functions/projectsToJS.php");
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css"/>
 		<script src="scripts/ng-sortable/ng-sortable.js"></script>
 		<link rel="stylesheet" type="text/css" href="scripts/ng-sortable/ng-sortable.min.css"/>
-		<script src="scripts/script.js"></script>
 		<link rel="stylesheet" type="text/css" href="style/main.css"/><!--[if lt IE 9]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
