@@ -85,83 +85,6 @@ body .page.presentation .text {
   margin-top: 0px;
   padding-top: 1px;
 }
-.row {
-  display: block;
-}
-.row .titleColumn {
-  width: 300px;
-}
-.row .titleColumn .tools {
-  display: inline-block;
-  height: 40px;
-  width: 22px;
-  float: right;
-}
-.row .titleColumn .tools img {
-  width: 19px;
-  padding-top: 3px;
-  opacity: 0.5;
-}
-.row .titleColumn .tools img:hover {
-  opacity: 1;
-}
-.row .teacherColumn {
-  width: 140px;
-}
-.row .langColumn {
-  width: 140px;
-}
-.row .studentsColumn {
-  width: 120px;
-}
-.row div {
-  padding: 5px;
-  display: table-cell;
-  vertical-align: middle;
-}
-.row img {
-  width: 20px;
-}
-.row:hover .row {
-  border-bottom: 1px solid #95a5a6;
-}
-.row:hover .arrow-up {
-  opacity: 0.8 !important;
-}
-.row[included='false'] .titleColumn {
-  background: none !important;
-}
-.row[included='true'] {
-  transition: background-color 100ms ease-out;
-  background-color: rgba(46,204,113,0.2);
-}
-.row[included='true'] .titleColumn {
-  background-repeat: no-repeat;
-  background-position: -20px center;
-  padding-left: 50px;
-  width: 250px;
-}
-.body .row {
-  color: #000;
-  text-decoration: none;
-  transition: background-color 800ms ease-in;
-  position: relative;
-  border-bottom: 1px dotted #95a5a6;
-}
-.body .row > div {
-  height: 50px;
-}
-.body .row .arrow-up {
-  cursor: hand;
-  transition: opacity 100ms ease-in;
-  opacity: 0.04;
-  position: absolute;
-  left: -15px;
-  top: 28px;
-}
-.body .row .arrow-up img {
-  width: 12px;
-}
 .details-project h1 {
   text-align: center;
   border-radius: 5px;
@@ -267,6 +190,125 @@ body .page.presentation .text {
   font-style: italic;
   padding: 20px;
 }
+.row {
+  display: block;
+}
+.row .titleColumn {
+  width: 300px;
+}
+.row .titleColumn .tools {
+  display: inline-block;
+  height: 40px;
+  width: 22px;
+  float: right;
+}
+.row .titleColumn .tools img {
+  width: 19px;
+  padding-top: 3px;
+  opacity: 0.5;
+}
+.row .titleColumn .tools img:hover {
+  opacity: 1;
+}
+.row .teacherColumn {
+  width: 140px;
+}
+.row .langColumn {
+  width: 140px;
+}
+.row .studentsColumn {
+  width: 120px;
+}
+.row div {
+  padding: 5px;
+  display: table-cell;
+  vertical-align: middle;
+}
+.row img {
+  width: 20px;
+}
+.row:hover .row {
+  border-bottom: 1px solid #95a5a6;
+}
+.row:hover .arrow-up {
+  opacity: 0.8 !important;
+}
+.row[included='false'] .titleColumn {
+  background: none !important;
+}
+.row[included='true'] {
+  transition: background-color 100ms ease-out;
+  background-color: rgba(46,204,113,0.2);
+}
+.row[included='true'] .titleColumn {
+  background-repeat: no-repeat;
+  background-position: -20px center;
+  padding-left: 50px;
+  width: 250px;
+}
+.body .row {
+  color: #000;
+  text-decoration: none;
+  transition: background-color 800ms ease-in;
+  position: relative;
+  border-bottom: 1px dotted #95a5a6;
+}
+.body .row > div {
+  height: 50px;
+}
+.body .row .arrow-up {
+  cursor: hand;
+  transition: opacity 100ms ease-in;
+  opacity: 0.04;
+  position: absolute;
+  left: -15px;
+  top: 28px;
+}
+.body .row .arrow-up img {
+  width: 12px;
+}
+.page.liste-des-projets {
+  position: relative;
+}
+.page.liste-des-projets .confirmation {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  width: 340px;
+  overflow: hidden;
+  height: 64px;
+}
+.page.liste-des-projets .confirmation .here {
+  transition: top 100ms ease-in-out;
+  height: 128px;
+  position: relative;
+  top: 0px;
+}
+.page.liste-des-projets .confirmation .here .partValid {
+  margin-top: 30px;
+  margin-left: 140px;
+  float: right;
+  clear: both;
+}
+.page.liste-des-projets .confirmation .here .partConfirm {
+  clear: both;
+  width: 340px;
+  height: 64px;
+}
+.page.liste-des-projets .confirmation .here .partConfirm b {
+  font-size: 11px;
+  display: block;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.page.liste-des-projets .confirmation[state="active"] .here {
+  transition: top 100ms ease-in-out;
+  top: -64px;
+}
+.page.liste-des-projets .confirmation[state="already"] .here {
+  transition: top 100ms ease-in-out;
+  top: -128px;
+}
 #disp-error {
   position: fixed;
   top: 0px;
@@ -295,24 +337,48 @@ body .page.presentation .text {
 }
 button {
   color: #000;
+  border: 0;
   background-color: #60c7ff;
+  border-bottom: 2px solid #0096e8;
   vertical-align: top;
 border-bottom
   text-align: center;
   text-shadow: 0 1px rgba(0,0,0,0.3);
   color: #fff;
-  border: 0;
   font-size: 14px;
   padding: 8px;
   padding-left: 30px;
   padding-right: 30px;
   border-radius: 3px;
-  border-bottom: 2px solid #0096e8;
   outline: 0 none;
+}
+button.green {
+  background-color: #2ecc71;
+  border-bottom: 2px solid #1e874b;
+}
+button.disabled {
+  background-color: #bdc3c7;
+  border-bottom: 2px solid #8b959c;
+  color: #808080;
+  opacity: 0.5;
+}
+button.red {
+  background-color: #ff5761;
+  border-bottom: 2px solid #e2000d;
 }
 button:hover {
   transition: background-color 100ms ease-out;
   background-color: #36b8ff;
+}
+button:hover.green {
+  background-color: #28b463;
+}
+button:hover.red {
+  background-color: #ff2e3a;
+}
+button:hover.disabled {
+  background-color: #bdc3c7;
+  border-bottom: 2px solid #8b959c;
 }
 button:active {
   padding-top: 7px;

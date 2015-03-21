@@ -16,9 +16,10 @@ app.filter('fillZero', function() {
 
 var importStuff = {};
 
-app.controller('main', function($scope, $parse) {
+app.controller('listeProjets', function($scope, $parse) {
 	window.SC = $scope;
 	SC.importStuff = importStuff;
+	$scope.stateConfirm = 'already';
 	SC.$watch('importStuff', function(newval){
 		if(!newval.projects)
 			return 0;
@@ -43,11 +44,24 @@ app.controller('main', function($scope, $parse) {
 		'postgresql',	'python'
 	];
 
+	$scope.confirmChoices = function(){
+		$.post( "ajax.php", {action: "confirm-choices"}).done(function(data) {
+			if(data!=''){
+				$scope.errorSpotted = [true, "La requête a échouée. Message d'erreur : "+data];
+				$scope.$apply();
+			}
+		});
+		$scope.stateConfirm = $scope.textHowToStudent = 'already';
+		$scope.highlight = true;
+		$scope.draggable = false;
+	};
+
 	$scope.errorSpotted = [false];
-
 	$scope.search = {nomProj: "", languages: "", author: ""};
-
 	$scope.projects = [];
+	$scope.draggable = false;
+	$scope.highlight = false;
+	$scope.textHowToStudent = 'no';
 
 	$scope.dragControlListeners = {
 	    accept: function (sourceItemHandleScope, destSortableScope) {return true;},

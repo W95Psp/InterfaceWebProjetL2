@@ -1,12 +1,28 @@
 script(src='/scripts/listProjects.js')
-div.page.liste-des-projets
+div.page.liste-des-projets(ng-controller='listeProjets')
 	h1 Liste des projets
 	:php
-		if(getUserType()==ELEVE){
-	button Valider la candidature
+		if(getUserType()==ELEVE && $_SESSION['groupId']){
+			$group = getGroupFromGroupId($_SESSION['groupId']);
+			echo '<div class="confirmation" state="{{stateConfirm}}" ng-init="';
+			echo 'stateConfirm = ';
+			if($group['EtatCandidature']==2)
+				echo "'already'";
+			else
+				echo "'no'";
+			echo '">';
+	.here
+		div.partValid
+			button.valid(ng-click='stateConfirm = "active"') Valider la candidature
+		div.partConfirm(style='text-align: center;')
+			b Voulez-vous valider vos 6 choix ? Cette opération est irréversible.
+			button.red(ng-click='confirmChoices()') Confirmer
+			button(ng-click='stateConfirm = "no"') Annuler
+		div.partValid
+			button.disabled Choix déjà effectués
 	:php
+		echo '</div>';
 		}
-	:php
 		include('php_functions/projectsList.php');
 		DisplayListProjects();
 	div#disp-error(ng-if='errorSpotted[0]')

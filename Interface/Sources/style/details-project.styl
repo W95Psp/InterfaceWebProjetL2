@@ -1,0 +1,45 @@
+.details-project
+	h1
+		text-align center
+		border-radius 5px
+		width 90%
+		margin auto
+		margin-top 20px
+		margin-bottom 10px
+		background-color color1
+		box-shadow 0px 0px 5px alpha(color1, 50%)
+		color white
+		padding 5px
+	.author
+		display block
+		text-align center
+	h2
+		background-repeat no-repeat
+		padding-left 45px
+	h2.h2Lang
+		background-image url('../images/icons/languages.png')
+	h2.h2Desc
+		background-image url('../images/icons/desc.png')
+	h2.h2Complete
+		background-image url('../images/icons/pdf.png')
+	h2.h2Contact
+		background-image url('../images/icons/mail.png')
+	.languages
+		.lang
+			padding 7px
+			padding-bottom 0px
+			margin-right 5px
+			color black
+			img
+				width 20px
+			span
+				display inline-block
+				position relative
+				top -5px
+				padding-left 5px
+			border-radius 5px
+			background-color transparent
+			transition background-color 40ms linear
+			&:hover
+				background-color #CCC
+				transition background-color 100ms ease-out

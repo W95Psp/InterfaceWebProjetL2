@@ -1,6 +1,6 @@
 
 <script src="/scripts/listProjects.js"></script>
-<div class="page mes-projets">
+<div ng-controller="listeProjets" class="page mes-projets">
 	<h1>Mes projets</h1>
 	<button class="add">Ajouter</button><?php include('php_functions/projectsList.php');
 DisplayListProjects('encadrant'); ?>

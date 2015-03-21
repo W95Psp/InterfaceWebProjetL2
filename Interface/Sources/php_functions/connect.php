@@ -12,6 +12,8 @@
 	        if($param==getUserType())
 	        	$okay = true;
 	    }
+	    if(!$okay)
+	    	die("[error]");
 		return $okay;
 	}
 
@@ -31,6 +33,7 @@
 	}
 
 	function setUser($id, $name, $type){
+		session_unset();
 		$_SESSION["userType"] = $type;
 		$_SESSION["userId"] = $id;
 		$_SESSION["userName"] = $name;

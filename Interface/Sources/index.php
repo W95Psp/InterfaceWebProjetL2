@@ -1,4 +1,6 @@
-<?php //Connect to db (variable : $db)
+<?php system("node jade.js");
+
+//Connect to db (variable : $db)
 include("php_functions/mysql.php");
 
 //Connection related functions
@@ -22,7 +24,7 @@ require("php_functions/projectsToJS.php");
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 	</head>
-	<body ng-controller="main">
+	<body>
 		<div style="text-align: center; width: 90px;position: absolute; padding: 4px; top: 10px; left: 10px; font-size: 8px; border-radius: 4px; background-color: rgba(0,0,0,0.2); opacity: 0.8;">
 			<div style=" padding-bottom: 3px;">Profil utilisateur</div>
 			<select style="font-size: 8px;" onchange="window.location = window.location.href+&quot;/@force-user-type=&quot;+this.value"><option value=0 <?php if(getUserType()==ANONYME)
