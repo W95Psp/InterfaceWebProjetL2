@@ -25,9 +25,19 @@ require("php_functions/projectsToJS.php");
 		<![endif]-->
 	</head>
 	<body>
+		<script>
+			function loadThisUserProfile(v){	//To delete, when login (CAS) will be ok
+				var href = window.location.href;
+				console.log(href.match(/\/\@force\-user\-type\=[0-9]^/));
+				if(href.match(/\/\@force\-user\-type\=[0-9]$/g)){
+					href=href.substr(0, href.lastIndexOf('/@force'));
+				}
+				window.location = href + "/@force-user-type=" + v;
+			}
+		</script>
 		<div style="text-align: center; width: 90px;position: absolute; padding: 4px; top: 10px; left: 10px; font-size: 8px; border-radius: 4px; background-color: rgba(0,0,0,0.2); opacity: 0.8;">
 			<div style=" padding-bottom: 3px;">Profil utilisateur</div>
-			<select style="font-size: 8px;" onchange="window.location = window.location.href+&quot;/@force-user-type=&quot;+this.value"><option value=0 <?php if(getUserType()==ANONYME)
+			<select style="font-size: 8px;" onchange="loadThisUserProfile(this.value)"><option value=0 <?php if(getUserType()==ANONYME)
 	echo ' selected'; ?>> Anonyme</option>
 				<option value=1 <?php if(getUserType()==ELEVE)
 	echo ' selected'; ?>> Etudiant</option>
