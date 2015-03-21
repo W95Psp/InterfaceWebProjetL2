@@ -18,19 +18,22 @@
 			'les-encadrants' => 'Les encadrants',
 			'liste-des-projets' => 'Liste des projets',
 			'groupe' => 'Groupe',
-			'deconnexion' => 'Déonnexion'
+			'deconnexion' => 'Déonnexion',
+			'presentation' => '####'
 		),
 		ENCADRANT => array(
 			'les-encadrants' => 'Les encadrants',
 			'mes-projets' => 'Mes projets',
 			'liste-des-projets' => 'Liste des projets',
-			'deconnexion' => 'Déconnexion'
+			'deconnexion' => 'Déconnexion',
+			'presentation' => '####'
 		),
 		ADMIN => array(
 			'admin' => 'Administration',
 			'mes-projets' => 'Mes projets',
 			'liste-des-projets' => 'Liste des projets',
-			'deconnexion' => 'Déconnexion'
+			'deconnexion' => 'Déconnexion',
+			'presentation' => '####'
 		)
 	);
 
