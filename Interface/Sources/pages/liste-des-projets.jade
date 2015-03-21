@@ -2,6 +2,11 @@ script(src='/scripts/listProjects.js')
 div.page.liste-des-projets
 	h1 Liste des projets
 	:php
+		if(getUserType()==ELEVE){
+	button Valider la candidature
+	:php
+		}
+	:php
 		include('php_functions/projectsList.php');
 		DisplayListProjects();
 	div#disp-error(ng-if='errorSpotted[0]')
