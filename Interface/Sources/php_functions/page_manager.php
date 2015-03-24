@@ -39,8 +39,8 @@
 
 	$pages = $pagesByMode[getUserType()];
 
-	if(!isset($pages[$page]))
-		$page = array_keys($pages)[0];
+	//if(!isset($pages[$page]))
+	//	$page = array_keys($pages)[0];
 
 	function displayPages($part, $currentPage){
 		global $pages;
