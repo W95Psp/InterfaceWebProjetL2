@@ -1,6 +1,6 @@
 <?php
 	$params = $_SERVER['REQUEST_URI'];
-	$params = (substr($params, 1, 9)=='index.php') ? substr($params, 11) : substr($params, 2);
+	$params = substr($params, strpos($params, '?')+1);
 	$parseParam = explode('/', $params);
 
 	$page = $parseParam[0];
@@ -18,7 +18,7 @@
 			'les-encadrants' => 'Les encadrants',
 			'liste-des-projets' => 'Liste des projets',
 			'groupe' => 'Groupe',
-			'deconnexion' => 'Déconnexion',
+			'deconnexion' => 'Déonnexion',
 			'presentation' => '####'
 		),
 		ENCADRANT => array(
@@ -39,8 +39,8 @@
 
 	$pages = $pagesByMode[getUserType()];
 
-	//if(!isset($pages[$page]))
-	//	$page = array_keys($pages)[0];
+	if(!isset($pages[$page]))
+		$page = array_keys($pages)[0];
 
 	function displayPages($part, $currentPage){
 		global $pages;
