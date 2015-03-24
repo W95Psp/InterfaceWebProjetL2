@@ -18,7 +18,7 @@
 			'les-encadrants' => 'Les encadrants',
 			'liste-des-projets' => 'Liste des projets',
 			'groupe' => 'Groupe',
-			'deconnexion' => 'Déonnexion',
+			'deconnexion' => 'Déconnexion',
 			'presentation' => '####'
 		),
 		ENCADRANT => array(
