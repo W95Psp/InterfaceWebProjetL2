@@ -1,9 +1,11 @@
+link(rel="stylesheet", type="text/css", href='style/liste-des-projets.css')
 script(src='/scripts/listProjects.js')
 div.page.mes-projets(ng-controller='listeProjets')
 	h1 Mes projets
-	button.add Ajouter
+	a(href='/?liste-des-projets/0000-nouveau-projet')
+		button.add Ajouter
 	:php
-		include('php_functions/projectsList.php');
+		include('php_functions/template-liste-projets.php');
 		DisplayListProjects('encadrant');
 	div#disp-error(ng-if='errorSpotted[0]')
 		.content
