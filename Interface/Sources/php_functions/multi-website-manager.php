@@ -7,7 +7,7 @@
 	});
 
 	if(preg_match_all("/^<redirect-to\:(.*)>$/", $versionWebsite, $r)){
-		die('Erreur, la ressource à été déplacée. <a href="'.$r[1][0].'">Cliquez ici pour être redirigé</a>');
+		die('Erreur, la ressource &agrave; &eacute;t&eacute; d&eacute;plac&eacute;e. <a href="'.$r[1][0].'">Cliquez ici pour &ecirc;tre redirig&eacute</a>');
 	}
 
 	if($versionWebsite=='none')
