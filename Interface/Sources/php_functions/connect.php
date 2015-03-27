@@ -47,7 +47,7 @@
 	}
 
 	function getUserId(){
-		return @$_SESSION["userId"] || -1;
+		return @$_SESSION["userId"];
 	}
 
 	function tempFunction_toDelete_enableForceUserTypeStuff(){
