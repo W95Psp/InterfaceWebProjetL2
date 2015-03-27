@@ -3,7 +3,7 @@
 	$versionWebsiteUrl = 'none';
 	@array_walk(json_decode(file_get_contents('config/versions-website.json')),function($version, $url){
 		global $versionWebsite;
-		if($_SERVER['HTTP_HOST']==$url){
+		if(substr($_SERVER['HTTP_HOST'], 0, strlen($url))==$url){
 			$versionWebsiteUrl = $url;
 			$versionWebsite = $version;
 		}
