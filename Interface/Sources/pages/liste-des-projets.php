@@ -1,7 +1,11 @@
 
 <script src="/scripts/listProjects.js"></script>
 <div ng-controller="listeProjets" class="page liste-des-projets">
-	<h1>Liste des projets</h1><?php if(getUserType()==ELEVE && $_SESSION['groupId']){
+	<h1><?php if(getUserType()==ELEVE && $_SESSION['groupId']){ ?>
+		<button id="save" ng-if="stateConfirm!=&quot;already&quot;" ng-click="isThereAnyModificationsYet &amp;&amp; sendOrder()" class="{{isThereAnyModificationsYet ? &quot;green&quot; : &quot;disabled&quot;}}">
+			<div></div>
+		</button><?php } ?><span>Liste des projets</span>
+	</h1><?php if(getUserType()==ELEVE && $_SESSION['groupId']){
 	$group = getGroupFromGroupId($_SESSION['groupId']);
 	echo '<div class="confirmation" state="{{stateConfirm}}" ng-init="';
 	echo 'stateConfirm = ';
@@ -10,7 +14,7 @@
 	else
 		echo "'no'";
 	echo '">'; ?>
-	<div class="here">
+	<div class="validationForm">
 		<div class="partValid">
 			<button ng-click="stateConfirm = &quot;active&quot;" class="valid">Valider la candidature</button>
 		</div>

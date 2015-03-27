@@ -36,6 +36,7 @@ var importStuff = {};
 
 app.controller('listeProjets', function($scope, $parse) {
 	window.SC = $scope;
+	this.isThereAnyModificationsYet = false;
 	SC.importStuff = importStuff;
 	$scope.stateConfirm = 'already';
 	SC.$watch('importStuff', function(newval){
@@ -80,19 +81,25 @@ app.controller('listeProjets', function($scope, $parse) {
 	$scope.highlight = false;
 	$scope.textHowToStudent = 'no';
 
+	$scope.sendOrder = function(){
+		var order = '';
+    	for(var i in $scope.projects)
+    		order += ';'+$scope.projects[i].idProj;
+    	$.post( "ajax.php", {action: "update-order", order: order.substr(1)}).done(function(data) {
+			if(data!=''){
+				$scope.errorSpotted = [true, "La synchronisation a échouée. Message d'erreur : "+data];
+				$scope.$apply();
+			}
+		});
+		$scope.isThereAnyModificationsYet = false;
+	}
+
 	$scope.dragControlListeners = {
 	    accept: function (sourceItemHandleScope, destSortableScope) {return true;},
 	    itemMoved: function (event){return true;},
 	    orderChanged: function(event){
-	    	var order = '';
-	    	for(var i in $scope.projects)
-	    		order += ';'+$scope.projects[i].idProj;
-	    	$.post( "ajax.php", {action: "update-order", order: order.substr(1)}).done(function(data) {
-				if(data!=''){
-					$scope.errorSpotted = [true, "La synchronisation a échouée. Message d'erreur : "+data];
-					$scope.$apply();
-				}
-			});
+	    	$scope.isThereAnyModificationsYet = true;
+	    	//sendOrder();
 	    	return true;
 	   	}
 	};

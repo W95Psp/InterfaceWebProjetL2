@@ -42,11 +42,11 @@ LEFT JOIN Enseignent AS ens
         array_push($projects, $row);
     while(count($order)){
         $id = array_shift($order)[0];
-        array_map(function($project){
-            global $id;
-            if($project['idProj']==$id)
-                array_unshift($projects, array_splice($projects, $foundKey, 1)[0]);
-        }, $projects);
+        foreach ($projects as $key => $project)
+            if($project['idProj']==$id){
+                array_unshift($projects, array_splice($projects, $key, 1)[0]);
+                break;
+            }
     }
     define('NUMBER', 0);
     define('STR', 1);

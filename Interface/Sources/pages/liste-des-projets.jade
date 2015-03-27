@@ -1,6 +1,13 @@
 script(src='/scripts/listProjects.js')
 div.page.liste-des-projets(ng-controller='listeProjets')
-	h1 Liste des projets
+	h1
+		:php
+			if(getUserType()==ELEVE && $_SESSION['groupId']){
+		button#save(ng-if='stateConfirm!="already"', ng-click='isThereAnyModificationsYet && sendOrder()', class='{{isThereAnyModificationsYet ? "green" : "disabled"}}')
+			div
+		:php
+			}
+		span Liste des projets
 	:php
 		if(getUserType()==ELEVE && $_SESSION['groupId']){
 			$group = getGroupFromGroupId($_SESSION['groupId']);
@@ -11,7 +18,7 @@ div.page.liste-des-projets(ng-controller='listeProjets')
 			else
 				echo "'no'";
 			echo '">';
-	.here
+	.validationForm
 		div.partValid
 			button.valid(ng-click='stateConfirm = "active"') Valider la candidature
 		div.partConfirm(style='text-align: center;')

@@ -131,6 +131,17 @@
 .body .row .arrow-up img {
   width: 12px;
 }
+#save {
+  margin-right: 10px;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+#save > div {
+  width: 24px;
+  height: 24px;
+  background-image: url("../images/icons/save.png");
+  display: inline-block;
+}
 .page.liste-des-projets {
   position: relative;
 }
@@ -142,34 +153,34 @@
   overflow: hidden;
   height: 64px;
 }
-.page.liste-des-projets .confirmation .here {
+.page.liste-des-projets .confirmation .validationForm {
   transition: top 100ms ease-in-out;
   height: 128px;
   position: relative;
   top: 0px;
 }
-.page.liste-des-projets .confirmation .here .partValid {
+.page.liste-des-projets .confirmation .validationForm .partValid {
   margin-top: 30px;
   margin-left: 140px;
   float: right;
   clear: both;
 }
-.page.liste-des-projets .confirmation .here .partConfirm {
+.page.liste-des-projets .confirmation .validationForm .partConfirm {
   clear: both;
   width: 340px;
   height: 64px;
 }
-.page.liste-des-projets .confirmation .here .partConfirm b {
+.page.liste-des-projets .confirmation .validationForm .partConfirm b {
   font-size: 11px;
   display: block;
   text-align: center;
   margin-bottom: 8px;
 }
-.page.liste-des-projets .confirmation[state="active"] .here {
+.page.liste-des-projets .confirmation[state="active"] .validationForm {
   transition: top 100ms ease-in-out;
   top: -64px;
 }
-.page.liste-des-projets .confirmation[state="already"] .here {
+.page.liste-des-projets .confirmation[state="already"] .validationForm {
   transition: top 100ms ease-in-out;
   top: -128px;
 }
