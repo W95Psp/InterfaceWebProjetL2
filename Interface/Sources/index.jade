@@ -5,6 +5,7 @@
 		include("index.php");
 		exit();
 	}
+	include("php_functions/multi-website-manager.php");
 
 	//Connect to db (variable : $db)
 	include("php_functions/mysql.php");
@@ -36,6 +37,7 @@ html(ng-app='ProjetsL2')
 		//- Load local stuff
 		link(rel="stylesheet", type="text/css", href='style/main.css')
 		:php
+			echo '<link rel="stylesheet" type="text/css" href="style/website-'.$versionWebsite.'.css"/>';
 			if(file_exists('style/'.$page.'.css'))
 				echo '<link rel="stylesheet" type="text/css" href="style/'.$page.'.css"/>';
 			if($route=='details-project')
@@ -84,13 +86,27 @@ html(ng-app='ProjetsL2')
 				.content
 					.left
 						.imageBox
-							img.title(		src='images/head/title.png')
+							:php
+								if($versionWebsite=='L2'){
+							img.title(		src='images/head/title-l2.png')
+							:php
+								}elseif($versionWebsite=='L3'){
+							img.title(		src='images/head/title-l3.png')
+							:php
+								}
 						.menu
 							:php
 								displayPages(0, $page);
 					.right
 						.imageBox
-							img.description(src='images/head/description.png')
+							:php
+								if($versionWebsite=='L2'){
+							img.description(src='images/head/description-l2.png')
+							:php
+								}elseif($versionWebsite=='L3'){
+							img.description(src='images/head/description-l3.png')
+							:php
+								}
 						.menu
 							:php
 								displayPages(1, $page);

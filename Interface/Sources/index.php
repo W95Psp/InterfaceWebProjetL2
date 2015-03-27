@@ -4,6 +4,7 @@
 	include("index.php");
 	exit();
 }
+include("php_functions/multi-website-manager.php");
 
 //Connect to db (variable : $db)
 include("php_functions/mysql.php");
@@ -25,7 +26,8 @@ require("php_functions/projectsToJS.php");
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css"/>
 		<script src="scripts/ng-sortable/ng-sortable.js"></script>
 		<link rel="stylesheet" type="text/css" href="scripts/ng-sortable/ng-sortable.min.css"/>
-		<link rel="stylesheet" type="text/css" href="style/main.css"/><?php if(file_exists('style/'.$page.'.css'))
+		<link rel="stylesheet" type="text/css" href="style/main.css"/><?php echo '<link rel="stylesheet" type="text/css" href="style/website-'.$versionWebsite.'.css"/>';
+if(file_exists('style/'.$page.'.css'))
 	echo '<link rel="stylesheet" type="text/css" href="style/'.$page.'.css"/>';
 if($route=='details-project')
 	echo '<link rel="stylesheet" type="text/css" href="style/details-project.css"/>';
@@ -61,12 +63,14 @@ if($route=='details-project')
 			<div class="ban">
 				<div class="content">
 					<div class="left">
-						<div class="imageBox"><img src="images/head/title.png" class="title"/></div>
+						<div class="imageBox"><?php if($versionWebsite=='L2'){ ?><img src="images/head/title-l2.png" class="title"/><?php }elseif($versionWebsite=='L3'){ ?><img src="images/head/title-l3.png" class="title"/><?php } ?>
+						</div>
 						<div class="menu"><?php displayPages(0, $page); ?>
 						</div>
 					</div>
 					<div class="right">
-						<div class="imageBox"><img src="images/head/description.png" class="description"/></div>
+						<div class="imageBox"><?php if($versionWebsite=='L2'){ ?><img src="images/head/description-l2.png" class="description"/><?php }elseif($versionWebsite=='L3'){ ?><img src="images/head/description-l3.png" class="description"/><?php } ?>
+						</div>
 						<div class="menu"><?php displayPages(1, $page); ?>
 						</div>
 					</div><img src="images/head/logo_UM2.png" class="um2"/>
