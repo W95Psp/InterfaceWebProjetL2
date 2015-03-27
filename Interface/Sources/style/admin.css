@@ -1,0 +1,26 @@
+#dragDropArea {
+  padding: 30px;
+  margin: 20px;
+  border: 2px dashed #ddd;
+  background-color: #eee;
+  border-radius: 12px;
+  font-size: 40px;
+  text-align: center;
+  color: #808080;
+}
+#dragDropArea.hover {
+  background-color: #e2ffd6;
+}
+.part {
+  width: 70%;
+  margin: auto;
+  border-radius: 2px;
+  border: 2px solid #eee;
+  padding: 20px;
+  padding-top: 10px;
+}
+.upImg {
+  position: relative;
+  top: 5px;
+  padding-right: 10px;
+}

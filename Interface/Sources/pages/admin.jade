@@ -31,6 +31,7 @@ style.
 	.panels[state="1"]{left: -760px;	transition: left 400ms ease-out;}
 	.panels[state="2"]{left: -1520px;	transition: left 400ms ease-out;}
 	.panels[state="3"]{left: -2280px;	transition: left 400ms ease-out;}
+	.panels[state="4"]{left: -3040px;	transition: left 400ms ease-out;}
 
 	.panel{
 		float: left;
@@ -44,7 +45,6 @@ link(rel="stylesheet", href="TinyEditor/style.css")
 		file_put_contents('pages/presentation-content.html', $html);
 	}
 	echo '<div class=\'page interface-admin\' ng-controller=\'admin\' ng-init=\'';
-	echo 'pages = ["Encadrants", "Groupes", "Présentation", "Modalité notes"]; currentPage = 0;';
 	if(isset($parseParam[1]) && $parseParam[1]=='presentation')
 		echo 'currentPage = 2;';
 	echo '\'>';
@@ -89,5 +89,38 @@ br
 				button(onclick='editor.post();') Mettre à jour
 		.panel 
 			h2 [Page à inclure ici] ~T4
+		.panel
+			h2 Etudiants
+			p.
+				Chaque année, il est nécéssaire d'alimenter la base de donnée avec une liste des étudiants autorisés à se connecter. De cette façon, seuls les étudiants de L2/L3 qui ont une UE de projet peuvent utiliser le site.
+			p.
+				Importez ici un fichier csv de la liste des étuidants. Le fichier csv peut être sous n'importe quelle forme mais doit rensigner au moins : nom, prénom et email.
+			div.part(ng-show='etudiantsMode==0')
+				h3
+					img.upImg(src='images/icons/upload.png')
+					span Uploadez votre document
+				div
+					b Parcourir : 
+					input(type="file", id="fichier_csv", name="fichier_csv", onchange='importData(this.files)', style='display: block; padding: 10px;')
+				div
+					b ... Ou glissez le directement ici :
+					#dragDropArea Déposer votre CSV ici !
+			div.part(ng-show='etudiantsMode==1')
+				h3
+					img.upImg(src='images/icons/work.png')
+					span Choisir les données à importer
+				div
+					input(type='checkbox')
+					span La première ligne correspond aux titres
+					br
+					span Séparateur : 
+					input(type='text', ng-model='separator')
+				div(style='width: 100%; overflow: auto;')
+
+					table
+						tr(ng-repeat='line in etudiantsData | limitTo:15')
+							td(ng-repeat='columnName in tmp = (line | parseCsv) track by $index')
+								| {{columnName}}
+
 :php
 	echo '</div>';
