@@ -86,6 +86,7 @@ body .page.presentation .text {
   padding-top: 1px;
 }
 button {
+  position: relative;
   color: #000;
   border: 0;
   background-color: #60c7ff;
@@ -133,6 +134,114 @@ button:hover.disabled {
 button:active {
   padding-top: 7px;
   margin-bottom: -1px;
+}
+button:active.disabled {
+  padding-top: 8px;
+  margin-bottom: 0px;
+}
+@-moz-keyframes clickWhenDisabled {
+  0% {
+    top: -20px;
+  }
+  14% {
+    top: 20px;
+  }
+  28% {
+    top: -15px;
+  }
+  42% {
+    top: 15px;
+  }
+  57% {
+    top: -10px;
+  }
+  71% {
+    top: 10px;
+  }
+  85% {
+    top: -5px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+@-webkit-keyframes clickWhenDisabled {
+  0% {
+    top: -20px;
+  }
+  14% {
+    top: 20px;
+  }
+  28% {
+    top: -15px;
+  }
+  42% {
+    top: 15px;
+  }
+  57% {
+    top: -10px;
+  }
+  71% {
+    top: 10px;
+  }
+  85% {
+    top: -5px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+@-o-keyframes clickWhenDisabled {
+  0% {
+    top: -20px;
+  }
+  14% {
+    top: 20px;
+  }
+  28% {
+    top: -15px;
+  }
+  42% {
+    top: 15px;
+  }
+  57% {
+    top: -10px;
+  }
+  71% {
+    top: 10px;
+  }
+  85% {
+    top: -5px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+@keyframes clickWhenDisabled {
+  0% {
+    top: -20px;
+  }
+  14% {
+    top: 20px;
+  }
+  28% {
+    top: -15px;
+  }
+  42% {
+    top: 15px;
+  }
+  57% {
+    top: -10px;
+  }
+  71% {
+    top: 10px;
+  }
+  85% {
+    top: -5px;
+  }
+  100% {
+    top: 0px;
+  }
 }
 #disp-error {
   position: fixed;

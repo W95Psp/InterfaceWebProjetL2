@@ -8,8 +8,8 @@ function dispInside(){
 	echo '">'."\n";
 		echo '<div class="tools" ng-if="uType+(project.idEns==uId)>=3" >'."\n";
 	?>
-			<img src="images/icons/edit.png"/>
-			<img src="images/icons/delete.png"/>
+			<a href='/?liste-des-projets/{{project.idProj | fillZero}}-{{project | getLinkFromTitle}}/edit'><img src="images/icons/edit.png"/></a>
+			<a href='/?liste-des-projets/delete/{{project.idProj}}'><img src="images/icons/delete.png"/></a>
 		<?php  echo '</div>'."\n"; ?>
 		<span ng-if='draggable' class="arrow-up" ng-click='putThisFirst(k);'>
 			<img src="images/icons/arrow-up.png"/>

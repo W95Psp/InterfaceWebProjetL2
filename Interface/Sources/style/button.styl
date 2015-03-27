@@ -1,4 +1,16 @@
+@keyframes clickWhenDisabled {
+    0% {top: -20px}
+    14% {top: 20px}
+    28% {top: -15px}
+    42% {top: 15px}
+    57% {top: -10px}
+    71% {top: 10px}
+    85% {top: -5px}
+    100% {top: 0px}
+}
+
 button
+	position relative
 	color black
 	border 0
 	background-color color1
@@ -38,3 +50,6 @@ button
 	&:active
 		padding-top 7px
 		margin-bottom -1px
+		&.disabled
+			padding-top 8px
+			margin-bottom 0px

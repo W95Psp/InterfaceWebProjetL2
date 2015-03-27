@@ -1,6 +1,6 @@
 
 <script src="/scripts/listProjects.js"></script>
-<div ng-controller="listeProjets" class="page liste-des-projets">
+<div ng-controller="listeProjets" class="page liste-des-projets"><?php include("php_functions/deleteProjet.php"); ?>
 	<h1><?php if(getUserType()==ELEVE && $_SESSION['groupId']){ ?>
 		<button id="save" ng-if="stateConfirm!=&quot;already&quot;" ng-click="isThereAnyModificationsYet &amp;&amp; sendOrder()" class="{{isThereAnyModificationsYet ? &quot;green&quot; : &quot;disabled&quot;}}">
 			<div></div>

@@ -1,5 +1,7 @@
 script(src='/scripts/listProjects.js')
 div.page.liste-des-projets(ng-controller='listeProjets')
+	:php
+		include("php_functions/deleteProjet.php");
 	h1
 		:php
 			if(getUserType()==ELEVE && $_SESSION['groupId']){
