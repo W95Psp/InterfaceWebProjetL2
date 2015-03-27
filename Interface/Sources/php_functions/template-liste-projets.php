@@ -18,7 +18,7 @@ function dispInside(){
 	</div>
 	<div class="teacherColumn">{{project.author}}</div>
 	<div class="langColumn">
-		<img ng-repeat="lang in project.languages" src="images/languages/{{lang}}.svg" class="language"/>
+		<img ng-repeat="lang in project.languages" style='cursor:default;' src="images/languages/{{lang}}.svg" title="{{lang | getDescription}}" class="language"/>
 	</div>
 	<div class="studentsColumn empty">Aucun étudiant pour le moment</div>
 <?php }

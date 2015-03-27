@@ -1,8 +1,26 @@
 var app = angular.module('ProjetsL2', ['ui.sortable']);
 
+var descriptionLanguages = {
+	'any': 			'Tout les languages sont acceptés.',
+	'dot-net': 		'Technologies .net',
+	'html5': 		'Html 5',
+	'java': 		'Java',
+	'javascript': 	'JavaScript',
+	'mysql': 		'MySQL',
+	'nodejs': 		'NodeJS',
+	'php': 			'PHP',
+	'postgresql': 	'PostgreSQL',
+	'python': 		'Python'
+};
+
 app.filter('getLinkFromTitle', function() {
     return function(input) {
         return input.nomProj.replace(/ /g, "-").replace(/[^a-z\-]/gi, "").toLowerCase();
+    }
+});
+app.filter('getDescription', function() {
+    return function(input) {
+        return descriptionLanguages[input] || input;
     }
 });
 app.filter('fillZero', function() {
@@ -43,7 +61,6 @@ app.controller('listeProjets', function($scope, $parse) {
 		'javascript',	'mysql',	'nodejs',	'php',
 		'postgresql',	'python'
 	];
-
 	$scope.confirmChoices = function(){
 		$.post( "ajax.php", {action: "confirm-choices"}).done(function(data) {
 			if(data!=''){
