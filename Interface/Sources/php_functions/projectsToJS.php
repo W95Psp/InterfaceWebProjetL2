@@ -48,21 +48,24 @@ LEFT JOIN Enseignent AS ens
                 array_unshift($projects, array_splice($projects, $foundKey, 1)[0]);
         }, $projects);
     }
-
+    define('NUMBER', 0);
+    define('STR', 1);
+    $keys = array(
+        'idProj'=> NUMBER,  'nomProj'=> STR,    'idEns'=> NUMBER,   'nomEns'=> STR,
+        'prenomEns'=> STR,  'descProj'=> STR,   'lien'=> STR,       'nbMini'=> NUMBER,
+        'nbMax'=> NUMBER,   'nbInscri'=> NUMBER
+    );
     $count = 0;
     foreach ($projects as $key => $project) {
         if($count++!=0)
             $str.= ',';
-        $str.= '{idProj:'.intval($project['idProj']).',';
-        $str.= 'nomProj:"'.addslashes((string)$project['nomProj']).'",';
-        $str.= 'idEns:'.intval($project['idEns']).',';
-        $str.= 'nomEns:"'.addslashes((string)$project['nomEns']).'",';
-        $str.= 'prenomEns:"'.addslashes((string)$project['prenomEns']).'",';
-        $str.= 'descProj:"'.addslashes((string)$project['descProj']).'",';
-        $str.= 'lien:"'.addslashes((string)$project['lien']).'",';
-        $str.= 'nbMini:'.intval($project['nbMini']).',';
-        $str.= 'nbMax:'.intval($project['nbMax']).',';
-        $str.= 'nbInscri:'.intval($project['nbInscri']).'}';
+        $str.= '{';
+        foreach ($keys as $key => $type)
+            if($type==NUMBER)
+                $str.= $key.':'.intval($project[$key]).',';
+            else
+                $str.= $key.':"'.addslashes((string)$project[$key]).'",';
+        $str.= '}';
     }
     return $str.'];</script>';
 }
