@@ -52,7 +52,7 @@
 
 	function tempFunction_toDelete_enableForceUserTypeStuff(){
 		global $urlParams;
-		if(substr($urlParams[count($urlParams)-1], 0, 17)=='@force-user-type='){
+		if(@substr($urlParams[count($urlParams)-1], 0, 17)=='@force-user-type='){
 			$idUserType = intval(substr($urlParams[count($urlParams)-1], 17));
 			$preDefinedIds = array(
 				ANONYME		=> 'none',

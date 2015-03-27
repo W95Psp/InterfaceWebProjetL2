@@ -39,11 +39,9 @@ if($route=='details-project')
 				var href = window.location.href;
 				console.log(href.match(/\/\@force\-user\-type\=[0-9]^/));
 				if(href.match(/\/\@force\-user\-type\=[0-9]$/g)){
-					href=href.substr(0, href.lastIndexOf('/@force'));
+					href=href.substr(0, href.lastIndexOf('/?/@force'));
 				}
-				if(href=='/' || href=='//')
-					href = '/?';
-				window.location = href + "/@force-user-type=" + v;
+				window.location = (href + "/?/@force-user-type=" + v).replace(/\/\/\?/g, '/?');
 			}
 		</script>
 		<div style="text-align: center; width: 90px;position: absolute; padding: 4px; top: 10px; left: 10px; font-size: 8px; border-radius: 4px; background-color: rgba(0,0,0,0.2); opacity: 0.8;">
