@@ -23,7 +23,7 @@
 		</div>
 	</div><?php echo '</div>';
 }
-include('php_functions/projectsList.php');
+include('php_functions/template-liste-projets.php');
 DisplayListProjects(); ?>
 	<div id="disp-error" ng-if="errorSpotted[0]">
 		<div class="content">

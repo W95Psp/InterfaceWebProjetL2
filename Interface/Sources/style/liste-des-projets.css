@@ -1,0 +1,175 @@
+.projectList {
+  border: 1px solid #95a5a6;
+  border-radius: 5px;
+}
+.projectList > .head div img {
+  width: 20px;
+  opacity: 0.6;
+}
+.projectList > .head div span {
+  display: inline-block;
+  position: relative;
+  margin-left: 5px;
+  top: -5px;
+}
+.projectList > .head .row:first-child {
+  background-color: #bdc3c7;
+}
+.projectList > .head .row:first-child div {
+  padding-top: 10px;
+}
+.projectList > .head .row:first-child div {
+  border-right: 1px dotted #95a5a6;
+}
+.projectList > .head .row:first-child div:last-child {
+  border-right: 0px solid #000 !important;
+}
+.projectList > .head .row.search {
+  background-color: #fff;
+}
+.projectList > .head input {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  background-image: url("../images/search.png");
+  background-repeat: no-repeat;
+  background-position: right center;
+  opacity: 0.3;
+  height: 16px;
+  transition: opacity 50ms ease-in;
+}
+.projectList > .head input:hover,
+.projectList > .head input:focus {
+  transition: opacity 100ms ease-out;
+  opacity: 0.8;
+}
+.projectList .noRowToDisplay {
+  text-align: center;
+  color: #ccc;
+  font-style: italic;
+  padding: 20px;
+}
+.row {
+  display: block;
+}
+.row .titleColumn {
+  width: 300px;
+}
+.row .titleColumn a {
+  color: #000;
+  text-decoration: none;
+  transition: text-decoration 100ms linear;
+}
+.row .titleColumn .tools {
+  display: inline-block;
+  height: 40px;
+  width: 22px;
+  float: right;
+}
+.row .titleColumn .tools img {
+  width: 19px;
+  padding-top: 3px;
+  opacity: 0.5;
+}
+.row .titleColumn .tools img:hover {
+  opacity: 1;
+}
+.row .teacherColumn {
+  width: 140px;
+}
+.row .langColumn {
+  width: 140px;
+}
+.row .studentsColumn {
+  width: 120px;
+}
+.row div {
+  padding: 5px;
+  display: table-cell;
+  vertical-align: middle;
+}
+.row img {
+  width: 20px;
+}
+.row:hover a {
+  border-bottom: 1px solid #ddd;
+}
+.row:hover .arrow-up {
+  opacity: 0.8 !important;
+}
+.row[included='false'] .titleColumn {
+  background: none !important;
+}
+.row[included='true'] {
+  transition: background-color 100ms ease-out;
+  background-color: rgba(46,204,113,0.2);
+}
+.row[included='true'] .titleColumn {
+  background-repeat: no-repeat;
+  background-position: -20px center;
+  padding-left: 50px;
+  width: 250px;
+}
+.body .row {
+  color: #000;
+  text-decoration: none;
+  transition: background-color 800ms ease-in;
+  position: relative;
+  border-bottom: 1px dotted #95a5a6;
+}
+.body .row > div {
+  height: 50px;
+}
+.body .row .arrow-up {
+  cursor: hand;
+  transition: opacity 100ms ease-in;
+  opacity: 0.04;
+  position: absolute;
+  left: -15px;
+  top: 28px;
+}
+.body .row .arrow-up img {
+  width: 12px;
+}
+.page.liste-des-projets {
+  position: relative;
+}
+.page.liste-des-projets .confirmation {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  width: 340px;
+  overflow: hidden;
+  height: 64px;
+}
+.page.liste-des-projets .confirmation .here {
+  transition: top 100ms ease-in-out;
+  height: 128px;
+  position: relative;
+  top: 0px;
+}
+.page.liste-des-projets .confirmation .here .partValid {
+  margin-top: 30px;
+  margin-left: 140px;
+  float: right;
+  clear: both;
+}
+.page.liste-des-projets .confirmation .here .partConfirm {
+  clear: both;
+  width: 340px;
+  height: 64px;
+}
+.page.liste-des-projets .confirmation .here .partConfirm b {
+  font-size: 11px;
+  display: block;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.page.liste-des-projets .confirmation[state="active"] .here {
+  transition: top 100ms ease-in-out;
+  top: -64px;
+}
+.page.liste-des-projets .confirmation[state="already"] .here {
+  transition: top 100ms ease-in-out;
+  top: -128px;
+}

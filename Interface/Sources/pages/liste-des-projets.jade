@@ -23,7 +23,7 @@ div.page.liste-des-projets(ng-controller='listeProjets')
 	:php
 		echo '</div>';
 		}
-		include('php_functions/projectsList.php');
+		include('php_functions/template-liste-projets.php');
 		DisplayListProjects();
 	div#disp-error(ng-if='errorSpotted[0]')
 		.content

@@ -48,6 +48,10 @@
 .row
 	display block
 	.titleColumn
+		a
+			color black
+			text-decoration none
+			transition text-decoration 100ms linear
 		.tools
 			display inline-block
 			height 40px
@@ -73,13 +77,13 @@
 	img
 		width 20px
 	&:hover
-		.row
-			border-bottom 1px solid #95a5a6
+		a
+			border-bottom: 1px solid #DDD
 		.arrow-up
-			opacity 0.8!important
+			opacity 0.8 !important
 	&[included='false']
 		.titleColumn
-			background none!important
+			background none !important
 	&[included='true']
 		transition background-color 100ms ease-out
 		background-color alpha(#2ecc71, 20%)

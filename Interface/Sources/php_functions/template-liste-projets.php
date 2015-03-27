@@ -1,36 +1,32 @@
 <?php
 function dispInside(){
-	echo '<div ';
+	echo "\n".'<div ';
 	echo 'style="background-image: url(\'images/icons/order/{{k+(!highlight*100)}}.png\')" ';
 	echo 'class="titleColumn" ng-init="';
 	echo 'uType = '.getUserType().';';
 	echo 'uId = '.getUserId();
-	echo '">';
-	echo '<div class="tools" ng-if="uType+(project.idEns==uId)>=3" >';
+	echo '">'."\n";
+		echo '<div class="tools" ng-if="uType+(project.idEns==uId)>=3" >'."\n";
 	?>
-		<img src="images/icons/edit.png"/>
-		<img src="images/icons/delete.png"/>
-	<?php  echo '</div>'; ?>
-	<span ng-if='draggable' class="arrow-up" ng-click='putThisFirst(k);'>
-		<img src="images/icons/arrow-up.png"/>
-	</span>
-	<span>
-	{{project.nomProj}}
-	</span>
+			<img src="images/icons/edit.png"/>
+			<img src="images/icons/delete.png"/>
+		<?php  echo '</div>'."\n"; ?>
+		<span ng-if='draggable' class="arrow-up" ng-click='putThisFirst(k);'>
+			<img src="images/icons/arrow-up.png"/>
+		</span>
+		<span><a href='/?liste-des-projets/{{project.idProj | fillZero}}-{{project | getLinkFromTitle}}'>{{project.nomProj}}</a></span>
 	</div>
-	<div class="teacherColumn">
-		{{project.author}}
-	</div>
+	<div class="teacherColumn">{{project.author}}</div>
 	<div class="langColumn">
 		<img ng-repeat="lang in project.languages" src="images/languages/{{lang}}.svg" class="language"/>
 	</div>
-	<div class="studentsColumn empty">
-		Aucun étudiant pour le moment
-	</div>
+	<div class="studentsColumn empty">Aucun étudiant pour le moment</div>
 <?php }
 
 
 function DisplayListProjects($filter = 'none'){
+	// dispInside();
+	// die("...");
 	global $db;
 	echo exportProjectsToJS($db, $filter);
 	$draggable = getUserType()==ELEVE || getUserType()==ADMIN;
@@ -96,7 +92,6 @@ function DisplayListProjects($filter = 'none'){
 				</div>
 			</div>
 		</div>
-
 		<div ng-if="!draggable" class="body">
 			<div ng-repeat="(k,project) in projects | filter:search">
 				<div class="row" included="{{highlight && k<nbChoice}}">
@@ -104,7 +99,6 @@ function DisplayListProjects($filter = 'none'){
 				</div>
 			</div>
 		</div>
-		
 		<div ng-repeat="a in filtredProjects = (projects | filter:search)" class="span"></div>
 		<div ng-show="filtredProjects.length==0" class="row noRowToDisplay">Aucun résultat.</div>
 	</div>

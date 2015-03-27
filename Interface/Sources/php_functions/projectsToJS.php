@@ -19,13 +19,8 @@ function getOrderProjects($db){
     return $r;
 }
 
-function sortOrder($a, $b){
-    return $b[1] - $a[1];
-}
-
 function exportProjectsToJS($db, $filter){
-    $str = '<script>';
-    $str.= 'importStuff.projects = [';
+    $str = '<script>importStuff.projects = [';
     $sql = '
 SELECT proj.nomProj, proj.descProj, proj.lien, proj.idProj, proj.nbMini, proj.nbMax, proj.nbInscri, ens.idEns, ens.nomEns, ens.prenomEns
 FROM Projet AS proj
@@ -34,68 +29,41 @@ LEFT JOIN Responsable AS resp
 LEFT JOIN Enseignent AS ens
     ON resp.Enseignant_idEns=ens.idEns
 ';
-    if($filter=='encadrant'){
+    if($filter=='encadrant')
         $sql .= ' WHERE ens.idEns='.getUserId();
-    }
 
     $res = $db->query($sql) or die(mysqli_error($db));
-
-    $start = true;
-
+    
     $order = getOrderProjects($db);
-    usort($order, "sortOrder");
+    usort($order, function($a,$b){return $b[1]-$a[1];});
 
     $projects = array();
-
     while (NULL !== ($row = $res->fetch_array()))
         array_push($projects, $row);
-
     while(count($order)){
         $id = array_shift($order)[0];
-        $foundKey = -1;
-        foreach ($projects as $key => $project) {
-            if($project['idProj']==$id){
-                $foundKey = $key;
-                break;
-            }
-        }
-        if($foundKey!=-1){
-            $found = array_splice($projects, $foundKey, 1);
-            array_unshift($projects, $found[0]);
-        }
+        array_map(function($project){
+            global $id;
+            if($project['idProj']==$id)
+                array_unshift($projects, array_splice($projects, $foundKey, 1)[0]);
+        }, $projects);
     }
 
+    $count = 0;
     foreach ($projects as $key => $project) {
-        $name = '"'.addslashes((string)$project['nomProj']).'"';
-        $desc = '"'.addslashes((string)$project['descProj']).'"';
-        $link = '"'.addslashes((string)$project['lien']).'"';
-        $idEns = intval($project['idEns']);
-        $prenomEns = '"'.addslashes((string)$project['prenomEns']).'"';
-        $nomEns = '"'.addslashes((string)$project['nomEns']).'"';
-        $idProj = intval($project['idProj']);
-        $nbMini = intval($project['nbMini']);
-        $nbMax = intval($project['nbMax']);
-        $nbInscrits = intval($project['nbInscri']);
-
-        if($start)
-            $start = false;
-        else
+        if($count++!=0)
             $str.= ',';
-        $str.= '{idProj:'.$idProj.',';
-        $str.= 'nomProj:'.$name.',';
-        $str.= 'idEns:'.$idEns.',';
-        $str.= 'nomEns:'.$nomEns.',';
-        $str.= 'prenomEns:'.$prenomEns.',';
-        $str.= 'descProj:'.$desc.',';
-        $str.= 'lien:'.$link.',';
-        $str.= 'nbMini:'.$nbMini.',';
-        $str.= 'nbMax:'.$nbMax.',';
-        $str.= 'nbInscri:'.$nbInscrits.'}';
+        $str.= '{idProj:'.intval($project['idProj']).',';
+        $str.= 'nomProj:"'.addslashes((string)$project['nomProj']).'",';
+        $str.= 'idEns:'.intval($project['idEns']).',';
+        $str.= 'nomEns:"'.addslashes((string)$project['nomEns']).'",';
+        $str.= 'prenomEns:"'.addslashes((string)$project['prenomEns']).'",';
+        $str.= 'descProj:"'.addslashes((string)$project['descProj']).'",';
+        $str.= 'lien:"'.addslashes((string)$project['lien']).'",';
+        $str.= 'nbMini:'.intval($project['nbMini']).',';
+        $str.= 'nbMax:'.intval($project['nbMax']).',';
+        $str.= 'nbInscri:'.intval($project['nbInscri']).'}';
     }
-
-    $str.= '];';
-    $str.= '</script>';
-
-    return $str;
+    return $str.'];</script>';
 }
 ?>

@@ -47,13 +47,13 @@
 	}
 
 	function getUserId(){
-		return $_SESSION["userId"];
+		return @$_SESSION["userId"] || -1;
 	}
 
 	function tempFunction_toDelete_enableForceUserTypeStuff(){
-		global $parseParam;
-		if(substr($parseParam[count($parseParam)-1], 0, 17)=='@force-user-type='){
-			$idUserType = intval(substr($parseParam[count($parseParam)-1], 17));
+		global $urlParams;
+		if(substr($urlParams[count($urlParams)-1], 0, 17)=='@force-user-type='){
+			$idUserType = intval(substr($urlParams[count($urlParams)-1], 17));
 			$preDefinedIds = array(
 				ANONYME		=> 'none',
 				ELEVE		=> 2065, 

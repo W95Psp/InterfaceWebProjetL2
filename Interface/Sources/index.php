@@ -1,4 +1,9 @@
-<?php system("node jade.js");
+<?php if(!@$hadRunNodeAlready){
+	system("node jade.js");
+	$hadRunNodeAlready = true;
+	include("index.php");
+	exit();
+}
 
 //Connect to db (variable : $db)
 include("php_functions/mysql.php");
@@ -20,7 +25,11 @@ require("php_functions/projectsToJS.php");
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css"/>
 		<script src="scripts/ng-sortable/ng-sortable.js"></script>
 		<link rel="stylesheet" type="text/css" href="scripts/ng-sortable/ng-sortable.min.css"/>
-		<link rel="stylesheet" type="text/css" href="style/main.css"/><!--[if lt IE 9]>
+		<link rel="stylesheet" type="text/css" href="style/main.css"/><?php if(file_exists('style/'.$page.'.css'))
+	echo '<link rel="stylesheet" type="text/css" href="style/'.$page.'.css"/>';
+if($route=='details-project')
+	echo '<link rel="stylesheet" type="text/css" href="style/details-project.css"/>';
+ ?><!--[if lt IE 9]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 	</head>
@@ -32,6 +41,8 @@ require("php_functions/projectsToJS.php");
 				if(href.match(/\/\@force\-user\-type\=[0-9]$/g)){
 					href=href.substr(0, href.lastIndexOf('/@force'));
 				}
+				if(href=='/' || href=='//')
+					href = '/?';
 				window.location = href + "/@force-user-type=" + v;
 			}
 		</script>
@@ -67,10 +78,9 @@ require("php_functions/projectsToJS.php");
 //  if url is like "/page/numeric-id-of-4-characters"
 //  else
 
-if(isset($parseParam[0]) && isset($parseParam[1]) &&
-	$parseParam[0]=="liste-des-projets" && is_numeric(substr($parseParam[1], 0, 4))
-){
-	$idProject = intval(substr($parseParam[1], 0, 4));
+
+if($route=='details-project'){
+	$idProject = intval(substr($urlParams[1], 0, 4));
 	include('pages/details-project.php');
 }else
 	include('pages/'.$page.'.php');
