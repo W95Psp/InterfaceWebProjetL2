@@ -1,4 +1,8 @@
-<?php if(count($urlParams)>2 && $urlParams[1]=='etudiants' && $urlParams[2]=='import' && isset($_POST['Data'])){
+<?php if($urlParams[1]=='deleteNewEtudiants'){// A supprimer, c'est juste pour les tests
+	$db->query('DELETE FROM Etudiant WHERE `telEtu` IS NULL;ALTER TABLE Etudiant AUTO_INCREMENT = 1;');
+	die('DONE.');
+}
+if(count($urlParams)>2 && $urlParams[1]=='etudiants' && $urlParams[2]=='import' && isset($_POST['Data'])){
 	$Data = json_decode($_POST['Data']);
 	$str = "INSERT INTO Etudiant (nomEtu, prenomEtu, emailEtu) VALUES";
 	$first = true;
@@ -12,8 +16,8 @@
 		$str.=')';
 		$first = false;
 	}
-	echo $str;
-	$db->query($str.';'); ?>Import effectué.<?php }else{ ?>
+	$db->query($str.';'); ?>
+<div style="text-align: center; padding: 40px;">Import effectué</div><?php }else{ ?>
 <script src="/scripts/admin.js"></script>
 <style>
 	h1{
