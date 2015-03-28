@@ -13,7 +13,63 @@ app.controller('admin', function($scope, $parse) {
 	$scope.pages = ["Encadrants", "Groupes", "Présentation", "Modalité notes", "Etudiants"];
 	$scope.currentPage = 4;
 	$scope.etudiantsData = '';
+	$scope.etudiantsDataFinal = [];
 	$scope.separator = 'none';
+	$scope.firstLineHeader = true;
+	$scope.columnsOptions = ['Ignorer', 'Mail', 'Nom', 'Prenom'];
+	$scope.columns = {};
+	for(var i=0; i<30; i++)
+		$scope.columns[i] = $scope.columnsOptions[0];
+	$scope.columnsOptions_sum = {};
+	$scope.twoSameInfo = false;
+	$scope.twoSameInfoDetails = [];
+	$scope.completed = false;
+	$scope.filterEtDatFin = {};
+	for(var i=1; i<$scope.columnsOptions.length; i++)
+		$scope.filterEtDatFin[$scope.columnsOptions[i]] = '';
+
+	function lookFor(arr, opt){
+		for(var i in arr)
+			if(arr[i]==opt)
+				return i;
+		return -1;
+	}
+
+	$scope.convertCSV = function(){
+		if($scope.firstLineHeader)
+			$scope.etudiantsData.shift();
+		var indexes = {};
+		for(var j=1; j<$scope.columnsOptions.length; j++)
+			indexes[$scope.columnsOptions[j]] = lookFor($scope.columns, $scope.columnsOptions[j]);
+		for(var i in $scope.etudiantsData){
+			var o = $scope.etudiantsData[i].split($scope.separator);
+			var d = {};
+			for(var j in indexes)
+				d[j] = o[indexes[j]];
+			$scope.etudiantsDataFinal.push(d);
+		}
+		$scope.etudiantsMode=2;
+	};
+
+	$scope.$watch('columns', function(newVal){
+		for(var i in $scope.columnsOptions)
+			$scope.columnsOptions_sum[$scope.columnsOptions[i]] = 0;
+		for(var i in newVal)
+			$scope.columnsOptions_sum[newVal[i]] += 1;
+		$scope.columnsOptions_sum['Ignorer'] = 0;
+		$scope.twoSameInfo = false;
+		while($scope.twoSameInfoDetails.length)
+			$scope.twoSameInfoDetails.pop();
+		var numberValid = 0;
+		for(var i in $scope.columnsOptions_sum)
+			if($scope.columnsOptions_sum[i]>1){
+				$scope.twoSameInfoDetails.push(i);
+				$scope.twoSameInfo = true;
+			}else if($scope.columnsOptions_sum[i]==1){
+				numberValid++;
+			}
+		$scope.completed = numberValid==$scope.columnsOptions.length-1;
+	}, true);
 });
 
 function tryToFindSeparator(){

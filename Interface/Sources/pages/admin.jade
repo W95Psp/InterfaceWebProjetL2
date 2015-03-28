@@ -105,22 +105,56 @@ br
 				div
 					b ... Ou glissez le directement ici :
 					#dragDropArea Déposer votre CSV ici !
-			div.part(ng-show='etudiantsMode==1')
+			div.part(ng-show='etudiantsMode==1', style='width: 90% !important;')
 				h3
 					img.upImg(src='images/icons/work.png')
 					span Choisir les données à importer
+					button(class='{{(completed ? "green" : "disabled")}}', style='float: right;', ng-click='completed && convertCSV()') Importer {{etudiantsData.length}} données
 				div
-					input(type='checkbox')
-					span La première ligne correspond aux titres
+					input(type='checkbox', ng-model='firstLineHeader')
+					span La première ligne du fichier est une entête
 					br
 					span Séparateur : 
 					input(type='text', ng-model='separator')
+				div.errTwoSameInfo(ng-if='twoSameInfo')
+					span.title Erreur : 
+					span Plusieurs colonnes ont le même rôle (
+					span.detail(ng-repeat='det in twoSameInfoDetails') {{det}}
+					span ). Une seule colonne peut correspondre à une seule information.
 				div(style='width: 100%; overflow: auto;')
-
-					table
-						tr(ng-repeat='line in etudiantsData | limitTo:15')
-							td(ng-repeat='columnName in tmp = (line | parseCsv) track by $index')
+					table.preview
+						tr(ng-if='etudiantsData.length>0', firstLine='true')
+							td(ng-repeat='(k, columnName) in tmp = (etudiantsData[0] | parseCsv) track by $index')
+								span(ng-show='!firstLineHeader') Col. n°{{k+1}}
+								span(ng-show='firstLineHeader') {{columnName}}
+								br
+								select(ng-model="columns[k]", ng-options="o as o for o in columnsOptions")
+						tr(ng-repeat='(k, line) in etudiantsData | limitTo:15', ng-hide='firstLineHeader && k==0')
+							td(ng-repeat='(k, columnName) in tmp = (line | parseCsv) track by $index')
 								| {{columnName}}
+			div.part(ng-show='etudiantsMode==2', style='width: 90% !important;')
+				h3 Résumé des données à importer
+				p.
+					Voilà les données que vous êtes sur le point d'importer. Vous pouvez parcourir le contenu à l'aide des filtres. Les filtres ne sont là que pour la visualisation, toutes les données seront au final importées.
+				p.
+					Seuls les premiers résultats sont affichés, pour ne pas surcharger votre navigateur.
+				table.sumup
+					tr
+						td(ng-repeat='col in columnsOptions')
+							span(ng-if='col==columnsOptions[0]')
+								| #
+							span(ng-if='col!=columnsOptions[0]')
+								| {{col}}
+					tr
+						td(ng-repeat='col in columnsOptions')
+							input(ng-if='col!=columnsOptions[0]', ng-model='filterEtDatFin[col]', type='text')
+					tr(ng-repeat='(k,line) in etudiantsDataFinal | filter:filterEtDatFin | limitTo:20')
+						td(ng-repeat='col in columnsOptions')
+							span(ng-if='col==columnsOptions[0]')
+								| {{k}}
+							span(ng-if='col!=columnsOptions[0]')
+								| {{line[col]}}
+				div(style='text-align: center;') ({{etudiantsDataFinal.length-20}} étudiants ne sont pas affichés)
 
 :php
 	echo '</div>';
