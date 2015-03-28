@@ -47,7 +47,8 @@
 	}
 
 	function getUserId(){
-		return @$_SESSION["userId"];
+		//userId ne peut pas être nul
+		return (isset($_SESSION["userId"]) && $_SESSION["userId"]) ? $_SESSION["userId"] : -1;
 	}
 
 	function tempFunction_toDelete_enableForceUserTypeStuff(){
