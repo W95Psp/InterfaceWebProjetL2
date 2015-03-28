@@ -99,6 +99,7 @@ br
 				h3
 					img.upImg(src='images/icons/upload.png')
 					span Uploadez votre document
+					a(href='sample_data_to_delete.csv', style='font-size: 9px; padding-left: 10px;') [Télécharger un sample pour essayer]
 				div
 					b Parcourir : 
 					input(type="file", id="fichier_csv", name="fichier_csv", onchange='importData(this.files)', style='display: block; padding: 10px;')
@@ -109,7 +110,7 @@ br
 				h3
 					img.upImg(src='images/icons/work.png')
 					span Choisir les données à importer
-					button(class='{{(completed ? "green" : "disabled")}}', style='float: right;', ng-click='completed && convertCSV()') Importer {{etudiantsData.length}} données
+					button(class='{{(completed ? "green" : "disabled")}}', style='float: right;', ng-click='completed && convertCSV()') Importer {{etudiantsData.length-firstLineHeader}} données
 				div
 					input(type='checkbox', ng-model='firstLineHeader')
 					span La première ligne du fichier est une entête
@@ -133,7 +134,12 @@ br
 							td(ng-repeat='(k, columnName) in tmp = (line | parseCsv) track by $index')
 								| {{columnName}}
 			div.part(ng-show='etudiantsMode==2', style='width: 90% !important;')
-				h3 Résumé des données à importer
+				h3
+					span Résumé des données à importer
+					a(href='/?admin/etudiants')
+						button(class='green', style='float: right;') Annuler
+					a(href='#not-available-yet', onclick='alert("not-available-yet");')
+						button(class='red', style='float: right; margin-right: 18px;') Confirmer
 				p.
 					Voilà les données que vous êtes sur le point d'importer. Vous pouvez parcourir le contenu à l'aide des filtres. Les filtres ne sont là que pour la visualisation, toutes les données seront au final importées.
 				p.

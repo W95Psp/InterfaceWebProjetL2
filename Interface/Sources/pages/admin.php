@@ -98,7 +98,7 @@ echo '\'>';
 			<p>Chaque année, il est nécéssaire d'alimenter la base de donnée avec une liste des étudiants autorisés à se connecter. De cette façon, seuls les étudiants de L2/L3 qui ont une UE de projet peuvent utiliser le site.</p>
 			<p>Importez ici un fichier csv de la liste des étuidants. Le fichier csv peut être sous n'importe quelle forme mais doit rensigner au moins : nom, prénom et email.</p>
 			<div ng-show="etudiantsMode==0" class="part">
-				<h3><img src="images/icons/upload.png" class="upImg"/><span>Uploadez votre document</span></h3>
+				<h3><img src="images/icons/upload.png" class="upImg"/><span>Uploadez votre document</span><a href="sample_data_to_delete.csv" style="font-size: 9px; padding-left: 10px;">[Télécharger un sample pour essayer]</a></h3>
 				<div><b>Parcourir : </b>
 					<input type="file" id="fichier_csv" name="fichier_csv" onchange="importData(this.files)" style="display: block; padding: 10px;"/>
 				</div>
@@ -108,7 +108,7 @@ echo '\'>';
 			</div>
 			<div ng-show="etudiantsMode==1" style="width: 90% !important;" class="part">
 				<h3><img src="images/icons/work.png" class="upImg"/><span>Choisir les données à importer</span>
-					<button style="float: right;" ng-click="completed &amp;&amp; convertCSV()" class="{{(completed ? &quot;green&quot; : &quot;disabled&quot;)}}">Importer {{etudiantsData.length}} données</button>
+					<button style="float: right;" ng-click="completed &amp;&amp; convertCSV()" class="{{(completed ? &quot;green&quot; : &quot;disabled&quot;)}}">Importer {{etudiantsData.length-firstLineHeader}} données</button>
 				</h3>
 				<div>
 					<input type="checkbox" ng-model="firstLineHeader"/><span>La première ligne du fichier est une entête</span><br/><span>Séparateur : </span>
@@ -129,7 +129,9 @@ echo '\'>';
 				</div>
 			</div>
 			<div ng-show="etudiantsMode==2" style="width: 90% !important;" class="part">
-				<h3>Résumé des données à importer</h3>
+				<h3><span>Résumé des données à importer</span><a href="/?admin/etudiants">
+						<button style="float: right;" class="green">Annuler</button></a><a href="#not-available-yet" onclick="alert(&quot;not-available-yet&quot;);">
+						<button style="float: right; margin-right: 18px;" class="red">Confirmer</button></a></h3>
 				<p>Voilà les données que vous êtes sur le point d'importer. Vous pouvez parcourir le contenu à l'aide des filtres. Les filtres ne sont là que pour la visualisation, toutes les données seront au final importées.</p>
 				<p>Seuls les premiers résultats sont affichés, pour ne pas surcharger votre navigateur.</p>
 				<table class="sumup">
