@@ -1,4 +1,4 @@
-<?php if($urlParams[1]=='deleteNewEtudiants'){// A supprimer, c'est juste pour les tests
+<?php if(@$urlParams[1]=='deleteNewEtudiants'){// A supprimer, c'est juste pour les tests
 	$db->query('DELETE FROM Etudiant WHERE `telEtu` IS NULL;ALTER TABLE Etudiant AUTO_INCREMENT = 1;');
 	die('DONE.');
 }
