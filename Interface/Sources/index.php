@@ -19,8 +19,7 @@ include("php_functions/page_manager.php");
 require("php_functions/projectsToJS.php");
  ?>
 <html ng-app="ProjetsL2">
-	<head>
-		<title>Projets L2</title>
+	<head><?php echo '<title>Projets '.$versionWebsite.'</title>'; ?>
 		<meta charset="UTF-8"/>
 		<script src="http://cdn.jsdelivr.net/g/jquery@1,jquery.ui@1.10%28jquery.ui.core.min.js+jquery.ui.widget.min.js+jquery.ui.mouse.min.js+jquery.ui.sortable.min.js%29,angularjs@1.2,angular.ui-sortable"></script>
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css"/>
