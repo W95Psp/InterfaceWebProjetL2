@@ -1,3 +1,26 @@
+:php
+	if($urlParams[1]=='deleteNewEtudiants'){// A supprimer, c'est juste pour les tests
+		$db->query('DELETE FROM Etudiant WHERE `telEtu` IS NULL;ALTER TABLE Etudiant AUTO_INCREMENT = 1;');
+		die('DONE.');
+	}
+	if(count($urlParams)>2 && $urlParams[1]=='etudiants' && $urlParams[2]=='import' && isset($_POST['Data'])){
+		$Data = json_decode($_POST['Data']);
+		$str = "INSERT INTO Etudiant (nomEtu, prenomEtu, emailEtu) VALUES";
+		$first = true;
+		foreach($Data as $line){
+			if(!$first)
+				$str.=',';
+			$str.='(';
+			$str.='"'.$line[0].'",';
+			$str.='"'.$line[1].'",';
+			$str.='"'.$line[2].'"';
+			$str.=')';
+			$first = false;
+		}
+		$db->query($str.';');
+| Import effectué.
+:php
+	}else{
 script(src='/scripts/admin.js')
 style.
 	h1{
@@ -138,8 +161,9 @@ br
 					span Résumé des données à importer
 					a(href='/?admin/etudiants')
 						button(class='green', style='float: right;') Annuler
-					a(href='#not-available-yet', onclick='alert("not-available-yet");')
-						button(class='red', style='float: right; margin-right: 18px;') Confirmer
+					form(style='display: inline;', method='POST', action='/?admin/etudiants/import')
+						input(type='hidden', name='Data', value='')
+						button(class='red', onclick='confirmAndSent(this)', style='float: right; margin-right: 18px;') Confirmer
 				p.
 					Voilà les données que vous êtes sur le point d'importer. Vous pouvez parcourir le contenu à l'aide des filtres. Les filtres ne sont là que pour la visualisation, toutes les données seront au final importées.
 				p.
@@ -161,6 +185,6 @@ br
 							span(ng-if='col!=columnsOptions[0]')
 								| {{line[col]}}
 				div(style='text-align: center;') ({{etudiantsDataFinal.length-20}} étudiants ne sont pas affichés)
-
 :php
 	echo '</div>';
+	}

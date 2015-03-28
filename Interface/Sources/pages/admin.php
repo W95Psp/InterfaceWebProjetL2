@@ -1,4 +1,19 @@
-
+<?php if(count($urlParams)>2 && $urlParams[1]=='etudiants' && $urlParams[2]=='import' && isset($_POST['Data'])){
+	$Data = json_decode($_POST['Data']);
+	$str = "INSERT INTO Etudiant (nomEtu, prenomEtu, emailEtu) VALUES";
+	$first = true;
+	foreach($Data as $line){
+		if(!$first)
+			$str.=',';
+		$str.='(';
+		$str.='"'.$line[0].'",';
+		$str.='"'.$line[1].'",';
+		$str.='"'.$line[2].'"';
+		$str.=')';
+		$first = false;
+	}
+	echo $str;
+	$db->query($str.';'); ?>Import effectué.<?php }else{ ?>
 <script src="/scripts/admin.js"></script>
 <style>
 	h1{
@@ -130,8 +145,12 @@ echo '\'>';
 			</div>
 			<div ng-show="etudiantsMode==2" style="width: 90% !important;" class="part">
 				<h3><span>Résumé des données à importer</span><a href="/?admin/etudiants">
-						<button style="float: right;" class="green">Annuler</button></a><a href="#not-available-yet" onclick="alert(&quot;not-available-yet&quot;);">
-						<button style="float: right; margin-right: 18px;" class="red">Confirmer</button></a></h3>
+						<button style="float: right;" class="green">Annuler</button></a>
+					<form style="display: inline;" method="POST" action="/?admin/etudiants/import">
+						<input type="hidden" name="Data" value=""/>
+						<button onclick="confirmAndSent(this)" style="float: right; margin-right: 18px;" class="red">Confirmer</button>
+					</form>
+				</h3>
 				<p>Voilà les données que vous êtes sur le point d'importer. Vous pouvez parcourir le contenu à l'aide des filtres. Les filtres ne sont là que pour la visualisation, toutes les données seront au final importées.</p>
 				<p>Seuls les premiers résultats sont affichés, pour ne pas surcharger votre navigateur.</p>
 				<table class="sumup">
@@ -151,4 +170,5 @@ echo '\'>';
 			</div>
 		</div>
 	</div>
-</div><?php echo '</div>'; ?>
+</div><?php echo '</div>';
+} ?>

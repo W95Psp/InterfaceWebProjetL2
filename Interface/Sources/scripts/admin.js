@@ -72,6 +72,15 @@ app.controller('admin', function($scope, $parse) {
 	}, true);
 });
 
+function confirmAndSent(o){
+	var obj = SC.etudiantsDataFinal;
+	var data = [];
+	for(var i in obj)
+		data.push([obj[i].Nom, obj[i].Prenom, obj[i].Mail]);
+	o.parentElement.getElementsByTagName('input')[0].value = JSON.stringify(data);
+	o.parentElement.submit();
+}
+
 function tryToFindSeparator(){
 	var numberOf_total = {'|': 0, ':': 0, ',': 0, ';': 0, '\t': 0};
 
