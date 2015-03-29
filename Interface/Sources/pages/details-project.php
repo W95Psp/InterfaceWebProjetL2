@@ -4,14 +4,23 @@
 		width: 20px;
 	}
 </style>
-<div ng-init="project = 0" class="page details-project"><?php echo '<span ng-init="project=projects[';
-echo $idProject;
-echo ']"></span>'; ?>
-	<h1>{{project.title}}</h1>
-	<div class="author">{{project.author}}</div>
-	<h2 class="h2Lang">Langages authorisés</h2>
-	<div class="languages"><a ng-repeat="lang in project.languages" target="_blank" href="http://fr.wikipedia.org/wiki/{{lang}}" class="lang"><img src="images/languages/{{lang}}.svg"/><span>{{lang}}</span></a></div>
-	<h2 class="h2Desc">Description</h2>Lorem ipsum Magna amet veniam est labore ut aliqua nostrud eu culpa aliqua voluptate in ut quis esse mollit Ut pariatur fugiat.<br/><br/>
-	<h2 class="h2Complete">Descriptif complet</h2><a href="/?liste-des-projets/{{project.id | fillZero}}-{{project | getLinkFromTitle}}/download-pdf">Télécharger en PDF</a>
-	<h2 class="h2Contact">Contact</h2><a href="mailto:example@example.ext">Envoyer un e-mail</a>
+<div ng-init="project = 0" class="page details-project">
+	<?php
+	$sql = "SELECT * FROM Projet WHERE idProj=" . $idProject;
+	$result = $db->query($sql);
+	$donnee = $result->fetch_array();
+	echo "<h1>" . $donnee['nomProj'] . "</h1>";
+	echo "<h2>Description du projet</h2>";
+	echo $donnee['descProj'];
+	echo "<h2>Pre Projet</h2>";
+	echo $donnee['preProj'];
+	echo "<h2>Document du projet</h2>";
+	echo "<p><a href='" . $donnee['lien'] . "' target='_blank'>Télécharger le sujet en PDF</a>";
+	echo "<h2>Responsable du projet</h2>";
+	$sql = "SELECT Enseignant.idEns AS idEns, Enseignant.prenomEns AS prenomEns, Enseignant.nomEns AS nomEns, Enseignant.emailEns AS emailEns FROM Enseignant,Responsable WHERE Responsable.EnseignantidEns=Enseignant.idEns AND Responsable.ProjetL2idPro=" . $idProject;
+	$res = $db->query($sql);
+	while ($don = $res->fetch_array()) {
+		echo $don['prenomEns']." ".strtoupper($don['nomEns'])." (<a href='mailto:".$don['emailEns']."'>".$don['emailEns']."</a>)<br>";
+	}
+	?>
 </div>
