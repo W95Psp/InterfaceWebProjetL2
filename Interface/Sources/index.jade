@@ -35,7 +35,7 @@ html(ng-app='ProjetsL2')
 		script(src='scripts/ng-sortable/ng-sortable.js')
 		link(rel="stylesheet" type="text/css" href="scripts/ng-sortable/ng-sortable.min.css")
 
-		//- Load local stuff
+		//- Load local stuff according to the current page
 		link(rel="stylesheet", type="text/css", href='style/main.css')
 		:php
 			echo '<link rel="stylesheet" type="text/css" href="style/website-'.$versionWebsite.'.css"/>';
@@ -48,6 +48,7 @@ html(ng-app='ProjetsL2')
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 	body
+		//<start stuff to delete>
 		script.
 			function loadThisUserProfile(v){	//To delete, when login (CAS) will be ok
 				var href = window.location.href;
@@ -82,6 +83,8 @@ html(ng-app='ProjetsL2')
 				| > Administrateur</option>
 			div(style='font-size: 7px;')
 				[Module temporaire pour essayer différents profils utilisateur]
+		//<end stuff to delete>
+
 		header
 			.ban
 				.content

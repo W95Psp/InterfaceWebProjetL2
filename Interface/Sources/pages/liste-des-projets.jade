@@ -1,6 +1,10 @@
+//On charge le script client qui gère la liste des projets
 script(src='/scripts/listProjects.js')
+
+//On déclare un contrôleur AngularJS
 div.page.liste-des-projets(ng-controller='listeProjets')
 	:php
+		//Inclusion du système de suppression de page
 		include("php_functions/deleteProjet.php");
 	h1
 		:php
@@ -20,6 +24,7 @@ div.page.liste-des-projets(ng-controller='listeProjets')
 			else
 				echo "'no'";
 			echo '">';
+	//Formulaire de validation en haut à droite de la page
 	.validationForm
 		div.partValid
 			button.valid(ng-click='stateConfirm = "active"') Valider la candidature
@@ -34,6 +39,8 @@ div.page.liste-des-projets(ng-controller='listeProjets')
 		}
 		include('php_functions/template-liste-projets.php');
 		DisplayListProjects();
+
+	//Affichage des erreurs (ne devrait jamais se produire)
 	div#disp-error(ng-if='errorSpotted[0]')
 		.content
 			.title Erreur !
