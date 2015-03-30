@@ -35,6 +35,7 @@ if($route=='details-project')
 		<![endif]-->
 	</head>
 	<body>
+		<!--<start stuff to delete>-->
 		<script>
 			function loadThisUserProfile(v){	//To delete, when login (CAS) will be ok
 				var href = window.location.href;
@@ -58,6 +59,7 @@ if($route=='details-project')
 			</select>
 			<div style="font-size: 7px;">[Module temporaire pour essayer différents profils utilisateur]</div>
 		</div>
+		<!--<end stuff to delete>-->
 		<header>
 			<div class="ban">
 				<div class="content">

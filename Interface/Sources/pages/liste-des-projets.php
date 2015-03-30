@@ -1,6 +1,9 @@
 
+<!--On charge le script client qui gère la liste des projets-->
 <script src="/scripts/listProjects.js"></script>
-<div ng-controller="listeProjets" class="page liste-des-projets"><?php include("php_functions/deleteProjet.php"); ?>
+<!--On déclare un contrôleur AngularJS-->
+<div ng-controller="listeProjets" class="page liste-des-projets"><?php //Inclusion du système de suppression de page
+include("php_functions/deleteProjet.php"); ?>
 	<h1><?php if(getUserType()==ELEVE && $_SESSION['groupId']){ ?>
 		<button id="save" ng-if="stateConfirm!=&quot;already&quot;" ng-click="isThereAnyModificationsYet &amp;&amp; sendOrder()" class="{{isThereAnyModificationsYet ? &quot;green&quot; : &quot;disabled&quot;}}">
 			<div></div>
@@ -14,6 +17,7 @@
 	else
 		echo "'no'";
 	echo '">'; ?>
+	<!--Formulaire de validation en haut à droite de la page-->
 	<div class="validationForm">
 		<div class="partValid">
 			<button ng-click="stateConfirm = &quot;active&quot;" class="valid">Valider la candidature</button>
@@ -28,7 +32,9 @@
 	</div><?php echo '</div>';
 }
 include('php_functions/template-liste-projets.php');
-DisplayListProjects(); ?>
+DisplayListProjects();
+ ?>
+	<!--Affichage des erreurs (ne devrait jamais se produire)-->
 	<div id="disp-error" ng-if="errorSpotted[0]">
 		<div class="content">
 			<div class="title">Erreur !</div><span>{{errorSpotted[1]}}</span>

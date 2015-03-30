@@ -17,6 +17,8 @@ var descriptionLanguages = {
 //Formate le title d'un projet en vue d'être passé en paramètre
 app.filter('getLinkFromTitle', function() {
     return function(input) {
+    	//Tous les caractère spéciaux (autre que des lettres non accentuées en fait) sont supprimé
+    	//	tandis que les espaces sont replacés par des tirets.
         return input.nomProj.replace(/ /g, "-").replace(/[^a-z\-]/gi, "").toLowerCase();
     }
 });
@@ -24,6 +26,7 @@ app.filter('getLinkFromTitle', function() {
 //Remplace le nom "brutal" d'un langage par une description, pour le tooltip
 app.filter('getDescription', function() {
     return function(input) {
+    	//Si le langage n'a pas de description, alors on renvoie simplement son nom "brutal"
         return descriptionLanguages[input] || input;
     }
 });
@@ -138,6 +141,7 @@ app.controller('listeProjets', function($scope, $parse) {
 	   	}
 	};
 
+	//Action pour la petite flèche à droite
 	$scope.putThisFirst = function(position){	//Quand l'ordre des projets a été modifié par l'utilisateur
 		var elem = $scope.projects.splice(position, 1)[0];
 		$scope.isThereAnyModificationsYet = true;
