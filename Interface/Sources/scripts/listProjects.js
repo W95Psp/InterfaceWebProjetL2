@@ -31,8 +31,7 @@ app.filter('getDescription', function() {
     }
 });
 
-//Pour constituer l'ID d'un projet
-//(Attention: on admet qu'il n'y aura jamais plus de 999 projets)
+//Formatte l'ID pour que ce soit plus joli
 app.filter('fillZero', function() {
     return function(r) {
         r = r+'';

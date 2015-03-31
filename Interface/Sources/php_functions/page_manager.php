@@ -38,8 +38,11 @@
 		}
 	}
 
-	if(isset($urlParams[0]) && isset($urlParams[1]) && $urlParams[0]=="liste-des-projets" && is_numeric(substr($urlParams[1], 0, 4)))
-		$route = 'details-project';
-	else
-		$route = 'normal';
+	$route = 'normal';
+	if(isset($urlParams[0]) && isset($urlParams[1]) && $urlParams[0]=="liste-des-projets" && is_numeric(substr($urlParams[1], 0, 4))){
+		if(preg_match_all('/^([0-9]+)\-.*/', $urlParams[1], $r)){
+			$idProject = +$r[1][0];
+			$route = 'details-project';
+		}
+	}
 ?>

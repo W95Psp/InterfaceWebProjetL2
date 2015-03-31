@@ -83,7 +83,6 @@ if($route=='details-project')
 
 
 if($route=='details-project'){
-	$idProject = intval(substr($urlParams[1], 0, 4));
 	include('pages/details-project.php');
 }else
 	include('pages/'.$page.'.php');
