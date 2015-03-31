@@ -39,7 +39,7 @@
 	}
 
 	$route = 'normal';
-	if(isset($urlParams[0]) && isset($urlParams[1]) && $urlParams[0]=="liste-des-projets" && is_numeric(substr($urlParams[1], 0, 4))){
+	if(isset($urlParams[0]) && isset($urlParams[1]) && $urlParams[0]=="liste-des-projets"){
 		if(preg_match_all('/^([0-9]+)\-.*/', $urlParams[1], $r)){
 			$idProject = +$r[1][0];
 			$route = 'details-project';
