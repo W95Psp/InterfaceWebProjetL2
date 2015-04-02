@@ -22,12 +22,18 @@ function getOrderProjects($db){
 function exportProjectsToJS($db, $filter){
     $str = '<script>importStuff.projects = [';
     $sql = '
-SELECT proj.nomProj, proj.descProj, proj.lien, proj.idProj, proj.nbMini, proj.nbMax, proj.nbInscri, ens.idEns, ens.nomEns, ens.prenomEns
+SELECT  proj.nomProj, proj.descProj, proj.allowedLanguages, proj.lien,
+            proj.idProj, proj.nbMini, proj.nbMax, proj.nbInscri,
+        ens.idEns, ens.nomEns, ens.prenomEns,
+        GROUP_CONCAT(ens.idEns SEPARATOR "|") AS ens_id_list,
+        GROUP_CONCAT(ens.nomEns SEPARATOR "|") AS ens_nom_list,
+        GROUP_CONCAT(ens.prenomEns SEPARATOR "|") AS ens_prenom_list
 FROM Projet AS proj
 LEFT JOIN Responsable AS resp
     ON proj.idProj=resp.ProjectL2_idPro
 LEFT JOIN Enseignent AS ens
     ON resp.Enseignant_idEns=ens.idEns
+GROUP BY proj.idProj
 ';
     if($filter=='encadrant')
         $sql .= ' WHERE ens.idEns='.getUserId();
