@@ -6,7 +6,7 @@ function dispInside(){
 	echo 'uType = '.getUserType().';';
 	echo 'uId = '.getUserId();
 	echo '">'."\n";
-		echo '<div class="tools" ng-if="uType+(project.idEns==uId)>=3" >'."\n";
+		echo '<div class="tools" ng-if="uType+(project.authorsIds.indexOf(+uId)!=-1)>=3" >'."\n";
 	?>
 			<a href='/?liste-des-projets/{{project.idProj | fillZero}}-{{project | getLinkFromTitle}}/edit'><img src="images/icons/edit.png"/></a>
 			<a href='/?liste-des-projets/delete/{{project.idProj}}'><img src="images/icons/delete.png"/></a>

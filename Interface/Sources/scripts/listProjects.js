@@ -69,6 +69,7 @@ app.controller('listeProjets', function($scope, $parse) {
 			['ens_id_list' ,'ens_nom_list' ,'ens_prenom_list'].forEach(function(key){
 				o[key] = (o[key]+'').split('|');
 			});
+			o.authorsIds = [];
 			while(o['ens_id_list'].length){
 				o.authors.push({
 					id: idEns=o['ens_id_list'].shift(),
@@ -77,6 +78,7 @@ app.controller('listeProjets', function($scope, $parse) {
 					link: '?les-encadrants/'+idEns+'/'
 				});
 				o.rawAuthors = (o.rawAuthors?(o.rawAuthors+', '):'')+prenom+' '+nom;
+				o.authorsIds.push(+idEns);
 			}
 			delete o['ens_id_list'];
 			delete o['ens_nom_list'];

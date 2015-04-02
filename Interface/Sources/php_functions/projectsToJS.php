@@ -41,10 +41,10 @@ LEFT JOIN Enseignent AS ens
     ON resp.Enseignant_idEns=ens.idEns
 LEFT JOIN ChoixGroupe AS chxGrp
     ON chxGrp.idProj=proj.idProj
-GROUP BY proj.idProj
 ';
     if($filter=='encadrant')
         $sql .= ' WHERE ens.idEns='.getUserId();
+    $sql.=' GROUP BY proj.idProj';
 
     $res = $db->query($sql) or die(mysqli_error($db));
     
