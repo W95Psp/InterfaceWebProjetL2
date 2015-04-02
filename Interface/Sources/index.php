@@ -81,25 +81,36 @@ if($route=='details-project')
 					</div><img src="images/head/logo_UM2.png" class="um2"/>
 				</div>
 			</div>
-		</header><?php $notices = getNoticesForMe();
+		</header><?php $wantToEndANotice = array(false, 0);
+if(@$urlParams[0]=="delete-action-to-do"&&is_numeric($urlParams[1])){
+	$wantToEndANotice[0] = true;
+	$wantToEndANotice[1] = intval($urlParams[1]);
+}
+$notices = getNoticesForMe();
 foreach($notices as $notice){
-	$listConcernedPeople = explode(',',$notice['concernedPeople']);
-	$becauseOf = '';
-	while($item = array_pop($listConcernedPeople)){
-		if($item[0]=='-'){
-			$id = substr($item, 1);
-			$type = ELEVE;
-			if($id[0]=='p'){
-				$id = substr($id, 1);
-				$type = ENCADRANT;
+	if($wantToEndANotice[0] && intval($wantToEndANotice[1])==intval($notice['id'])){
+		if($notice['idPersonInCharge'].''!=getUserId().'')
+			break;
+		$db->query('DELETE FROM Action_sous_confirmation WHERE id='.intval($notice['id']));
+	}else{
+		$listConcernedPeople = explode(',',$notice['concernedPeople']);
+		$becauseOf = '';
+		while($item = array_pop($listConcernedPeople)){
+			if($item[0]=='-'){
+				$id = substr($item, 1);
+				$type = ELEVE;
+				if($id[0]=='p'){
+					$id = substr($id, 1);
+					$type = ENCADRANT;
+				}
+				$id = intval($id);
+				if($type==ELEVE)
+					$res = $db->query('SELECT nomEtu as nom, prenomEtu as prenom, idEtu FROM Etudiant WHERE idEtu='.$id) or die(mysqli_error($db));
+				else
+					$res = $db->query('SELECT nomEns as nom, prenomEns as prenom, idEns FROM Enseignent WHERE idEns='.$id) or die(mysqli_error($db));
+				while (NULL !== ($row = $res->fetch_array()))
+					$becauseOf .= $row['prenom'].' '.$row['nom'].' ; ';
 			}
-			$id = intval($id);
-			if($type==ELEVE)
-				$res = $db->query('SELECT nomEtu as nom, prenomEtu as prenom, idEtu FROM Etudiant WHERE idEtu='.$id) or die(mysqli_error($db));
-			else
-				$res = $db->query('SELECT nomEns as nom, prenomEns as prenom, idEns FROM Enseignent WHERE idEns='.$id) or die(mysqli_error($db));
-			while (NULL !== ($row = $res->fetch_array()))
-				$becauseOf .= $row['prenom'].' '.$row['nom'].' ; ';
 		}
 	} ?>
 		<div class="notice"><b>Attention : </b><?php echo $becauseOf; ?>
