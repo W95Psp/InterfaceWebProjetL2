@@ -57,10 +57,11 @@ GROUP BY proj.idProj
     define('NUMBER', 0);
     define('STR', 1);
     $keys = array(
-        'idProj'=> NUMBER,  'nomProj'=> STR,    'idEns'=> NUMBER,   'nomEns'=> STR,
-        'prenomEns'=> STR,  'descProj'=> STR,   'lien'=> STR,       'nbMini'=> NUMBER,
-        'nbMax'=> NUMBER,   'nbInscri'=> NUMBER
+        'idProj'=> NUMBER,       'nomProj'=> STR,    'ens_id_list'=> STR,   'ens_nom_list'=> STR,
+        'ens_prenom_list'=> STR, 'descProj'=> STR,   'lien'=> STR,          'nbMini'=> NUMBER,
+        'nbMax'=> NUMBER,        'nbInscri'=> NUMBER
     );
+
     $count = 0;
     foreach ($projects as $key => $project) {
         if($count++!=0)
