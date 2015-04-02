@@ -81,7 +81,14 @@
   width: 140px;
 }
 .row .studentsColumn {
-  width: 120px;
+  width: 137px;
+}
+.row .studentsColumn.content {
+  text-align: center;
+  font-size: 11px;
+}
+.row .studentsColumn.empty {
+  color: #ccc;
 }
 .row div {
   padding: 5px;

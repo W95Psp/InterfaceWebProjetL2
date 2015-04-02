@@ -65,28 +65,28 @@ app.controller('listeProjets', function($scope, $parse) {
 			var o = newval.projects.shift();//On prend le premier de la liste (Liste *ordonneé* ici !)
 			//Traitements des auteurs
 			o.authors = new Array();
-			var idEns;
+			var idEns, prenom, nom;
 			['ens_id_list' ,'ens_nom_list' ,'ens_prenom_list'].forEach(function(key){
 				o[key] = (o[key]+'').split('|');
 			});
-			while(o['ens_id_list'].length)
+			while(o['ens_id_list'].length){
 				o.authors.push({
 					id: idEns=o['ens_id_list'].shift(),
-					nom: o['ens_nom_list'].shift(),
-					prenom: o['ens_prenom_list'].shift(),
+					nom: nom=o['ens_nom_list'].shift(),
+					prenom: prenom=o['ens_prenom_list'].shift(),
 					link: '?les-encadrants/'+idEns+'/'
 				});
+				o.rawAuthors = (o.rawAuthors?(o.rawAuthors+', '):'')+prenom+' '+nom;
+			}
 			delete o['ens_id_list'];
 			delete o['ens_nom_list'];
 			delete o['ens_prenom_list'];
 
-			//[à implémenter : champ language dans la BDD]
-			/*|*/	o.languages = [];
-			/*|*/	$scope.languages.forEach(function(lang){
-			/*|*/		if(Math.random()>0.5)
-			/*|*/			o.languages.push(lang);
-			/*|*/	});
-			//[Fin-à implémenter]
+			if(!o.allowedLanguages)	//Si rien n'est rensigné, on autorise tout langages
+				o.allowedLanguages = ['any'];
+			else
+				o.allowedLanguages = o.allowedLanguages.split(',');
+			
 			$scope.projects.push(o);
 		}
 	}, true);
@@ -105,14 +105,13 @@ app.controller('listeProjets', function($scope, $parse) {
 		$.post( "ajax.php", {action: "confirm-choices"}).done(function(data) {
 			if(data!=''){
 				$scope.errorSpotted = [true, "La requête a échouée. Message d'erreur : "+data];
+			}else{
+				$scope.stateConfirm = $scope.textHowToStudent = 'already';
 				$scope.$apply();
 			}
 		});
 		//Si la requête POST échoue, il y a une erreur non gérée, donc
 		//	la page affiche une erreur bloquante (= aucune action possible)
-		//	donc on peut afficher sur l'interface que tout a été confirmé.
-		//	[A voir : c'est un peu mal]
-		$scope.stateConfirm = $scope.textHowToStudent = 'already';
 		$scope.highlight = true;
 		$scope.draggable = false;
 	};
@@ -121,7 +120,7 @@ app.controller('listeProjets', function($scope, $parse) {
 	$scope.errorSpotted = [false];
 
 	//Mise en place du filtre de recherche
-	$scope.search = {nomProj: "", languages: "", author: ""};
+	$scope.search = {nomProj: "", allowedLanguages: "", rawAuthors: ""};
 	
 	//Liste des projets à afficher
 	$scope.projects = [];

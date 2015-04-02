@@ -27,12 +27,20 @@ SELECT  proj.nomProj, proj.descProj, proj.allowedLanguages, proj.lien,
         ens.idEns, ens.nomEns, ens.prenomEns,
         GROUP_CONCAT(ens.idEns SEPARATOR "|") AS ens_id_list,
         GROUP_CONCAT(ens.nomEns SEPARATOR "|") AS ens_nom_list,
-        GROUP_CONCAT(ens.prenomEns SEPARATOR "|") AS ens_prenom_list
+        GROUP_CONCAT(ens.prenomEns SEPARATOR "|") AS ens_prenom_list,
+        GROUP_CONCAT(ens.prenomEns SEPARATOR "|") AS ens_prenom_list,
+        (
+            SELECT  count(*) 
+            FROM    ChoixGroupe as chxGrp
+            WHERE   proj.idProj = chxGrp.idProj
+        ) as nbStudents
 FROM Projet AS proj
 LEFT JOIN Responsable AS resp
     ON proj.idProj=resp.ProjectL2_idPro
 LEFT JOIN Enseignent AS ens
     ON resp.Enseignant_idEns=ens.idEns
+LEFT JOIN ChoixGroupe AS chxGrp
+    ON chxGrp.idProj=proj.idProj
 GROUP BY proj.idProj
 ';
     if($filter=='encadrant')
@@ -59,7 +67,7 @@ GROUP BY proj.idProj
     $keys = array(
         'idProj'=> NUMBER,       'nomProj'=> STR,    'ens_id_list'=> STR,   'ens_nom_list'=> STR,
         'ens_prenom_list'=> STR, 'descProj'=> STR,   'lien'=> STR,          'nbMini'=> NUMBER,
-        'nbMax'=> NUMBER,        'nbInscri'=> NUMBER
+        'nbMax'=> NUMBER,        'nbStudents'=> NUMBER
     );
 
     $count = 0;

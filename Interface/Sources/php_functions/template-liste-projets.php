@@ -20,9 +20,11 @@ function dispInside(){
 		<span ng-repeat='(nb, author) in project.authors'><span ng-if='nb!=0'>, </span><a href='/?encadrants/{{author.id}}'>{{author.prenom + " " + author.nom}}</a></span>
 	</div>
 	<div class="langColumn">
-		<img ng-repeat="lang in project.languages" style='cursor:default;' src="images/languages/{{lang}}.svg" title="{{lang | getDescription}}" class="language"/>
+		<img ng-repeat="lang in project.allowedLanguages" style='cursor:default;' src="images/languages/{{lang}}.svg" title="{{lang | getDescription}}" class="language"/>
 	</div>
-	<div class="studentsColumn empty">Aucun étudiant pour le moment</div>
+	<div class="studentsColumn content empty" ng-if='project.nbStudents==0'>Aucun étudiant pour le moment</div>
+	<div class="studentsColumn content" ng-if='project.nbStudents==1'>Un groupe a mis ce projet dans sa liste de choix</div>
+	<div class="studentsColumn content" ng-if='project.nbStudents>1'>{{project.nbStudents}} groupes ont mis ce projet dans leur liste de choix</div>
 <?php }
 
 
@@ -71,17 +73,17 @@ function DisplayListProjects($filter = 'none'){
 				<div class="titleColumn"><img src="images/icons/title.png" class="icon"/><span>Intitulé</span></div>
 				<div class="teacherColumn"><img src="images/icons/teacher.png" class="icon"/><span>Encadrant</span></div>
 				<div class="langColumn"><img src="images/icons/languages.png" class="icon"/><span>Langages</span></div>
-				<div class="studentsColumn"><img src="images/icons/students.png" class="icon"/><span>Affecté(s)</span></div>
+				<div class="studentsColumn"><img src="images/icons/students.png" class="icon"/><span>Voulu par</span></div>
 			</div>
 			<div ng-if='!draggable' class="row search">
 				<div class="titleColumn">
 					<input ng-model="search.nomProj"/>
 				</div>
 				<div class="teacherColumn">
-					<input ng-model="search.authors"/>
+					<input ng-model="search.rawAuthors"/>
 				</div>
 				<div class="langColumn">
-					<input ng-model="search.languages"/>
+					<input ng-model="search.allowedLanguages"/>
 				</div>
 				<div class="studentsColumn">
 				</div>
