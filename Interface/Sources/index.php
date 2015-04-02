@@ -12,6 +12,9 @@ include("php_functions/mysql.php");
 //Connection related functions
 include("php_functions/connect.php");
 
+//Include mail stuff
+include("php_functions/ask_module.php");
+
 //Parse url to array ($parseParam, i.e. "/page1/cat2/blurp" => $parseParam = new Array("/page1", "cat2", "blurp"))
 include("php_functions/page_manager.php");
 
@@ -78,12 +81,36 @@ if($route=='details-project')
 					</div><img src="images/head/logo_UM2.png" class="um2"/>
 				</div>
 			</div>
-		</header><?php //Basic route :
+		</header><?php $notices = getNoticesForMe();
+foreach($notices as $notice){
+	$listConcernedPeople = explode(',',$notice['concernedPeople']);
+	$becauseOf = '';
+	while($item = array_pop($listConcernedPeople)){
+		if($item[0]=='-'){
+			$id = substr($item, 1);
+			$type = ELEVE;
+			if($id[0]=='p'){
+				$id = substr($id, 1);
+				$type = ENCADRANT;
+			}
+			$id = intval($id);
+			if($type==ELEVE)
+				$res = $db->query('SELECT nomEtu as nom, prenomEtu as prenom, idEtu FROM Etudiant WHERE idEtu='.$id) or die(mysqli_error($db));
+			else
+				$res = $db->query('SELECT nomEns as nom, prenomEns as prenom, idEns FROM Enseignent WHERE idEns='.$id) or die(mysqli_error($db));
+			while (NULL !== ($row = $res->fetch_array()))
+				$becauseOf .= $row['prenom'].' '.$row['nom'].' ; ';
+		}
+	} ?>
+		<div class="notice"><b>Attention : </b><?php echo $becauseOf; ?>
+			a refusé de<i><?php echo @$notice['dataJson']['explain']; ?>.</i><br/><br/><?php echo '<a href="/?delete-action-to-do/'.$notice['id'].'"><button>Je comprends</button></a>'; ?>
+		</div><?php } ?><?php //Basic route :
 //  if url is like "/page/numeric-id-of-4-characters"
 //  else
 
+if($route=='!stop-here'){
 
-if($route=='details-project'){
+}elseif($route=='details-project'){
 	include('pages/details-project.php');
 }else
 	include('pages/'.$page.'.php');
