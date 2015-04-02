@@ -63,8 +63,23 @@ app.controller('listeProjets', function($scope, $parse) {
 			return 0;
 		while(newval.projects.length>0){	//Sinon, on importe tous les projets que l'on trouve
 			var o = newval.projects.shift();//On prend le premier de la liste (Liste *ordonneé* ici !)
-			o.author = o.prenomEns+" "+o.nomEns;//On construit le champ author
-			o.authorLink = '?les-encadrants/'+o.idEns+'/';
+			//Traitements des auteurs
+			o.authors = new Array();
+			var idEns;
+			['ens_id_list' ,'ens_nom_list' ,'ens_prenom_list'].forEach(function(key){
+				o[key] = (o[key]+'').split('|');
+			});
+			while(o['ens_id_list'].length)
+				o.authors.push({
+					id: idEns=o['ens_id_list'].shift(),
+					nom: o['ens_nom_list'].shift(),
+					prenom: o['ens_prenom_list'].shift(),
+					link: '?les-encadrants/'+idEns+'/'
+				});
+			delete o['ens_id_list'];
+			delete o['ens_nom_list'];
+			delete o['ens_prenom_list'];
+
 			//[à implémenter : champ language dans la BDD]
 			/*|*/	o.languages = [];
 			/*|*/	$scope.languages.forEach(function(lang){

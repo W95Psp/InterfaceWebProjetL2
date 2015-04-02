@@ -16,7 +16,9 @@ function dispInside(){
 		</span>
 		<span><a href='/?liste-des-projets/{{project.idProj | fillZero}}-{{project | getLinkFromTitle}}'>{{project.nomProj}}</a></span>
 	</div>
-	<div class="teacherColumn">{{project.author}}</div>
+	<div class="teacherColumn">
+		<span ng-repeat='(nb, author) in project.authors'><span ng-if='nb!=0'>, </span><a href='/?encadrants/{{author.id}}'>{{author.prenom + " " + author.nom}}</a></span>
+	</div>
 	<div class="langColumn">
 		<img ng-repeat="lang in project.languages" style='cursor:default;' src="images/languages/{{lang}}.svg" title="{{lang | getDescription}}" class="language"/>
 	</div>
@@ -76,7 +78,7 @@ function DisplayListProjects($filter = 'none'){
 					<input ng-model="search.nomProj"/>
 				</div>
 				<div class="teacherColumn">
-					<input ng-model="search.author"/>
+					<input ng-model="search.authors"/>
 				</div>
 				<div class="langColumn">
 					<input ng-model="search.languages"/>
