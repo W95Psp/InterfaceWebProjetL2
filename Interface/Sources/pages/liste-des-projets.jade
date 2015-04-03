@@ -9,7 +9,7 @@ div.page.liste-des-projets(ng-controller='listeProjets')
 	h1
 		:php
 			if(getUserType()==ELEVE && $_SESSION['groupId']){
-		button#save(ng-if='stateConfirm!="already"', ng-click='isThereAnyModificationsYet && sendOrder()', class='{{isThereAnyModificationsYet ? "green" : "disabled"}}')
+		button#save(ng-if='stateConfirm.substr(0, 7)!="already"', ng-click='isThereAnyModificationsYet && sendOrder()', class='{{isThereAnyModificationsYet ? "green" : "disabled"}}')
 			div
 		:php
 			}
@@ -20,6 +20,8 @@ div.page.liste-des-projets(ng-controller='listeProjets')
 			echo '<div class="confirmation" state="{{stateConfirm}}" ng-init="';
 			echo 'stateConfirm = ';
 			if($group['EtatCandidature']==2)
+				echo "'already'";
+			else if($group['EtatCandidature']==3)
 				echo "'already'";
 			else
 				echo "'no'";

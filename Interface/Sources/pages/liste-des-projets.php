@@ -5,7 +5,7 @@
 <div ng-controller="listeProjets" class="page liste-des-projets"><?php //Inclusion du système de suppression de page
 include("php_functions/deleteProjet.php"); ?>
 	<h1><?php if(getUserType()==ELEVE && $_SESSION['groupId']){ ?>
-		<button id="save" ng-if="stateConfirm!=&quot;already&quot;" ng-click="isThereAnyModificationsYet &amp;&amp; sendOrder()" class="{{isThereAnyModificationsYet ? &quot;green&quot; : &quot;disabled&quot;}}">
+		<button id="save" ng-if="stateConfirm.substr(0, 7)!=&quot;already&quot;" ng-click="isThereAnyModificationsYet &amp;&amp; sendOrder()" class="{{isThereAnyModificationsYet ? &quot;green&quot; : &quot;disabled&quot;}}">
 			<div></div>
 		</button><?php } ?><span>Liste des projets</span>
 	</h1><?php if(getUserType()==ELEVE && $_SESSION['groupId']){
@@ -13,6 +13,8 @@ include("php_functions/deleteProjet.php"); ?>
 	echo '<div class="confirmation" state="{{stateConfirm}}" ng-init="';
 	echo 'stateConfirm = ';
 	if($group['EtatCandidature']==2)
+		echo "'already'";
+	else if($group['EtatCandidature']==3)
 		echo "'already'";
 	else
 		echo "'no'";

@@ -43,8 +43,11 @@ function DisplayListProjects($filter = 'none'){
 			$draggable = false;
 			$textHowToStudent = 'already';
 		}
+		if($group['EtatCandidature']==3){
+			$draggable = false;
+			$textHowToStudent = 'already-wait';
+		}
 	}else if(getUserType()==ELEVE){
-		echo $_SESSION['groupId'].'///';
 		$draggable = false;
 		$highlight = false;
 		$textHowToStudent = 'no-group';
@@ -62,6 +65,9 @@ function DisplayListProjects($filter = 'none'){
 	<div ng-if='textHowToStudent=="already"' style="font-style: italic; width: 70%; margin: auto; text-align: center; margin-bottom: 8px;">
 		Vous avez confirmé vos choix, il n'est donc plus possible
 		de les modifier.
+	</div>
+	<div ng-if='textHowToStudent=="already-wait"' style="font-style: italic; width: 70%; margin: auto; text-align: center; margin-bottom: 8px;">
+		Choix proposé à tous les membre de votre groupe. En attente de la confirmation de chacun d'entre eux.
 	</div>
 	<div ng-if='textHowToStudent=="no-group"' style="font-style: italic; width: 70%; margin: auto; text-align: center; margin-bottom: 8px;">
 		Pour formuler des choix, il faut <b>appartenir à un groupe</b>.

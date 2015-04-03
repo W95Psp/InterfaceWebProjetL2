@@ -1,8 +1,10 @@
 <?php
 class ConfirmModule{
 	private static function exec($action){
-		if($action['action']=='delete'){
-			// if($action['subject']=='')
+		if($action['action']=='delete-projet'){
+			$db->query('DELETE Projet WHERE idProj='.$action['id']) or die(mysqli_error($db));
+		}else if($action['action']=='validChoices'){
+			$db->query('UPDATE Groupe SET EtatCandidature=2 WHERE idG='.$action['groupId']) or die(mysqli_error($db));
 		}
 	}
 
@@ -106,7 +108,7 @@ class ConfirmModule{
 		self::exec(json_decode($res['dataJson'], true));
 		self::delete($idToConfirm);
 	}
-	
+
 	public static function confirmOrDecline($idToConfirm, $confirmOrNot = true){
 		global $db;
 		$type = getUserType();

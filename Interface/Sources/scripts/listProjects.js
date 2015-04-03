@@ -109,8 +109,8 @@ app.controller('listeProjets', function($scope, $parse) {
 				$scope.errorSpotted = [true, "La requête a échouée. Message d'erreur : "+data];
 			}else{
 				$scope.stateConfirm = $scope.textHowToStudent = 'already';
-				$scope.$apply();
 			}
+			$scope.$apply();
 		});
 		//Si la requête POST échoue, il y a une erreur non gérée, donc
 		//	la page affiche une erreur bloquante (= aucune action possible)
