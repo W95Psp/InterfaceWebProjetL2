@@ -60,6 +60,9 @@
 	function getUserName(){
 		return @$_SESSION["userName"];
 	}
+	function getGroupId(){
+		return @$_SESSION["groupId"];
+	}
 	function getUserPrenom(){
 		return @$_SESSION["prenom"];
 	}
