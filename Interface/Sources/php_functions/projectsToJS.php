@@ -39,9 +39,7 @@ LEFT JOIN Responsable AS resp
     ON proj.idProj=resp.ProjectL2_idPro
 LEFT JOIN Enseignent AS ens
     ON resp.Enseignant_idEns=ens.idEns
-LEFT JOIN ChoixGroupe AS chxGrp
-    ON chxGrp.idProj=proj.idProj
-';
+';//ATTENTION: La requête SQL n'est pas terminée (voir deux trois lignes plus loin)
     if($filter=='encadrant')
         $sql .= ' WHERE ens.idEns='.getUserId();
     $sql.=' GROUP BY proj.idProj';
