@@ -52,7 +52,7 @@ if($route=='details-project')
 		</script>
 		<div style="text-align: center; width: 90px;position: absolute; padding: 4px; top: 10px; left: 10px; font-size: 8px; border-radius: 4px; background-color: rgba(0,0,0,0.2); opacity: 0.8;">
 			<div style=" padding-bottom: 3px;">Profil utilisateur</div>
-			<select style="font-size: 8px;" onchange="loadThisUserProfile(this.value)"><option value=0 <?php if(getUserType()==ANONYME)
+			<select style="font-size: 8px;" onchange="loadThisUserProfile(this.value)"><option value=0<?php if(getUserType()==ANONYME)
 	echo ' selected'; ?>> Anonyme</option>
 				<option value=1 <?php if(getUserType()==ELEVE)
 	echo ' selected'; ?>> Etudiant</option>
@@ -81,30 +81,19 @@ if($route=='details-project')
 					</div><img src="images/head/logo_UM2.png" class="um2"/>
 				</div>
 			</div>
-		</header><?php $notices = getNoticesForMe();
+		</header><?php $notices = ConfirmModule::getNotices();
 foreach($notices as $notice){
-	$listConcernedPeople = explode(',',$notice['concernedPeople']);
-	$becauseOf = '';
-	while($item = array_pop($listConcernedPeople)){
-		if($item[0]=='-'){
-			$id = substr($item, 1);
-			$type = ELEVE;
-			if($id[0]=='p'){
-				$id = substr($id, 1);
-				$type = ENCADRANT;
-			}
-			$id = intval($id);
-			if($type==ELEVE)
-				$res = $db->query('SELECT nomEtu as nom, prenomEtu as prenom, idEtu FROM Etudiant WHERE idEtu='.$id) or die(mysqli_error($db));
-			else
-				$res = $db->query('SELECT nomEns as nom, prenomEns as prenom, idEns FROM Enseignent WHERE idEns='.$id) or die(mysqli_error($db));
-			while (NULL !== ($row = $res->fetch_array()))
-				$becauseOf .= $row['prenom'].' '.$row['nom'].' ; ';
-		}
-	} ?>
-		<div class="notice"><b>Attention : </b><?php echo $becauseOf; ?>
-			a refusé de<i><?php echo @$notice['dataJson']['explain']; ?>.</i><br/><br/><?php echo '<a href="/?delete-action-to-do/'.$notice['id'].'"><button>Je comprends</button></a>'; ?>
-		</div><?php } ?><?php //Basic route :
+	if(@$urlParams[0]=="delete-action-to-do" && intval($urlParams[1])==intval($notice['id'])){
+		ConfirmModule::delete($notice['id']);
+	}else if(@$urlParams[0]=="force-action-to-do" && intval($urlParams[1])==intval($notice['id'])){
+		ConfirmModule::forceAction($notice['id']);
+	}else if($notice['expired']==true){ ?>
+		<div class="notice neutral"><b>Personne </b><span>n'a confirmé ni infirmé </span><i><?php echo ' "'.@$notice['dataJson']['explain'].'" '; ?></i><span>dans le temps imparti. </span><br/><br/><?php echo '<a href="/?force-action-to-do/'.$notice['id'].'"><button>Force la décision</button></a>'; ?>
+		</div><?php }else if($notice['canceled']==true){ ?>
+		<div class="notice red"><b>Attention : </b><?php echo implode(',', array_map('ConfirmModule::getUserByArray', $notice['concernedPeople']['list-'])); ?>
+			<?php echo (count($notice['concernedPeople']['list-'])==1)?'a':'ont' ?> refusé de<i><?php echo ' '.@$notice['dataJson']['explain']; ?>.</i><br/><br/><?php echo '<a href="/?delete-action-to-do/'.$notice['id'].'"><button>Je comprends</button></a>'; ?>
+		</div><?php }
+} ?><?php //Basic route :
 //  if url is like "/page/numeric-id-of-4-characters"
 //  else
 
