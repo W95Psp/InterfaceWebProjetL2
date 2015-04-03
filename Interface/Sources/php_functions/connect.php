@@ -41,7 +41,7 @@
 			if($type==ELEVE)
 				$res = $db->query('SELECT nomEtu as nom, prenomEtu as prenom, emailEtu as mail, false as isAdmin FROM Etudiant WHERE idEtu='.$id)->fetch_array();
 			else
-				$res = $db->query('SELECT nomEns as nom, prenomEns as prenom, emailEtu as mail, isAdmin FROM Enseignent WHERE idEns='.$id)->fetch_array();
+				$res = $db->query('SELECT nomEns as nom, prenomEns as prenom, emailEns as mail, isAdmin FROM Enseignent WHERE idEns='.$id)->fetch_array();
 		$_SESSION["userType"] = $type;
 		if($type==ENCADRANT && $res['isAdmin'])
 			$_SESSION["userType"] = ADMIN;

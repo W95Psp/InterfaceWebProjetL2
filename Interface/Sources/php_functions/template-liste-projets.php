@@ -33,7 +33,7 @@ function DisplayListProjects($filter = 'none'){
 	// die("...");
 	global $db;
 	echo exportProjectsToJS($db, $filter);
-	$draggable = getUserType()==ELEVE || getUserType()==ADMIN;
+	$draggable = getUserType()==ELEVE;
 	$highlight = getUserType()==ELEVE;
 	$textHowToStudent = (getUserType()==ELEVE)?'normal':'no';
 

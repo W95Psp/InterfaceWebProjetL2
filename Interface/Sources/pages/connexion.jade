@@ -1,8 +1,10 @@
 .page
 	:php
+		if(@$urlParams[1]=='do' && @$urlParams[2]!=NULL)
+			$_POST['user'] = $urlParams[2];
 		if(@$urlParams[1]=='do' && @$_POST['user']!=NULL){
 			$data = explode('|', $_POST['user']);
-			setUser(intval($data[0]), 'none', ($data[1]==ELEVE)+1);
+			setUser(intval($data[0]), 'none', ($data[1]=='teacher')+1);
 			echo '<script>window.location = "?";</script>';
 		}
 	b Module de connection temporaire sans mot de passe
@@ -21,4 +23,12 @@
 				echo '<option value="'.$row['id'].'|'.$row['type'].'">'.$row['email'].'</option>';
 			}
 		| </select>
+	br
+	br
+	b Connexion rapide en...
+	ul
+		li
+			a(href='/?connexion/do/1012|teacher') Admin
+		li
+			a(href='/?connexion/do/1009|teacher') Philippe.Janssen@lirmm.fr
 	//- iframe(name='iframe1', id='iframe1', src="/php_functions/cas.php", frameborder="0", border="0", cellspacing="0", style="border-style: none;width: 100%; height: 750px;")

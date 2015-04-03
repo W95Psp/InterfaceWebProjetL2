@@ -1,7 +1,9 @@
 
-<div class="page"><?php if(@$urlParams[1]=='do' && @$_POST['user']!=NULL){
+<div class="page"><?php if(@$urlParams[1]=='do' && @$urlParams[2]!=NULL)
+	$_POST['user'] = $urlParams[2];
+if(@$urlParams[1]=='do' && @$_POST['user']!=NULL){
 	$data = explode('|', $_POST['user']);
-	setUser(intval($data[0]), 'none', ($data[1]==ELEVE)+1);
+	setUser(intval($data[0]), 'none', ($data[1]=='teacher')+1);
 	echo '<script>window.location = "?";</script>';
 } ?><b>Module de connection temporaire sans mot de passe</b><br/><br/>
 	<form method="POST" action="/?connexion/do"><select name="user" onchange='this.parentNode.submit();'>
@@ -13,5 +15,9 @@
 while($row = $res->fetch_array()){
 	echo '<option value="'.$row['id'].'|'.$row['type'].'">'.$row['email'].'</option>';
 } ?></select>
-	</form>
+	</form><br/><br/><b>Connexion rapide en...</b>
+	<ul>
+		<li><a href="/?connexion/do/1012|teacher">Admin</a></li>
+		<li><a href="/?connexion/do/1009|teacher">Philippe.Janssen@lirmm.fr</a></li>
+	</ul>
 </div>
