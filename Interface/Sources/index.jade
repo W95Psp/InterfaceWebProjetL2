@@ -52,43 +52,6 @@ html(ng-app='ProjetsL2')
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 	body
-		//<start stuff to delete>
-		script.
-			function loadThisUserProfile(v){	//To delete, when login (CAS) will be ok
-				var href = window.location.href;
-				console.log(href.match(/\/\@force\-user\-type\=[0-9]^/));
-				if(href.match(/\/\@force\-user\-type\=[0-9]$/g)){
-					href=href.substr(0, href.lastIndexOf('/?/@force'));
-				}
-				window.location = (href + "/?/@force-user-type=" + v).replace(/\/\/\?/g, '/?');
-			}
-		div(style='text-align: center; width: 90px;position: absolute; padding: 4px; top: 10px; left: 10px; font-size: 8px; border-radius: 4px; background-color: rgba(0,0,0,0.2); opacity: 0.8;')
-			div(style=' padding-bottom: 3px;') Profil utilisateur
-			select(style='font-size: 8px;', onchange='loadThisUserProfile(this.value)')
-				| <option value=0
-				:php
-					if(getUserType()==ANONYME)
-						echo ' selected';
-				| > Anonyme</option>
-				| <option value=1 
-				:php
-					if(getUserType()==ELEVE)
-						echo ' selected';
-				| > Etudiant</option>
-				| <option value=2 
-				:php
-					if(getUserType()==ENCADRANT)
-						echo ' selected';
-				| > Encadrant</option>
-				| <option value=3 
-				:php
-					if(getUserType()==ADMIN)
-						echo ' selected';
-				| > Administrateur</option>
-			div(style='font-size: 7px;')
-				[Module temporaire pour essayer différents profils utilisateur]
-		//<end stuff to delete>
-
 		header
 			.ban
 				.content
@@ -119,6 +82,14 @@ html(ng-app='ProjetsL2')
 							:php
 								displayPages(1, $page);
 					img.um2(		src='images/head/logo_UM2.png')
+		:php
+			if(getUserType()!=ANONYME){
+		div(style='width: 740px; margin: auto; text-align: right; font-size: 11px; position: relative; top: -10px;')
+			i Connecté en tant que 
+				b <?php echo getUserName(); ?>
+		:php
+			}
+
 		:php
 			$notices = ConfirmModule::getNotices();
 			foreach($notices as $notice){

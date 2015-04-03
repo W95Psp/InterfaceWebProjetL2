@@ -10,9 +10,7 @@
 	$urlParams = $parsedParam[1];
 	//Sélection de la page courante
 	$page = isset($urlParams[0]) ? $urlParams[0] : 'not-defined';
-	//A supprimer :
-	tempFunction_toDelete_enableForceUserTypeStuff();//Pour le truc en haut à gauche ;)
-
+	
 	//Chargement des configurations des pages / menu
 	$pagesData = array(
 		"allowed" => json_decode(file_get_contents("config/allowed-pages.json"), true),

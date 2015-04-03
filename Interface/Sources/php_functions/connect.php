@@ -32,14 +32,39 @@
 		return $result;
 	}
 
-	function setUser($id, $name, $type){
+	function setUser($id, $name, $type){	//Type {0: ANONYME, 1: ELEVE, 2or3: PROF, gonna see whether admin or not}
+		global $db;
 		session_unset();
+		$id = intval($id);
+		//idEtu nomEtu prenomEtu emailEtu telEtu mdpEtu droitEtu idG_E
+		if($type>ANONYME)
+			if($type==ELEVE)
+				$res = $db->query('SELECT nomEtu as nom, prenomEtu as prenom, emailEtu as mail, false as isAdmin FROM Etudiant WHERE idEtu='.$id)->fetch_array();
+			else
+				$res = $db->query('SELECT nomEns as nom, prenomEns as prenom, emailEtu as mail, isAdmin FROM Enseignent WHERE idEns='.$id)->fetch_array();
 		$_SESSION["userType"] = $type;
+		if($type==ENCADRANT && $res['isAdmin'])
+			$_SESSION["userType"] = ADMIN;
 		$_SESSION["userId"] = $id;
-		$_SESSION["userName"] = $name;
+		if(@$res){
+			$_SESSION["userName"] = $res['prenom'].' '.$res['nom'];
+			$_SESSION["prenom"] = $res['prenom'];
+			$_SESSION["nom"] = $res['nom'];
+			$_SESSION["mail"] = $res['mail'];
+		}
 		if($type==ELEVE){
 			$_SESSION['groupId'] = getGroupIdFromStudentId($id);
 		}
+	}
+
+	function getUserName(){
+		return @$_SESSION["userName"];
+	}
+	function getUserPrenom(){
+		return @$_SESSION["prenom"];
+	}
+	function getUserNom(){
+		return @$_SESSION["nom"];
 	}
 
 	function getUserType(){
@@ -49,19 +74,5 @@
 	function getUserId(){
 		//userId ne peut pas être nul
 		return (isset($_SESSION["userId"]) && $_SESSION["userId"]) ? $_SESSION["userId"] : -1;
-	}
-
-	function tempFunction_toDelete_enableForceUserTypeStuff(){
-		global $urlParams;
-		if(@substr($urlParams[count($urlParams)-1], 0, 17)=='@force-user-type='){
-			$idUserType = intval(substr($urlParams[count($urlParams)-1], 17));
-			$preDefinedIds = array(
-				ANONYME		=> 'none',
-				ELEVE		=> 2065, 
-				ENCADRANT	=> 1009, 
-				ADMIN		=> 1012, 
-				);
-			setUser($preDefinedIds[$idUserType], "TEST", $idUserType);
-		}
 	}
 ?>

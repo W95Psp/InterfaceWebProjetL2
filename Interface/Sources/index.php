@@ -39,31 +39,6 @@ if($route=='details-project')
 		<![endif]-->
 	</head>
 	<body>
-		<!--<start stuff to delete>-->
-		<script>
-			function loadThisUserProfile(v){	//To delete, when login (CAS) will be ok
-				var href = window.location.href;
-				console.log(href.match(/\/\@force\-user\-type\=[0-9]^/));
-				if(href.match(/\/\@force\-user\-type\=[0-9]$/g)){
-					href=href.substr(0, href.lastIndexOf('/?/@force'));
-				}
-				window.location = (href + "/?/@force-user-type=" + v).replace(/\/\/\?/g, '/?');
-			}
-		</script>
-		<div style="text-align: center; width: 90px;position: absolute; padding: 4px; top: 10px; left: 10px; font-size: 8px; border-radius: 4px; background-color: rgba(0,0,0,0.2); opacity: 0.8;">
-			<div style=" padding-bottom: 3px;">Profil utilisateur</div>
-			<select style="font-size: 8px;" onchange="loadThisUserProfile(this.value)"><option value=0<?php if(getUserType()==ANONYME)
-	echo ' selected'; ?>> Anonyme</option>
-				<option value=1 <?php if(getUserType()==ELEVE)
-	echo ' selected'; ?>> Etudiant</option>
-				<option value=2 <?php if(getUserType()==ENCADRANT)
-	echo ' selected'; ?>> Encadrant</option>
-				<option value=3 <?php if(getUserType()==ADMIN)
-	echo ' selected'; ?>> Administrateur</option>
-			</select>
-			<div style="font-size: 7px;">[Module temporaire pour essayer différents profils utilisateur]</div>
-		</div>
-		<!--<end stuff to delete>-->
 		<header>
 			<div class="ban">
 				<div class="content">
@@ -81,7 +56,9 @@ if($route=='details-project')
 					</div><img src="images/head/logo_UM2.png" class="um2"/>
 				</div>
 			</div>
-		</header><?php $notices = ConfirmModule::getNotices();
+		</header><?php if(getUserType()!=ANONYME){ ?>
+		<div style="width: 740px; margin: auto; text-align: right; font-size: 11px; position: relative; top: -10px;"><i>Connecté en tant que <b><?php echo getUserName(); ?></b></i></div><?php }
+ ?><?php $notices = ConfirmModule::getNotices();
 foreach($notices as $notice){
 	if(@$urlParams[0]=="delete-action-to-do" && intval($urlParams[1])==intval($notice['id'])){
 		ConfirmModule::delete($notice['id']);
