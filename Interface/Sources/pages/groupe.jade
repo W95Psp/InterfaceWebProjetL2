@@ -3,7 +3,10 @@ script(src='scripts/groupe.js')
 
 :php
 	$ngInit = '';
-	$ngInit.= 'groupId='.intval(getGroupId()).';';
+	if(getGroupId())
+		$ngInit.= 'groupId='.intval(getGroupId()).';';
+	else
+		$ngInit.= 'groupId="none";';
 	$ngInit.= 'myName="'.getUsername().'";';
 	$res = $db->query('SELECT idEtu as id, idG_E, CONCAT(`nomEtu`, " ", `prenomEtu`) as name FROM Etudiant WHERE idEtu!='.getUserId()) or die(mysqli_error($db));
 	$ngInit.= 'listStudents=[';

@@ -1,6 +1,6 @@
 
 <script src="scripts/groupe.js"></script><link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'><?php $ngInit = '';
-$ngInit.= 'groupId='.getGroupId().';';
+$ngInit.= 'groupId='.intval(getGroupId()).';';
 $ngInit.= 'myName="'.getUsername().'";';
 $res = $db->query('SELECT idEtu as id, idG_E, CONCAT(`nomEtu`, " ", `prenomEtu`) as name FROM Etudiant WHERE idEtu!='.getUserId()) or die(mysqli_error($db));
 $ngInit.= 'listStudents=[';
