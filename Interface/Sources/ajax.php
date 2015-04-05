@@ -66,6 +66,71 @@ UNION ALL
 				"message"=> $message
 			)
 		);
+	}else if(
+			isset($_GET['action'])			&&
+			$_GET['action']=='fetchMyState'	&&
+			getUserType()==ELEVE
+		){
+		$result = array();
+		//If current student own a group
+		if($db->query('SELECT count(*) FROM Groupe WHERE idEtuCreator='.intval(getUserId()))->fetch_row()[0]==0){//no
+			$result['state'] = '?';//Well, nothing in DB
+		}else{//Student own a group
+			if(!$_SESSION['groupId'])
+				die('Erreur de cohérence. Déconnectez vous puis reconnectez vous.');
+			$gId = intval($_SESSION['groupId']);
+
+			$notices = ConfirmModule::getNotices();
+			//Sorry for the final "s" at peoples :S
+			$peoples = array();
+			//Liste de toutes les personnes ayant refusé ou n'ayant pas encore répondu
+			foreach($notices as $notice){
+				if($notice["dataJson"]["action"]=="joinGroup"){
+					$peoples[] = array(
+						"state" => (count($notice["concernedPeople"]['list-'])==0)?0:2,
+						"id" => $notice["concernedPeople"]['all-values'][0]
+					);
+				}
+			}
+			//Liste de toutes les personnes déjà dans le groupe sauf l'étudiant créateur
+			$etuInG = $db->query('SELECT idEtu FROM `Etudiant` WHERE idG_E='.$gId.' AND idEtu!='.intval(getUserId()));
+			$result['state'] = 'compose';
+			$result['fixed'] = true;
+			
+			while($etu = $etuInG->fetch_row()){
+				$peoples[] = array(
+					"state" => 1,
+					"id" => $etu['idEtu']
+				);
+			}
+
+			$result['peoples'] = $peoples;
+		}
+		echo json_encode($result);
+	}else if(
+			isset($_GET['action'])			&&
+			isset($_GET['persons'])		&&
+			$_GET['action']=='createGroup'	&&
+			$_GET['persons']!=''			&&
+			getUserType()==ELEVE
+		){
+		$persons = explode(',', $_GET['persons']);
+		if(!doesTheseUsersExistAndHaveNoGroup($persons))
+			die('Some student ID were not found ('.$_GET['persons'].').');
+		if($_SESSION['groupId']==null)
+			die('Error: the student ['.getUserName().'] can\'t create a group while he is already in another one.');
+		$number = $db->query('SELECT count(*) FROM Groupe WHERE idEtuCreator='.intval(getUserId()))->fetch_row()[0];
+		if($number!=0)
+			die('Error: the student ['.getUserName().'] own already a group.');
+
+		$db->query('INSERT INTO Groupe(idEtuCreator) VALUES ('.intval(getUserId()).')');
+		foreach ($persons as $person) {
+			echo '<br/> Demande à '.$person.' :';
+			ConfirmModule::registerAction(array(intval($person)), array(), array(
+				"action" => "joinGroup",
+				"explain" => 'rejoindre votre groupe'
+			));
+		}
 	}else{
 		echo 'invalid request';
 	}

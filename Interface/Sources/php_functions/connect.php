@@ -32,6 +32,11 @@
 		return $result;
 	}
 
+	function doesTheseUsersExistAndHaveNoGroup($arrUsersId){
+		global $db;
+		return $db->query('SELECT count(*) FROM Etudiant WHERE idEtu IN ('.implode(',', array_map('intval', $arrUsersId)).') AND idG_E IS NULL')->fetch_row()[0]==count($arrUsersId);
+	}
+
 	function setUser($id, $name, $type){	//Type {0: ANONYME, 1: ELEVE, 2or3: PROF, gonna see whether admin or not}
 		global $db;
 		session_unset();
@@ -65,6 +70,9 @@
 	}
 	function getUserPrenom(){
 		return @$_SESSION["prenom"];
+	}
+	function getUserMail(){
+		return @$_SESSION["mail"];
 	}
 	function getUserNom(){
 		return @$_SESSION["nom"];

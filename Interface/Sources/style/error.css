@@ -1,0 +1,27 @@
+#disp-error {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(0,0,0,0.5);
+}
+#disp-error .content {
+  position: relative;
+  top: 60px;
+  margin: auto;
+  z-index: 200;
+  width: 700px;
+  height: 270px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+  border-radius: 20px;
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+  opacity: 1;
+}
+#disp-error .content .title {
+  color: #f00;
+  display: block;
+  text-align: center;
+}

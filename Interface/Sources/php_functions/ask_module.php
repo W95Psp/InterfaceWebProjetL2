@@ -14,18 +14,19 @@ class ConfirmModule{
 
 	public static function registerAction($listOfStudentsId, $listOfTeachersId, $objectJson){
 		global $db;
-
+		$prefixSQL1 = (count($listOfStudentsId)==0)?'-5':'';
+		$prefixSQL2 = (count($listOfTeachersId)==0)?'-5':'';
 		// SQL Querty to select emails of every peoples involved
 		$sql = '
 	SELECT  `idEtu` as id, `nomEtu` as nom, TRUE as isEleve, `prenomEtu` as prenom,
 			`emailEtu` as email FROM `Etudiant`
-		WHERE idEtu IN ('.implode(',', array_map('intval', $listOfStudentsId)).')
+		WHERE idEtu IN ('.$prefixSQL1.implode(',', array_map('intval', $listOfStudentsId)).')
 
 	UNION ALL
 
 	SELECT  `idEns` as id, `nomEns` as nom, FALSE as isEleve, `prenomEns` as prenom,
 			`emailEns` as email FROM `Enseignent`
-		WHERE idEns IN ('.implode(',', array_map('intval', $listOfTeachersId)).');';
+		WHERE idEns IN ('.$prefixSQL2.implode(',', array_map('intval', $listOfTeachersId)).');';
 
 		//Let's build the list (teacher prefixed by "p")
 		$listPeople = array();
@@ -92,6 +93,7 @@ class ConfirmModule{
 				'value' => ($value[0]=='p')?substr($value, 1):$value
 			);
 			$ids['all'][] = $prefix.$value;
+			$ids['all-values'][] = $value;
 		}
 		$ids['list?'] = $ids['list'];
 		return $ids;

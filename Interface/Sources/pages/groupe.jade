@@ -17,55 +17,73 @@ script(src='scripts/groupe.js')
 	$ngInit.= '];';
 
 | <div class='page presentation' ng-controller='groupe' ng-init='<?php echo $ngInit; ?>'>
-h1.compose Composer mon groupe
-.case(style='margin: auto; display: block;') {{myName}}
-div.plus et inviter les personnes suivantes :
-div#cases
-	div.caseParent
-		div.case(ng-repeat='(k,place) in GroupComposedBy track by $index', greenAround='{{place!=-1 && !fixed}}')
-			span.done(ng-show='place!=-1')
-				| {{place | getUsernameById:this}}
-				img(ng-show='!fixed', src='images/icons/cancel.png', ng-click='recoverToList(place);GroupComposedBy[k]=-1;')
-			input(ng-show='place==-1', ng-model='test')
-			div.autoCompletion(ng-show='place==-1', forceThat='{{test.length>=1}}')
-				div(ng-show='test.length')
-					div.title Résultat(s) :
-					div.item(ng-click='student.available && deleteFromList(student.id) && ($parent.GroupComposedBy[k] = student.id)', ng-repeat='student in results = (listStudents | filter:{name: test} | limitTo:6)', selectable='{{student.available?"true":"took"}}')
-						span {{student.name}} 
-						span(ng-if='!student.available') [Déjà dans un groupe]
-					div.item(ng-show='results.length==0')
-						br
-						i(style='font-size: 13px;') Aucun étudiant dont le nom ou prénom ressemblant à "{{test}}" n'a été trouvé !
-						br
-						br
-						button Signaler
-				div(ng-show='!test.length')
-					div.title Tapez quelque chose.
-			div.state(ng-show='fixed')
-				span.wait(ng-show='state') L'invitation a été envoyée, pas de réponse pour l'instant.
-				span.confirmed(ng-show='state') Validé !
-				span.declined(ng-show='!state') Décliné !
-				div
-					a(href='#', style='text-decoration: none; font-size: 12px; color: #2980b9;', ng-click='$parent.fixed=false;recoverToList(place);GroupComposedBy[k]=-1;') Choisir une autre personne
-	br
-	br
-	br
-	br
-	div(ng-show='!fixed')
-		button(ng-show='countFilled()==3', ng-click='fixed=true') Envoyer les invitations !
-		button.disabled(ng-show='countFilled()!=3 && countFilled()!=0') Il reste {{3-countFilled()}} personnes à choisir.
-		button.disabled(ng-show='countFilled()==0') Choisissez 3 personnes.
+div(ng-show='!canShow')
+	h1 Chargement...
+div(ng-show='canShow')
+	div(ng-show='mode=="?" || mode=="wait"')
+		h1 Vous n'êtes affecté à aucun groupe pour l'instant.
+		p Vous pouvez choisir de créer un groupe puis d'inviter des personnes à le rejoindre. Mettez vous d'accord avec vos amis à propos de qui crée le groupe et qui invite les autres.
+		button(ng-show='mode=="?"', ng-click='mode="wait"') J'attends que l'on me propose
+		button(ng-show='mode=="?"', ng-click='mode="compose"') Je crée mon groupe
+		p(ng-show='mode=="wait"').
+			Bien, si quelqu'un vous ajoute à un groupe, nous vous en informerons par e-mail (<a href='mailto:<?php echo getUserMail(); ?>'><?php echo getUserMail(); ?></a>) et sur cette page. Si vous décidez finalement de créer votre propre groupe, pas de problème, rechargez simplement la page.
+	div(ng-show='mode=="compose"')
+		h1.compose Composer mon groupe
+		.case(style='margin: auto; display: block;') {{myName}}
+		div.plus et inviter les personnes suivantes :
+		div#cases
+			div.caseParent
+				div.case(ng-repeat='(k,place) in GroupComposedBy track by $index', greenAround='{{place!=-1 && !fixed}}')
+					span.done(ng-show='place!=-1')
+						| {{place | getUsernameById:this}}
+						img(ng-show='!fixed', src='images/icons/cancel.png', ng-click='recoverToList(place);GroupComposedBy[k]=-1;')
+					input(ng-show='place==-1', ng-model='test')
+					div.autoCompletion(ng-show='place==-1', forceThat='{{test.length>=1}}')
+						div(ng-show='test.length')
+							div.title Résultat(s) :
+							div.item(ng-click='student.available && deleteFromList(student.id) && ($parent.GroupComposedBy[k] = student.id)', ng-repeat='student in results = (listStudents | filter:{name: test} | limitTo:6)', selectable='{{student.available?"true":"took"}}')
+								span {{student.name}} 
+								span(ng-if='!student.available') [Déjà dans un groupe]
+							div.item(ng-show='results.length==0')
+								br
+								i(style='font-size: 13px;') Aucun étudiant dont le nom ou prénom ressemblant à "{{test}}" n'a été trouvé !
+								br
+								br
+								button Signaler
+						div(ng-show='!test.length')
+							div.title Tapez quelque chose.
+					div.state(ng-show='fixed')
+						span.wait(ng-show='GroupComposedByState[k]==0') L'invitation a été envoyée, pas de réponse pour l'instant.
+						span.confirmed(ng-show='GroupComposedByState[k]==1') Validé !
+						span.declined(ng-show='GroupComposedByState[k]==2') Décliné !
+						div
+							a(href='#', style='text-decoration: none; font-size: 12px; color: #2980b9;', ng-click='$parent.fixed=false;recoverToList(place);GroupComposedBy[k]=-1;') Choisir une autre personne
+			br
+			br
+			br
+			br
+			div(ng-show='!fixed')
+				button(ng-show='countFilled()==3', ng-click='ask();fixed=true;') Envoyer les invitations !
+				button.disabled(ng-show='countFilled()!=3 && countFilled()!=0') Il reste {{3-countFilled()}} personnes à choisir.
+				button.disabled(ng-show='countFilled()==0') Choisissez 3 personnes.
+				button.red(ng-click='mode="?"') Annuler
 
-	br
-	br
-	br
-	br
-	br
-	br
-	br
-	button(ng-click='tempFun_to_delete__()') [Pour tester :] réintialiser idG de tout le monde
-	br
-	br
-	br
-	br
+			br
+			br
+			br
+			br
+			br
+			br
+			br
+			button(ng-click='tempFun_to_delete__()') [Pour tester :] réintialiser idG de tout le monde
+			br
+			br
+			br
+			br
+//Affichage des erreurs (ne devrait jamais se produire)
+div#disp-error(ng-if='errorSpotted[0]')
+	.content
+		.title Erreur !
+			button.red(onclick='this.parentNode.parentNode.innerHTML = SC.errorSpotted[1];') Afficher en HTML (peut-être dangeureux!)
+		span {{errorSpotted[1]}}
 | </div>

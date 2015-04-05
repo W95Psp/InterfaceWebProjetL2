@@ -13,8 +13,11 @@ app.filter('getUsernameById', function() {
 });
 var SC;
 app.controller('groupe', function($scope, $parse) {
-	$scope.GroupComposedBy = new Array(2003, 2009, 2005);
-	$scope.fixed = true;
+	$scope.mode = '?';
+	$scope.errorSpotted = [false, ''];
+	$scope.GroupComposedBy = new Array(-1, -1, -1);
+	$scope.GroupComposedByState = new Array(0, 0, 0);
+	$scope.fixed = false;
 	SC = $scope;
 	$scope.alreadySelectedStudents = [];
 	$scope.deleteFromList = function(id){
@@ -31,6 +34,18 @@ app.controller('groupe', function($scope, $parse) {
 	$scope.countFilled = function(){
 		return ($scope.GroupComposedBy[0]!=-1)+($scope.GroupComposedBy[1]!=-1)+($scope.GroupComposedBy[2]!=-1);
 	}
+	$scope.ask = function(){
+		$.ajax({
+			type: "GET",
+			url: 'ajax.php?action=createGroup&persons='+($scope.GroupComposedBy.join(',')),
+			success: function(result){
+				if(result.length>0){
+					$scope.errorSpotted = [true, result];
+					$scope.$apply();
+				}
+			}
+		});
+	}
 	$scope.tempFun_to_delete__ = function(){
 		for(var i in $scope.listStudents)
 			$scope.listStudents[i].available = true;
@@ -40,4 +55,38 @@ app.controller('groupe', function($scope, $parse) {
 			for(var i in $scope.GroupComposedBy)
 				$scope.deleteFromList($scope.GroupComposedBy[i]);
 		}, i);
+	var lastUpdate = '!';
+	setInterval($scope.refesh = function(){
+		$.ajax({
+			type: "GET",
+			url: 'ajax.php?action=fetchMyState',
+			success: function(result){
+				if(lastUpdate!=result){
+					$scope.canShow = true;
+					lastUpdate = result;
+					try{
+						result = JSON.parse(result);
+					}catch(err){
+						$scope.errorSpotted = [true, result];
+						$scope.$apply();
+						return;
+					}
+					console.log(result);
+					$scope.mode = result.state;
+					$scope.fixed = result.fixed;
+					
+					if($scope.fixed){
+						for(var i in result.peoples){//Sorry for the final "s" at peoples :S
+							var one = result.peoples[i];
+							$scope.GroupComposedBy[i] = +one.id;
+							$scope.GroupComposedByState[i] = +one.state;
+						}
+					}
+					$scope.$apply();
+				}
+			}
+		});
+	}, 2000);
+
+	$scope.refesh();
 });
