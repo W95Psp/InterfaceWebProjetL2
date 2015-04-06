@@ -59,7 +59,6 @@ app.controller('listeProjets', function($scope, $http) {
 	$scope.switchVisility = function(proj){
 		$http.get('ajax.php?action=switchVisility&id='+(+proj.idProj)).success(function(result){
 			proj.show = result=='true';
-			console.log(result);
 		});
 	}
 
