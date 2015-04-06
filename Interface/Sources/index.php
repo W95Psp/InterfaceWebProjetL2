@@ -58,19 +58,7 @@ if($route=='details-project')
 			</div>
 		</header><?php if(getUserType()!=ANONYME){ ?>
 		<div style="width: 740px; margin: auto; text-align: right; font-size: 11px; position: relative; top: -10px;"><i>Connecté en tant que <b><?php echo getUserName(); ?></b></i></div><?php }
- ?><?php $notices = ConfirmModule::getNotices();
-foreach($notices as $notice){
-	if(@$urlParams[0]=="delete-action-to-do" && intval($urlParams[1])==intval($notice['id'])){
-		ConfirmModule::delete($notice['id']);
-	}else if(@$urlParams[0]=="force-action-to-do" && intval($urlParams[1])==intval($notice['id'])){
-		ConfirmModule::forceAction($notice['id']);
-	}else if($notice['expired']==true){ ?>
-		<div class="notice neutral"><b>Personne </b><span>n'a confirmé ni infirmé </span><i><?php echo ' "'.@$notice['dataJson']['explain'].'" '; ?></i><span>dans le temps imparti. </span><br/><br/><?php echo '<a href="/?force-action-to-do/'.$notice['id'].'"><button>Force la décision</button></a>'; ?>
-		</div><?php }else if($notice['canceled']==true){ ?>
-		<div class="notice red"><b>Attention : </b><?php echo implode(',', array_map('ConfirmModule::getUserByArray', $notice['concernedPeople']['list-'])); ?>
-			<?php echo (count($notice['concernedPeople']['list-'])==1)?'a':'ont' ?> refusé de<i><?php echo ' '.@$notice['dataJson']['explain']; ?>.</i><br/><br/><?php echo '<a href="/?delete-action-to-do/'.$notice['id'].'"><button>Je comprends</button></a>'; ?>
-		</div><?php }
-} ?><?php //Basic route :
+ ?><?php //Basic route :
 //  if url is like "/page/numeric-id-of-4-characters"
 //  else
 

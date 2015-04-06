@@ -1,8 +1,11 @@
 <?php
 class ConfirmModule{
 	private static function exec($action){
+		global $db;
 		if($action['action']=='delete-projet'){
 			$db->query('DELETE Projet WHERE idProj='.$action['id']) or die(mysqli_error($db));
+		}else if($action['action']=='joinGroup'){
+			$db->query('UPDATE Etudiant SET idGrEtu='.$action['idGroup'].' WHERE idEtu='.intval(getUserId())) or die(mysqli_error($db));
 		}else if($action['action']=='validChoices'){
 			$db->query('UPDATE Groupe SET EtatCandidature=2 WHERE idG='.$action['groupId']) or die(mysqli_error($db));
 		}
@@ -25,7 +28,7 @@ class ConfirmModule{
 	UNION ALL
 
 	SELECT  `idEns` as id, `nomEns` as nom, FALSE as isEleve, `prenomEns` as prenom,
-			`emailEns` as email FROM `Enseignent`
+			`emailEns` as email FROM `Enseignant`
 		WHERE idEns IN ('.$prefixSQL2.implode(',', array_map('intval', $listOfTeachersId)).');';
 
 		//Let's build the list (teacher prefixed by "p")
@@ -51,10 +54,24 @@ class ConfirmModule{
 		if($arr['isStudent'])
 			$r=$db->query('SELECT nomEtu as nom, prenomEtu as prenom FROM Etudiant WHERE idEtu='.$id)->fetch_array();
 		else
-			$r=$db->query('SELECT nomEns as nom, prenomEns as prenom FROM Enseignent WHERE idEns='.$id)->fetch_array();
+			$r=$db->query('SELECT nomEns as nom, prenomEns as prenom FROM Enseignant WHERE idEns='.$id)->fetch_array();
 		return $r["prenom"].' '.$r["nom"];
 	}
 
+	public static function getAsks(){
+		global $db;
+		$res = $db->query('SELECT `id`, `idPersonInCharge`, `isPersonInChargeAStudent`, `concernedPeople`, `dataJson` FROM `Action_sous_confirmation` WHERE FIND_IN_SET("'.getUserId().'", concernedPeople)') or die(mysqli_error($db));
+		$asks = array();
+		while($row=$res->fetch_array())
+			$asks[] = array(
+				'id' => $row['id'],
+				'idPersonInCharge' => $row['idPersonInCharge'],
+				'isPersonInChargeAStudent' => $row['isPersonInChargeAStudent'],
+				'concernedPeople' => $row['concernedPeople'],
+				'dataJson' => json_decode($row['dataJson'], true)
+			);
+		return $asks;
+	}
 	public static function getNotices(){
 		global $db;
 		$notices = array();
@@ -80,14 +97,15 @@ class ConfirmModule{
 		return $notices;
 	}
 
-	private static function countAndOrder($concernedPeople){
+	private static function countAndOrder($concernedPeople, $confirmOrNot = 'nothing'){
 		$ids = array('list+'=>array(), 'list-'=>array(), 'list'=>array(), 'all'=>array());
 		foreach (explode(',', $concernedPeople) as $current){
 			if(!$current)continue;
 			$prefix = ($current[0]=='+'||$current[0]=='-')?$current[0]:'';
 			$value = ($current[0]=='+'||$current[0]=='-')?substr($current, 1):$current;
-			if(!$prefix && $current.''==getUserId().'')
-				$prefix = '+';
+			if($confirmOrNot!='nothing')
+				if(!$prefix && $current.''==getUserId().'')
+					$prefix = $confirmOrNot?'+':'-';
 			$ids['list'.$prefix][] = array(
 				'isStudent' => $value[0]!='p',
 				'value' => ($value[0]=='p')?substr($value, 1):$value
@@ -118,14 +136,14 @@ class ConfirmModule{
 			$id = (($type==ELEVE)?'':'p').intval(getUserId());
 			$res = $db->query('SELECT dataJson, concernedPeople FROM Action_sous_confirmation WHERE id='.intval($idToConfirm).' AND FIND_IN_SET("'.$id.'", concernedPeople)')->fetch_array();
 
-			$ids = self::countAndOrder($res['concernedPeople']);
+			$ids = self::countAndOrder($res['concernedPeople'], $confirmOrNot);
 
 			//Si tout le monde a confirmé (aucun refus et aucun indécis, donc)
 			if(count($ids['list?'])==0 && count($ids['list-'])==0){
 				$db->query('DELETE FROM Action_sous_confirmation WHERE id='.intval($idToConfirm)) or die(mysqli_error($db));
-				self::exec(json_decode($row['dataJson'], true));
+				self::exec(json_decode($res['dataJson'], true));
 			}else
-				$db->query('UPDATE Action_sous_confirmation SET concernedPeople="'.$db->real_escape_string($concernedPeople).'" WHERE id='.intval($idToConfirm)) or die(mysqli_error($db));
+				$db->query('UPDATE Action_sous_confirmation SET concernedPeople="'.$db->real_escape_string(implode(',', $ids['all'])).'" WHERE id='.intval($idToConfirm)) or die(mysqli_error($db));
 			return true;
 		}
 	}

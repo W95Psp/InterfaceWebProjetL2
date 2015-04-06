@@ -37,8 +37,8 @@ function DisplayListProjects($filter = 'none'){
 	$highlight = getUserType()==ELEVE;
 	$textHowToStudent = (getUserType()==ELEVE)?'normal':'no';
 
-	if(isset($_SESSION['groupId']) && $_SESSION['groupId'] && getUserType()==ELEVE){
-		$group = getGroupFromGroupId($_SESSION['groupId']);
+	if(getGroupId() && getUserType()==ELEVE){
+		$group = getGroupFromGroupId(getGroupId());
 		if($group['EtatCandidature']==2){
 			$draggable = false;
 			$textHowToStudent = 'already';

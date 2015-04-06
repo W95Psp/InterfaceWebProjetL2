@@ -92,37 +92,6 @@ html(ng-app='ProjetsL2')
 			}
 
 		:php
-			$notices = ConfirmModule::getNotices();
-			foreach($notices as $notice){
-				if(@$urlParams[0]=="delete-action-to-do" && intval($urlParams[1])==intval($notice['id'])){
-					ConfirmModule::delete($notice['id']);
-				}else if(@$urlParams[0]=="force-action-to-do" && intval($urlParams[1])==intval($notice['id'])){
-					ConfirmModule::forceAction($notice['id']);
-				}else if($notice['expired']==true){
-		div.notice.neutral
-			b Personne 
-			span n'a confirmé ni infirmé 
-			i <?php echo ' "'.@$notice['dataJson']['explain'].'" '; ?>
-			span dans le temps imparti. 
-			br
-			br
-			:php
-				echo '<a href="/?force-action-to-do/'.$notice['id'].'"><button>Force la décision</button></a>';
-		:php
-				}else if($notice['canceled']==true){
-		div.notice.red
-			b Attention : 
-			| <?php echo implode(',', array_map('ConfirmModule::getUserByArray', $notice['concernedPeople']['list-'])); ?>
-			| <?php echo (count($notice['concernedPeople']['list-'])==1)?'a':'ont' ?> refusé de
-			i <?php echo ' '.@$notice['dataJson']['explain']; ?>.
-			br
-			br
-			:php
-				echo '<a href="/?delete-action-to-do/'.$notice['id'].'"><button>Je comprends</button></a>';
-		:php
-			}
-			}
-		:php
 			//Basic route :
 			//  if url is like "/page/numeric-id-of-4-characters"
 			//  else

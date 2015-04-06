@@ -18,8 +18,13 @@ body
 	box-shadow 0px 0px 12px alpha(red, 20%)
 	margin auto
 	border-radius 6px
-	background-color #e74c3c
-	color white
 	text-align center
 	padding 14px
 	margin-top 20px
+	&.red
+		background-color #e74c3c
+		color white
+	&.neutral
+		border 1px dashed blue
+		background-color white
+		box-shadow 0px 0px 6px alpha(black, 20%)

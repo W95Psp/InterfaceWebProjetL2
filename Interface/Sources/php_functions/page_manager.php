@@ -14,6 +14,12 @@
 	//Chargement des configurations des pages / menu
 	$pagesData = array(
 		"allowed" => json_decode(file_get_contents("config/allowed-pages.json"), true),
+		"allowed_specific" => array(
+				ANONYME => json_decode(file_get_contents("config/anonyme-allowed-pages.json"), true),
+				ELEVE => json_decode(file_get_contents("config/eleve-allowed-pages.json"), true),
+				ENCADRANT => json_decode(file_get_contents("config/encadrant-allowed-pages.json"), true),
+				ADMIN => json_decode(file_get_contents("config/admin-allowed-pages.json"), true)
+			),
 		"menus" => array(
 				ANONYME => json_decode(file_get_contents("config/anonyme-menu.json"), true),
 				ELEVE => json_decode(file_get_contents("config/eleve-menu.json"), true),
@@ -24,8 +30,9 @@
 	//Sélection du "bon" menu
 	$menu = $pagesData["menus"][getUserType()];
 	//Vérifie que la page est autorisée, si ce n'est pas le cas, $page = default one 
-	if(!in_array($page, $pagesData["allowed"]))
+	if(!(in_array($page, $pagesData["allowed"]) || in_array($page, $pagesData["allowed_specific"][getUserType()])))
 		$page = array_keys($menu)[0];	//On prend la première page déclarée dans le menu
+
 	function displayPages($part){
 		global $menu, $page;
 		$count = 0;

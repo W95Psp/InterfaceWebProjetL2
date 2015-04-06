@@ -8,15 +8,15 @@ div.page.liste-des-projets(ng-controller='listeProjets')
 		include("php_functions/deleteProjet.php");
 	h1
 		:php
-			if(getUserType()==ELEVE && $_SESSION['groupId']){
+			if(getUserType()==ELEVE && getGroupId()){
 		button#save(ng-if='stateConfirm.substr(0, 7)!="already"', ng-click='isThereAnyModificationsYet && sendOrder()', class='{{isThereAnyModificationsYet ? "green" : "disabled"}}')
 			div
 		:php
 			}
 		span Liste des projets
 	:php
-		if(getUserType()==ELEVE && $_SESSION['groupId']){
-			$group = getGroupFromGroupId($_SESSION['groupId']);
+		if(getUserType()==ELEVE && getGroupId()){
+			$group = getGroupFromGroupId(getGroupId());
 			echo '<div class="confirmation" state="{{stateConfirm}}" ng-init="';
 			echo 'stateConfirm = ';
 			if($group['EtatCandidature']==2)

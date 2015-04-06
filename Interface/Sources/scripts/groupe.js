@@ -12,57 +12,34 @@ app.filter('getUsernameById', function() {
     }
 });
 var SC;
-app.controller('groupe', function($scope, $parse) {
-	$scope.mode = '?';
-	$scope.errorSpotted = [false, ''];
-	$scope.GroupComposedBy = new Array(-1, -1, -1);
-	$scope.GroupComposedByState = new Array(0, 0, 0);
-	$scope.fixed = false;
+app.controller('groupe', function($scope, $http) {
 	SC = $scope;
-	$scope.alreadySelectedStudents = [];
-	$scope.deleteFromList = function(id){
+
+	$scope.listStudents = new Array();
+	$scope.syncFinished = false;
+	$scope.errorSpotted = [false, ''];
+	$scope.group = new Array({id: false},{id: false},{id: false});
+
+	function getIndexOfStudent(student){
 		for(var i in $scope.listStudents)
-			if($scope.listStudents[i].id==id)
-				$scope.alreadySelectedStudents.push($scope.listStudents.splice(i, 1)[0]);
-		return true;
+			if(student.id==$scope.listStudents[i].id)
+				return i;
 	}
-	$scope.recoverToList = function(id){
-		for(var i in $scope.alreadySelectedStudents)
-			if($scope.alreadySelectedStudents[i].id==id)
-				$scope.listStudents.push($scope.alreadySelectedStudents.splice(i, 1)[0]);
+
+	$scope.chooseThisStudent = function(student, groupPosition){
+		console.log("choose=",student);
+		$scope.group[groupPosition] = $scope.listStudents.splice(getIndexOfStudent(student), 1)[0];
+		$scope.group[groupPosition].temp = true;
 	}
-	$scope.countFilled = function(){
-		return ($scope.GroupComposedBy[0]!=-1)+($scope.GroupComposedBy[1]!=-1)+($scope.GroupComposedBy[2]!=-1);
-	}
-	$scope.ask = function(){
-		$.ajax({
-			type: "GET",
-			url: 'ajax.php?action=createGroup&persons='+($scope.GroupComposedBy.join(',')),
-			success: function(result){
-				if(result.length>0){
-					$scope.errorSpotted = [true, result];
-					$scope.$apply();
-				}
-			}
-		});
-	}
-	$scope.tempFun_to_delete__ = function(){
-		for(var i in $scope.listStudents)
-			$scope.listStudents[i].available = true;
-	}
-	for(var i in [200, 600, 3000])
-		setTimeout(function(){
-			for(var i in $scope.GroupComposedBy)
-				$scope.deleteFromList($scope.GroupComposedBy[i]);
-		}, i);
+
 	var lastUpdate = '!';
-	setInterval($scope.refesh = function(){
+	setInterval($scope.refresh = function(){
 		$.ajax({
 			type: "GET",
-			url: 'ajax.php?action=fetchMyState',
+			url: 'ajax.php?action=getState',
 			success: function(result){
 				if(lastUpdate!=result){
-					$scope.canShow = true;
+					$scope.syncFinished = true;
 					lastUpdate = result;
 					try{
 						result = JSON.parse(result);
@@ -71,22 +48,48 @@ app.controller('groupe', function($scope, $parse) {
 						$scope.$apply();
 						return;
 					}
-					console.log(result);
-					$scope.mode = result.state;
-					$scope.fixed = result.fixed;
+
+					console.log('success', result);
+
+					$scope.groupId = result.groupId;
+					$scope.myName = result.myName;
 					
-					if($scope.fixed){
-						for(var i in result.peoples){//Sorry for the final "s" at peoples :S
-							var one = result.peoples[i];
-							$scope.GroupComposedBy[i] = +one.id;
-							$scope.GroupComposedByState[i] = +one.state;
-						}
-					}
+					while(result.inGroup.length<3)
+						result.inGroup.push({id: 0});
+					for(var i in result.inGroup)
+						$scope.group[i] = result.inGroup[i];
+
+					while($scope.listStudents.length)
+						$scope.listStudents.pop();
+					for(var i in result.listStudents)
+						$scope.listStudents.push(result.listStudents[i]);
+					
 					$scope.$apply();
 				}
 			}
 		});
 	}, 2000);
 
-	$scope.refesh();
+
+	function error(res){
+		$scope.errorSpotted = [true, res];
+	}
+	defaultCallback = function(res){
+			if(res.length>0)
+				error(res);
+			$scope.refresh();
+		};
+	$scope.createGroup = function(sId){
+		$http.get("ajax.php?action=createGroup").success(defaultCallback);
+	};
+	$scope.acceptInvitation = function(sId){
+		$http.get("ajax.php?action=manageInvitation&accept=1").success(defaultCallback);
+	};
+	$scope.declineInvitation = function(sId){
+		$http.get("ajax.php?action=manageInvitation&accept=0").success(defaultCallback);
+	};
+	$scope.addToGroup = function(sId){
+		$http.get('ajax.php?action=addToGroup&id='+(+sId)).success(defaultCallback);
+	}
+	$scope.refresh();
 });

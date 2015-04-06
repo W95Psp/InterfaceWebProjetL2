@@ -10,7 +10,7 @@ if(@$urlParams[1]=='do' && @$_POST['user']!=NULL){
 		<option value="!" selected="selected">Sélectionner un profil</option><?php $res = $db->query('
 	SELECT idEtu as id, emailEtu as email, "student" as type FROM Etudiant
 	UNION ALL
-	SELECT idEns as id, emailEns as email, "teacher" as type FROM Enseignent
+	SELECT idEns as id, emailEns as email, "teacher" as type FROM Enseignant
 ');
 while($row = $res->fetch_array()){
 	echo '<option value="'.$row['id'].'|'.$row['type'].'">'.$row['email'].'</option>';

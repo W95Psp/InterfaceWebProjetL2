@@ -275,9 +275,16 @@ button:active.disabled {
   box-shadow: 0px 0px 12px rgba(255,0,0,0.2);
   margin: auto;
   border-radius: 6px;
-  background-color: #e74c3c;
-  color: #fff;
   text-align: center;
   padding: 14px;
   margin-top: 20px;
+}
+.notice.red {
+  background-color: #e74c3c;
+  color: #fff;
+}
+.notice.neutral {
+  border: 1px dashed #00f;
+  background-color: #fff;
+  box-shadow: 0px 0px 6px rgba(0,0,0,0.2);
 }

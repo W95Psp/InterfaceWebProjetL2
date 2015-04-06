@@ -4,12 +4,12 @@
 <!--On déclare un contrôleur AngularJS-->
 <div ng-controller="listeProjets" class="page liste-des-projets"><?php //Inclusion du système de suppression de page
 include("php_functions/deleteProjet.php"); ?>
-	<h1><?php if(getUserType()==ELEVE && $_SESSION['groupId']){ ?>
+	<h1><?php if(getUserType()==ELEVE && getGroupId()){ ?>
 		<button id="save" ng-if="stateConfirm.substr(0, 7)!=&quot;already&quot;" ng-click="isThereAnyModificationsYet &amp;&amp; sendOrder()" class="{{isThereAnyModificationsYet ? &quot;green&quot; : &quot;disabled&quot;}}">
 			<div></div>
 		</button><?php } ?><span>Liste des projets</span>
-	</h1><?php if(getUserType()==ELEVE && $_SESSION['groupId']){
-	$group = getGroupFromGroupId($_SESSION['groupId']);
+	</h1><?php if(getUserType()==ELEVE && getGroupId()){
+	$group = getGroupFromGroupId(getGroupId());
 	echo '<div class="confirmation" state="{{stateConfirm}}" ng-init="';
 	echo 'stateConfirm = ';
 	if($group['EtatCandidature']==2)

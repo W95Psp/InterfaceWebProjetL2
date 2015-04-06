@@ -1,18 +1,18 @@
 <?php
 function getOrderProjects($db){
     $r = array();
-    if(getUserType()==ELEVE && $_SESSION['groupId']!=0){
-        $group = getGroupFromGroupId($_SESSION['groupId']);
+    if(getUserType()==ELEVE && getGroupId()!=0){
+        $group = getGroupFromGroupId(getGroupId());
         if($group['EtatCandidature']==0){
             $res = $db->query('SELECT idProj FROM Projet');
             $values = '';
             $count = 0;
             while (NULL !== ($row = $res->fetch_array()))
-                $values .= ($count?', ':'').'('.$row['idProj'].', '.$_SESSION['groupId'].', '.(++$count).')';
+                $values .= ($count?', ':'').'('.$row['idProj'].', '.getGroupId().', '.(++$count).')';
             $db->query('INSERT INTO ChoixGroupe (idProj, idG, `index`) VALUES '.$values);
-            $db->query('UPDATE Groupe SET EtatCandidature=1 WHERE idG='.$_SESSION['groupId']);
+            $db->query('UPDATE Groupe SET EtatCandidature=1 WHERE idG='.getGroupId());
         }
-        $res = $db->query('SELECT idProj, `index` FROM ChoixGroupe WHERE idG = '.$_SESSION['groupId']) or die(mysqli_error($db));;
+        $res = $db->query('SELECT idProj, `index` FROM ChoixGroupe WHERE idG = '.getGroupId()) or die(mysqli_error($db));;
         while (NULL !== ($row = $res->fetch_array()))
             array_push($r, array($row['idProj'], $row['index']));
     }
@@ -36,9 +36,9 @@ SELECT  proj.nomProj, proj.descProj, proj.allowedLanguages, proj.lien,
         ) as nbStudents
 FROM Projet AS proj
 LEFT JOIN Responsable AS resp
-    ON proj.idProj=resp.ProjectL2_idPro
-LEFT JOIN Enseignent AS ens
-    ON resp.Enseignant_idEns=ens.idEns
+    ON proj.idProj=resp.idPro
+LEFT JOIN Enseignant AS ens
+    ON resp.idEns=ens.idEns
 ';//ATTENTION: La requête SQL n'est pas terminée (voir deux trois lignes plus loin)
     if($filter=='encadrant')
         $sql .= ' WHERE ens.idEns='.getUserId();
