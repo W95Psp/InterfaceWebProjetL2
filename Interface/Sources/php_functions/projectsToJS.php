@@ -22,8 +22,8 @@ function getOrderProjects($db){
 function exportProjectsToJS($db, $filter){
     $str = '<script>importStuff.projects = [';
     $sql = '
-SELECT  proj.nomProj, proj.descProj, proj.allowedLanguages, proj.lien,
-            proj.idProj, proj.nbMini, proj.nbMax, proj.nbInscri,
+SELECT  proj.nomProj, proj.estValide as `show`, proj.descProj, proj.allowedLanguages, proj.lien,
+            proj.idProj, proj.nbMini, proj.nbMax,
         ens.idEns, ens.nomEns, ens.prenomEns,
         GROUP_CONCAT(ens.idEns SEPARATOR "|") AS ens_id_list,
         GROUP_CONCAT(ens.nomEns SEPARATOR "|") AS ens_nom_list,
@@ -43,7 +43,7 @@ LEFT JOIN Enseignant AS ens
     if($filter=='encadrant')
         $sql .= ' WHERE ens.idEns='.getUserId();
     $sql.=' GROUP BY proj.idProj';
-
+    // die('[['.$sql.']]');
     $res = $db->query($sql) or die(mysqli_error($db));
     
     $order = getOrderProjects($db);
@@ -65,7 +65,7 @@ LEFT JOIN Enseignant AS ens
     $keys = array(
         'idProj'=> NUMBER,       'nomProj'=> STR,    'ens_id_list'=> STR,   'ens_nom_list'=> STR,
         'ens_prenom_list'=> STR, 'descProj'=> STR,   'lien'=> STR,          'nbMini'=> NUMBER,
-        'nbMax'=> NUMBER,        'nbStudents'=> NUMBER
+        'nbMax'=> NUMBER,        'nbStudents'=> NUMBER,        'show'=> NUMBER
     );
 
     $count = 0;

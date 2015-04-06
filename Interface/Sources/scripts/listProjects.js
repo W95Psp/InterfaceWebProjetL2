@@ -43,7 +43,7 @@ app.filter('fillZero', function() {
 
 var importStuff = {};
 
-app.controller('listeProjets', function($scope, $parse) {
+app.controller('listeProjets', function($scope, $http) {
 	window.SC = $scope;
 
 	//Pour le bouton de sauvegarde (sauvegarde possible que si nécéssaire)
@@ -53,6 +53,24 @@ app.controller('listeProjets', function($scope, $parse) {
 	$scope.importStuff = importStuff;
 
 	$scope.stateConfirm = 'already';
+
+	$scope.choicesProposition = false;
+
+	$scope.switchVisility = function(proj){
+		$http.get('ajax.php?action=switchVisility&id='+(+proj.idProj)).success(function(result){
+			proj.show = result=='true';
+			console.log(result);
+		});
+	}
+
+	setInterval($scope.refresh = function(){
+		if($scope.textHowToStudent=='already-wait'){
+			$http.get("ajax.php?action=opinion-needed-choices").success(function(result){
+				$scope.choicesProposition = (result=='true');
+			});
+		}
+	}, 2500);
+
 
 	//Dès qu'un lot de données doit être importé depuis l'environement extérieur,
 	//	il est placé dans l'objet importStuff, qui sera ensuite traité.
@@ -102,6 +120,11 @@ app.controller('listeProjets', function($scope, $parse) {
 
 	//Fonction à appeller pour confirmer les choix effectués
 	//	Prérequis : choix déjà sauvegardés
+	$scope.manageChoicesProposition = function(agree){
+		$http.get('ajax.php?action=decision-with-choices&agree='+(agree?'true':'false')).success(function(){
+			$scope.refresh();
+		});
+	}
 	$scope.confirmChoices = function(){
 		//Seul un ordre est donné, aucune donnée ne transite
 		$.post( "ajax.php", {action: "confirm-choices"}).done(function(data) {

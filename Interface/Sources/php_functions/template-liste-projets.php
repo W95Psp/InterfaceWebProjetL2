@@ -6,7 +6,10 @@ function dispInside(){
 	echo 'uType = '.getUserType().';';
 	echo 'uId = '.getUserId();
 	echo '">'."\n";
-		echo '<div class="tools" ng-if="uType+(project.authorsIds.indexOf(+uId)!=-1)>=3" >'."\n";
+	?>
+	<div ng-if='uType==3' ng-click='switchVisility(project)' class='prShowHide' showOrNot='{{!!project.show}}'></div>
+	<?php
+		echo '<div class="tools" ng-if="uType+(project.authorsIds.indexOf(+uId)!=-1)>=3" >';
 	?>
 			<a href='/?liste-des-projets/{{project.idProj | fillZero}}-{{project | getLinkFromTitle}}/edit'><img src="images/icons/edit.png"/></a>
 			<a href='/?liste-des-projets/delete/{{project.idProj}}'><img src="images/icons/delete.png"/></a>
@@ -97,14 +100,14 @@ function DisplayListProjects($filter = 'none'){
 		</div>
 		<div ng-if="draggable" class="body" data-as-sortable="dragControlListeners" data-ng-model="projects">
 			<div data-as-sortable-item data-ng-repeat="(k,project) in projects | filter:search">
-				<div class="row" data-as-sortable-item-handle included="{{highlight && k<nbChoice}}">
+				<div ng-show='project.show || uType==3' class="row" data-as-sortable-item-handle included="{{highlight && k<nbChoice}}">
 					<?php dispInside(); ?>
 				</div>
 			</div>
 		</div>
 		<div ng-if="!draggable" class="body">
 			<div ng-repeat="(k,project) in projects | filter:search">
-				<div class="row" included="{{highlight && k<nbChoice}}">
+				<div ng-show='project.show || uType==3' class="row" included="{{highlight && k<nbChoice}}">
 					<?php dispInside(); ?>
 				</div>
 			</div>

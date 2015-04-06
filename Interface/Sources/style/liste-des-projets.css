@@ -49,6 +49,14 @@
   font-style: italic;
   padding: 20px;
 }
+.choicesProposition {
+  border: 1px dashed #00f;
+  border-radius: 5px;
+  padding: 15px;
+  width: 480px;
+  margin: 20px;
+  text-align: center;
+}
 .row {
   display: block;
 }
@@ -59,6 +67,25 @@
   color: #000;
   text-decoration: none;
   transition: text-decoration 100ms linear;
+}
+.row .titleColumn .prShowHide {
+  position: absolute;
+  padding: 0;
+  left: -30px;
+  opacity: 0.2;
+  background-image: url("../images/icons/visibleOrNot.png");
+  background-position: 0px 0px;
+  transition: background-position 100ms linear;
+  height: 24px;
+  width: 24px;
+}
+.row .titleColumn .prShowHide:hover {
+  transition: opacity 100ms linear;
+  opacity: 0.6;
+}
+.row .titleColumn .prShowHide[showOrNot='false'] {
+  background-position: 0px 24px;
+  transition: background-position 100ms linear;
 }
 .row .titleColumn .tools {
   display: inline-block;

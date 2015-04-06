@@ -43,7 +43,13 @@
 
 
 
-
+.choicesProposition
+	border 1px dashed blue
+	border-radius 5px
+	padding 15px
+	width 480px
+	margin 20px
+	text-align center
 
 .row
 	display block
@@ -52,6 +58,22 @@
 			color black
 			text-decoration none
 			transition text-decoration 100ms linear
+		.prShowHide
+			position absolute
+			padding 0
+			left -30px
+			opacity 0.2
+			&:hover
+				transition opacity 100ms linear
+				opacity 0.6
+			background-image url('../images/icons/visibleOrNot.png')
+			background-position 0px 0px
+			transition background-position 100ms linear
+			height 24px
+			width 24px
+			&[showOrNot='false']
+				background-position 0px 24px
+				transition background-position 100ms linear
 		.tools
 			display inline-block
 			height 40px

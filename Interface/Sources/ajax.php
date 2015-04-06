@@ -1,12 +1,6 @@
 <?php
 	include("php_functions/mysql.php");
 	include("php_functions/connect.php");
-	include("php_functions/ask_module.php");
-
-	function preventCoherenceBug(){
-		if(!getGroupId())
-			die('Erreur de cohérence. Déconnectez vous puis reconnectez vous.');
-	}
 
 	function getPeopleInGroup($gId){
 		global $db;
@@ -21,24 +15,42 @@
 			getGroupId()
 		){
 		protect(ELEVE);
+
 		$group = getGroupFromGroupId(getGroupId());
+
 		if($group['EtatCandidature']!=1)
 			die("La candidature est déjà validée, il est impossible de modifier l'ordre des choix.");
+		
 		$order = explode(';', $_POST['order']);
 		$db->query('DELETE FROM ChoixGroupe WHERE idG='.getGroupId()) or die(mysqli_error($db));;
 		$values = '';
 		$count = 0;
+
 		foreach ($order as $idProj)
 			$values .= ($count?',':'').'('.$idProj.', '.getGroupId().', '.(++$count).')';
 		
 		$db->query('INSERT INTO ChoixGroupe (idProj, idG, `index`) VALUES '.$values) or die(mysqli_error($db));;
 
-	}else if(isset($_POST['action']) && $_POST['action']=='confirm-choices' && getGroupId()){
+	}else if(@$_GET['action']=='opinion-needed-choices' && getGroupId()){
+		if(getGroupId()>0 &&
+			$db->query('SELECT (EtatCandidature=3) as need FROM Groupe WHERE idG='.getGroupId())->fetch_array()['need'] &&
+			$db->query('SELECT (accordChoixGroupe=0) as need FROM Etudiant WHERE idEtu='.getUserId())->fetch_array()['need']){
+			echo 'true';
+		}else
+			echo 'false';
+	}else if(@$_GET['action']=='decision-with-choices' && @$_GET['agree'] && getGroupId()){
+		$agree = intval($_GET['agree']=='true') + 1;
+		$db->query('UPDATE Etudiant SET accordChoixGroupe='.$agree.' WHERE idEtu'.getUserId());
+		$numberDisagreeOrDontKnow = $db->query('SELECT count(*) FROM Etudiant WHERE `accordChoixGroupe`!=1 AND `idGrEtu`=5')->fetch_row()[0];
+		if($numberDisagreeOrDontKnow==0){
+			$db->query('DELETE FROM ChoixGroupe WHERE `index` > 6 AND idG='.getGroupId()) or die(mysqli_error($db));
+			$db->query('UPDATE Groupe SET EtatCandidature=2 WHERE idG='.getGroupId()) or die(mysqli_error($db));
+		}
+	}else if(@$_POST['action']=='confirm-choices' && getGroupId()){
 
 		$group = getGroupFromGroupId(getGroupId());
 		if($group['EtatCandidature']!=1)
 			die("La candidature est déjà validée (ou en attente).");
-		// $db->query('DELETE FROM ChoixGroupe WHERE `index` > 6 AND idG='.getGroupId()) or die(mysqli_error($db));
 		$db->query('UPDATE Groupe SET EtatCandidature=3 WHERE idG='.getGroupId()) or die(mysqli_error($db));
 		
 	}else if(@$_GET['action']=='getState'	&&	getUserType()==ELEVE){
@@ -70,6 +82,10 @@
 		}
 
 		echo json_encode($result);
+	}else if(@$_GET['action']=='switchVisility'	&& @$_GET['id'] &&	getUserType()==ADMIN){
+		$db->query('UPDATE Projet SET estValide=(1-estValide) WHERE idProj='.intval($_GET['id']));
+		$res = $db->query('SELECT estValide FROM Projet WHERE idProj='.intval($_GET['id']))->fetch_array();
+		echo (intval($res['estValide'])==1)?'true':'false';
 	}else if(@$_GET['action']=='manageInvitation'	&&	getUserType()==ELEVE){
 		if(getGroupId()>=0)
 			die('Aucune invitation trouvée.');

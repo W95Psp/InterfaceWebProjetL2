@@ -6,6 +6,12 @@ div.page.liste-des-projets(ng-controller='listeProjets')
 	:php
 		//Inclusion du système de suppression de page
 		include("php_functions/deleteProjet.php");
+	div.choicesProposition(ng-show='choicesProposition')
+		div
+			b Êtes-vous d'accord avec les choix établis dans la liste ci-dessous ?
+		br
+		button.green(ng-click='manageChoicesProposition(true)') Oui
+		button.red(ng-click='manageChoicesProposition(false)') Non
 	h1
 		:php
 			if(getUserType()==ELEVE && getGroupId()){
@@ -43,7 +49,7 @@ div.page.liste-des-projets(ng-controller='listeProjets')
 		DisplayListProjects();
 
 	//Affichage des erreurs (ne devrait jamais se produire)
-	div#disp-error(ng-if='errorSpotted[0]')
+	div#disp-error(ng-if='errorSpotted[0]', ng-init='refresh()')
 		.content
 			.title Erreur !
 			span {{errorSpotted[1]}}

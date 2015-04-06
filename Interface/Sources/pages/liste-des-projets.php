@@ -4,6 +4,11 @@
 <!--On déclare un contrôleur AngularJS-->
 <div ng-controller="listeProjets" class="page liste-des-projets"><?php //Inclusion du système de suppression de page
 include("php_functions/deleteProjet.php"); ?>
+	<div ng-show="choicesProposition" class="choicesProposition">
+		<div><b>Êtes-vous d'accord avec les choix établis dans la liste ci-dessous ?</b></div><br/>
+		<button ng-click="manageChoicesProposition(true)" class="green">Oui</button>
+		<button ng-click="manageChoicesProposition(false)" class="red">Non</button>
+	</div>
 	<h1><?php if(getUserType()==ELEVE && getGroupId()){ ?>
 		<button id="save" ng-if="stateConfirm.substr(0, 7)!=&quot;already&quot;" ng-click="isThereAnyModificationsYet &amp;&amp; sendOrder()" class="{{isThereAnyModificationsYet ? &quot;green&quot; : &quot;disabled&quot;}}">
 			<div></div>
@@ -37,7 +42,7 @@ include('php_functions/template-liste-projets.php');
 DisplayListProjects();
  ?>
 	<!--Affichage des erreurs (ne devrait jamais se produire)-->
-	<div id="disp-error" ng-if="errorSpotted[0]">
+	<div id="disp-error" ng-if="errorSpotted[0]" ng-init="refresh()">
 		<div class="content">
 			<div class="title">Erreur !</div><span>{{errorSpotted[1]}}</span>
 		</div>
