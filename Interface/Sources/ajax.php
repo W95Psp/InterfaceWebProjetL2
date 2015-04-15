@@ -86,7 +86,7 @@
 		$db->query('UPDATE Projet SET estValide=(1-estValide) WHERE idProj='.intval($_GET['id']));
 		$res = $db->query('SELECT estValide FROM Projet WHERE idProj='.intval($_GET['id']))->fetch_array();
 		echo (intval($res['estValide'])==1)?'true':'false';
-	}else if(@$_GET['action']=='manageInvitation'	&&	getUserType()==ELEVE){
+	}else if(@$_GET['action']=='manageInvitation' && $isWebsiteOpen	&&	getUserType()==ELEVE){
 		if(getGroupId()>=0)
 			die('Aucune invitation trouvée.');
 
@@ -98,7 +98,7 @@
 			isset($_GET['id'])		&&
 			$_GET['action']=='addToGroup'	&&
 			$_GET['id']!=''			&&
-			getUserType()==ELEVE
+			getUserType()==ELEVE && $isWebsiteOpen
 		){
 
 		$listInGroupSQL = getPeopleInGroup(getGroupId());
@@ -116,7 +116,7 @@
 	}else if(
 			isset($_GET['action'])			&&
 			$_GET['action']=='createGroup'	&&
-			getUserType()==ELEVE
+			getUserType()==ELEVE	&& $isWebsiteOpen
 		){
 		if(getGroupId()!=null)
 			die('Error: the student ['.getUserName().'] can\'t create a group while he is already in another one.');
