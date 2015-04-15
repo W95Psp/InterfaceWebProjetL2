@@ -10,7 +10,7 @@ var SC;
 app.controller('admin', function($scope, $parse) {
 	SC = $scope;
 	$scope.etudiantsMode = 0;
-	$scope.pages = ["Encadrants", "Groupes", "Présentation", "Modalité notes", "Etudiants"];
+	$scope.pages = ["Encadrants", "Groupes", "Présentation", "Notation", "Etudiants", "Promos"];
 	$scope.currentPage = 4;
 	$scope.etudiantsData = '';
 	$scope.etudiantsDataFinal = [];

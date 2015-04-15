@@ -8,7 +8,7 @@ if(@$urlParams[1]=='do' && @$_POST['user']!=NULL){
 } ?><b>Module de connection temporaire sans mot de passe</b><br/><br/>
 	<form method="POST" action="/?connexion/do"><select name="user" onchange='this.parentNode.submit();'>
 		<option value="!" selected="selected">Sélectionner un profil</option><?php $res = $db->query('
-	SELECT idEtu as id, emailEtu as email, "student" as type FROM Etudiant
+	SELECT idEtu as id, emailEtu as email, "student" as type FROM V_EtudiantPromo
 	UNION ALL
 	SELECT idEns as id, emailEns as email, "teacher" as type FROM Enseignant
 ');

@@ -31,7 +31,7 @@
 		$allowedLanguages = trim($_POST['allowedLanguages']);
 		$allowedLanguages = addslashes($allowedLanguages);
 		if ($idProject == "N"){
-			$sql = "INSERT INTO Projet (nomProj,descProj,allowedLanguages,lien,nbMini,nbMax,estValide) VALUES ('".$nomProj."','".$descProj."','".$allowedLanguages."','',2,4,'".$estValide."')";
+			$sql = "SET @promo=(SELECT * FROM LAST_PROMO_ID);INSERT INTO Projet (nomProj,descProj,allowedLanguages,lien,nbMini,nbMax,estValide,idPromo) VALUES ('".$nomProj."','".$descProj."','".$allowedLanguages."','',2,4,'".$estValide."', @promo)";
 			$db->query($sql);
 			$idProject = $db->insert_id;
 			$sql2 = "INSERT INTO Responsable (idPro,idEns) VALUES (".$idProject.",".getUserId().")";

@@ -4,7 +4,7 @@ function getOrderProjects($db){
     if(getUserType()==ELEVE && getGroupId()!=0){
         $group = getGroupFromGroupId(getGroupId());
         if($group['EtatCandidature']==0){
-            $res = $db->query('SELECT idProj FROM Projet');
+            $res = $db->query('SELECT idProj FROM V_ProjetPromo');
             $values = '';
             $count = 0;
             while (NULL !== ($row = $res->fetch_array()))
@@ -22,7 +22,7 @@ function getOrderProjects($db){
 function exportProjectsToJS($db, $filter){
     $str = '<script>importStuff.projects = [';
     $sql = '
-SELECT  proj.nomProj, proj.estValide as `show`, proj.descProj, proj.allowedLanguages, proj.lien,
+SELECT  proj.nomProj, proj.estValide as `show`, proj.descProj, proj.allowedLanguages,
             proj.idProj, proj.nbMini, proj.nbMax,
         ens.idEns, ens.nomEns, ens.prenomEns,
         GROUP_CONCAT(ens.idEns SEPARATOR "|") AS ens_id_list,
@@ -34,7 +34,7 @@ SELECT  proj.nomProj, proj.estValide as `show`, proj.descProj, proj.allowedLangu
             FROM    ChoixGroupe as chxGrp
             WHERE   proj.idProj = chxGrp.idProj
         ) as nbStudents
-FROM Projet AS proj
+FROM V_ProjetPromo AS proj
 LEFT JOIN Responsable AS resp
     ON proj.idProj=resp.idPro
 LEFT JOIN Enseignant AS ens
@@ -64,7 +64,7 @@ LEFT JOIN Enseignant AS ens
     define('STR', 1);
     $keys = array(
         'idProj'=> NUMBER,       'nomProj'=> STR,    'ens_id_list'=> STR,   'ens_nom_list'=> STR,
-        'ens_prenom_list'=> STR, 'descProj'=> STR,   'lien'=> STR,          'nbMini'=> NUMBER,
+        'ens_prenom_list'=> STR, 'descProj'=> STR,         'nbMini'=> NUMBER,
         'nbMax'=> NUMBER,        'nbStudents'=> NUMBER,        'show'=> NUMBER
     );
 

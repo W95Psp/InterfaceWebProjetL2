@@ -11,7 +11,7 @@
 		<div class="notice neutral">
 <?php
 			if($ask['dataJson']['action']=='joinGroup'){
-				$res = $db->query('SELECT CONCAT(prenomEtu, " ", nomEtu) as nom FROM Etudiant WHERE idGrEtu='.$ask['dataJson']['idGroup']);
+				$res = $db->query('SELECT CONCAT(prenomEtu, " ", nomEtu) as nom FROM V_EtudiantPromo WHERE idGrEtu='.$ask['dataJson']['idGroup']);
 				$listNames = array();
 				while($row=$res->fetch_array())
 					$listNames[] = $row['nom'];

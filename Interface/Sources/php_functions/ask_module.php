@@ -22,7 +22,7 @@ class ConfirmModule{
 		// SQL Querty to select emails of every peoples involved
 		$sql = '
 	SELECT  `idEtu` as id, `nomEtu` as nom, TRUE as isEleve, `prenomEtu` as prenom,
-			`emailEtu` as email FROM `Etudiant`
+			`emailEtu` as email FROM V_EtudiantPromo
 		WHERE idEtu IN ('.$prefixSQL1.implode(',', array_map('intval', $listOfStudentsId)).')
 
 	UNION ALL

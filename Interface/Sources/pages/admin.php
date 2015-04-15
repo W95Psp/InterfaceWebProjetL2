@@ -4,7 +4,7 @@
 }
 if(count($urlParams)>2 && $urlParams[1]=='etudiants' && $urlParams[2]=='import' && isset($_POST['Data'])){
 	$Data = json_decode($_POST['Data']);
-	$str = "INSERT INTO Etudiant (nomEtu, prenomEtu, emailEtu) VALUES";
+	$str = "SET @promo=(SELECT * FROM LAST_PROMO_ID);INSERT INTO Etudiant (nomEtu, prenomEtu, emailEtu, idPromo) VALUES";
 	$first = true;
 	foreach($Data as $line){
 		if(!$first)
@@ -13,7 +13,7 @@ if(count($urlParams)>2 && $urlParams[1]=='etudiants' && $urlParams[2]=='import' 
 		$str.='"'.$line[0].'",';
 		$str.='"'.$line[1].'",';
 		$str.='"'.$line[2].'"';
-		$str.=')';
+		$str.=',@promo)';
 		$first = false;
 	}
 	$db->query($str.';'); ?>
@@ -25,11 +25,14 @@ if(count($urlParams)>2 && $urlParams[1]=='etudiants' && $urlParams[2]=='import' 
 		float: left;
 		font-size: 24px;
 		padding: 10px;
+		padding-top: 0px;
+		padding-bottom: 0px;
 		color: #bdc3c7;
 		transition: color 100ms linear;
 		position: relative;
 		top: 0px;
 		cursor: default;
+		margin: 0px;
 	}
 	h1[state='true']{
 		color: black;
@@ -45,13 +48,14 @@ if(count($urlParams)>2 && $urlParams[1]=='etudiants' && $urlParams[2]=='import' 
 	}
 	.panels{
 		position: relative;
-		width: 4000px;
+		width: 4700px;
 	}
 	.panels[state="0"]{left: 0px;		transition: left 400ms ease-out;}
 	.panels[state="1"]{left: -760px;	transition: left 400ms ease-out;}
 	.panels[state="2"]{left: -1520px;	transition: left 400ms ease-out;}
 	.panels[state="3"]{left: -2280px;	transition: left 400ms ease-out;}
 	.panels[state="4"]{left: -3040px;	transition: left 400ms ease-out;}
+	.panels[state="5"]{left: -3800px;	transition: left 400ms ease-out;}
 	
 	.panel{
 		float: left;
@@ -172,6 +176,10 @@ echo '\'>';
 				</table>
 				<div style="text-align: center;">({{etudiantsDataFinal.length-20}} étudiants ne sont pas affichés)</div>
 			</div>
+		</div>
+		<div class="panel">
+			<h2>Promos</h2>
+			<p>sqdsd</p>
 		</div>
 	</div>
 </div><?php echo '</div>';

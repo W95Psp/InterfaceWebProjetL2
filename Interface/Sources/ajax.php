@@ -4,7 +4,7 @@
 
 	function getPeopleInGroup($gId){
 		global $db;
-		return $db->query('SELECT idEtu as id, (idGrEtu>0) as agree, CONCAT(prenomEtu, " ", nomEtu) as name FROM Etudiant WHERE idGrEtu='.$gId.' OR idGrEtu='.(-intval($gId)));
+		return $db->query('SELECT idEtu as id, (idGrEtu>0) as agree, CONCAT(prenomEtu, " ", nomEtu) as name FROM V_EtudiantPromo WHERE idGrEtu='.$gId.' OR idGrEtu='.(-intval($gId)));
 	}
 
 
@@ -34,14 +34,14 @@
 	}else if(@$_GET['action']=='opinion-needed-choices' && getGroupId()){
 		if(getGroupId()>0 &&
 			$db->query('SELECT (EtatCandidature=3) as need FROM Groupe WHERE idG='.getGroupId())->fetch_array()['need'] &&
-			$db->query('SELECT (accordChoixGroupe=0) as need FROM Etudiant WHERE idEtu='.getUserId())->fetch_array()['need']){
+			$db->query('SELECT (accordChoixGroupe=0) as need FROM V_EtudiantPromo WHERE idEtu='.getUserId())->fetch_array()['need']){
 			echo 'true';
 		}else
 			echo 'false';
 	}else if(@$_GET['action']=='decision-with-choices' && @$_GET['agree'] && getGroupId()){
 		$agree = intval($_GET['agree']=='true') + 1;
 		$db->query('UPDATE Etudiant SET accordChoixGroupe='.$agree.' WHERE idEtu'.getUserId());
-		$numberDisagreeOrDontKnow = $db->query('SELECT count(*) FROM Etudiant WHERE `accordChoixGroupe`!=1 AND `idGrEtu`=5')->fetch_row()[0];
+		$numberDisagreeOrDontKnow = $db->query('SELECT count(*) FROM V_EtudiantPromo WHERE `accordChoixGroupe`!=1 AND `idGrEtu`=5')->fetch_row()[0];
 		if($numberDisagreeOrDontKnow==0){
 			$db->query('DELETE FROM ChoixGroupe WHERE `index` > 6 AND idG='.getGroupId()) or die(mysqli_error($db));
 			$db->query('UPDATE Groupe SET EtatCandidature=2 WHERE idG='.getGroupId()) or die(mysqli_error($db));
@@ -61,7 +61,7 @@
 			'myName' => getUserName()
 		);
 
-		$res = $db->query('SELECT idEtu as id, idGrEtu, CONCAT(`nomEtu`, " ", `prenomEtu`) as name FROM Etudiant WHERE idEtu!='.getUserId()) or die(mysqli_error($db));
+		$res = $db->query('SELECT idEtu as id, idGrEtu, CONCAT(`nomEtu`, " ", `prenomEtu`) as name FROM V_EtudiantPromo WHERE idEtu!='.getUserId()) or die(mysqli_error($db));
 
 		while($row = $res->fetch_array())
 			$result['listStudents'][] = array(

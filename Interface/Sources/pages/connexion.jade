@@ -15,7 +15,7 @@
 		option(value='!', selected) Sélectionner un profil
 		:php
 			$res = $db->query('
-				SELECT idEtu as id, emailEtu as email, "student" as type FROM Etudiant
+				SELECT idEtu as id, emailEtu as email, "student" as type FROM V_EtudiantPromo
 				UNION ALL
 				SELECT idEns as id, emailEns as email, "teacher" as type FROM Enseignant
 			');
