@@ -12,7 +12,7 @@
 			isset($_POST['action'])				&&
 			isset($_POST['order'])				&&
 			$_POST['action']=='update-order'	&&
-			getGroupId()
+			getGroupId()		&& $isWebsiteOpen
 		){
 		protect(ELEVE);
 
@@ -38,7 +38,7 @@
 			echo 'true';
 		}else
 			echo 'false';
-	}else if(@$_GET['action']=='decision-with-choices' && @$_GET['agree'] && getGroupId()){
+	}else if(@$_GET['action']=='decision-with-choices' && $isWebsiteOpen && @$_GET['agree'] && getGroupId()){
 		$agree = intval($_GET['agree']=='true') + 1;
 		$db->query('UPDATE Etudiant SET accordChoixGroupe='.$agree.' WHERE idEtu'.getUserId());
 		$numberDisagreeOrDontKnow = $db->query('SELECT count(*) FROM V_EtudiantPromo WHERE `accordChoixGroupe`!=1 AND `idGrEtu`=5')->fetch_row()[0];
@@ -46,7 +46,7 @@
 			$db->query('DELETE FROM ChoixGroupe WHERE `index` > 6 AND idG='.getGroupId()) or die(mysqli_error($db));
 			$db->query('UPDATE Groupe SET EtatCandidature=2 WHERE idG='.getGroupId()) or die(mysqli_error($db));
 		}
-	}else if(@$_POST['action']=='confirm-choices' && getGroupId()){
+	}else if(@$_POST['action']=='confirm-choices' && $isWebsiteOpen && getGroupId()){
 
 		$group = getGroupFromGroupId(getGroupId());
 		if($group['EtatCandidature']!=1)

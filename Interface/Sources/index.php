@@ -12,6 +12,16 @@ include("php_functions/mysql.php");
 //Connection related functions
 include("php_functions/connect.php");
 
+//Get current state of the website
+$isWebsiteOpen;
+call_user_func(function(){
+	global $db, $isWebsiteOpen;
+	$lastPromo = $db->query('SELECT UNIX_TIMESTAMP(`dateOpen`) as dateOpen,UNIX_TIMESTAMP(`dateClose`) as dateClose FROM `Promo` ORDER BY idPromo DESC LIMIT 0,1')->fetch_array();
+	$dStart  = intval($lastPromo["dateOpen"]);
+	$dEnd = intval($lastPromo["dateClose"]);
+	$isWebsiteOpen = (time()>$dStart && time()<$dEnd);
+});
+
 //Include mail stuff
 include("php_functions/ask_module.php");
 
