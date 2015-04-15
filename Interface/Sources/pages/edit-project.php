@@ -20,7 +20,7 @@
 		}
 		</script>
 		<?php
-		if ((!isset($idProject)) || (trim($idProject)==0)) {
+		if ((!isset($idProject)) || (intval($idProject)==0)) {
 			$idProject = "N";
 			$descProj = "";
 			$nomProj = "";

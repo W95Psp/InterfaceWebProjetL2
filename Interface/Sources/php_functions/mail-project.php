@@ -11,7 +11,7 @@ function mailValidation($idProj,$db){
 	$message = "<html> <body>";
 	$message .= "<p>Bonjour,</p>";
 	$message .= "<p>Un enseignant a soumis un sujet. Pour l'accepter ou le refuser, cliquez sur le lien ci-dessous : </p>";
-	$lien = $_SERVER['SERVER_NAME']."/validate-project.php?id=".$idProj;
+	$lien = $_SERVER['SERVER_NAME']."/?liste-des-projets/".$idProj."/validate";
 	$message .= "<p> <a href='".$lien."'>".$lien."</a> </p>";
 	$message .= "<p>Cordialement,</p>";
 	$message .= "<p>Site des projets</p>";

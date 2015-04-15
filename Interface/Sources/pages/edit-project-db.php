@@ -1,19 +1,12 @@
-
-<style>
-	.details-project img{
-		width: 20px;
-	}
-</style>
-<div ng-init="project = 0" class="page edit-project">
-	<?php
+<?php
+	session_start();
+	include "php_functions/mysql.php";
+	include "php_functions/connect.php";
 	include "php_functions/mail-project.php";
-	$retour = "<p><a href='/?liste-des-projets'>Retour à la liste des projets</a></p>";
 	if (getUserType() >= ENCADRANT) {
 		if ((!isset($_POST['nomProj'])) || (trim($_POST['nomProj'])=="")) {
 			$nomProj = "";
-			$sortie = "Une erreur s'est produite lors de l'édition du projet.";
-			echo "<h1>Erreur</h1>";
-			echo "<p>".$sortie."</p>".$retour;
+			header("Location: /?liste-des-projets");
 			exit();
 		} else {
 			$nomProj = trim($_POST['nomProj']);
@@ -37,12 +30,10 @@
 			$sql2 = "INSERT INTO Responsable (idPro,idEns) VALUES (".$idProject.",".getUserId().")";
 			$db->query($sql2);
 			mailValidation($idProject, $db);
-			$sortie="Le sujet a été proposé à l'administrateur.";
 		}
 		else{
 			$sql = "UPDATE Projet SET nomProj='".$nomProj."',descProj='".$descProj."',allowedLanguages='".$allowedLanguages."',estValide=".$estValide." WHERE idProj=".$idProject;
 			$db->query($sql);
-			$sortie="La modification a bien été enregistrée.";
 		}
 		if(!file_exists("pdfs")){
 			mkdir("pdfs");	
@@ -59,11 +50,10 @@
 			move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path);
 		}
 		
-		echo "<h1>".$nomProj."</h1>";
-		echo "<p>".$sortie."</p>".$retour;
+		header("Location: /?liste-des-projets");
+		exit();
 	} else {
-		echo "<h1>Désolé</h1>";
-		echo "<p>Vous ne disposez pas des permissions pour accéder à cette page.</p>".$retour;	
+		header("Location: /?liste-des-projets");
+		exit();	
 	}
-	?>
-</div>
+?>

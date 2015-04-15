@@ -1,4 +1,12 @@
-
+<?php
+if (($urlParam[2]=='edit') || (intval($idProject)==0)){
+	include("pages/edit-project.php");
+} else if ($urlParam[2]=='delete'){
+	include("pages/delete-project.php");
+} else if ($urlParam[2]=='validate'){
+	include("pages/validate-project.php");
+} else {
+?>
 <style>
 	.details-project img{
 		width: 20px;
@@ -29,3 +37,6 @@
 	}
 	?>
 </div>
+<?php
+}
+?>
