@@ -1,9 +1,9 @@
 <?php
-if (($urlParams[2]=='edit') || (intval($idProject)==0)){
+if ((@$urlParams[2]=='edit') || (intval($idProject)==0)){
 	include("pages/edit-project.php");
-} else if ($urlParams[2]=='delete'){
+} else if (@$urlParams[2]=='delete'){
 	include("pages/delete-project.php");
-} else if ($urlParams[2]=='validate'){
+} else if (@$urlParams[2]=='validate'){
 	include("pages/validate-project.php");
 } else {
 ?>
