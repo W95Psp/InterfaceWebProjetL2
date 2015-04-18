@@ -5,6 +5,8 @@ if ((@$urlParams[2]=='edit') || (intval($idProject)==0)){
 	include("pages/delete-project.php");
 } else if (@$urlParams[2]=='validate'){
 	include("pages/validate-project.php");
+} else if (@$urlParams[2]=='waiting'){
+	include("pages/validate-project-list.php");
 } else {
 ?>
 <style>

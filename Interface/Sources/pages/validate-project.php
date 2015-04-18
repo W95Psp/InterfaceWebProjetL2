@@ -6,7 +6,7 @@
 </style>
 <div ng-init="project = 0" class="page validate-project">
 	<?php
-	if (getUserType() >= ADMIN) {
+	if (getUserType() == ADMIN) {
 	?>
 		<script type="text/javascript">
 		function Valider(reponse){
