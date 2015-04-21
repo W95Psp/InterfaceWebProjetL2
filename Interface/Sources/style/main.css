@@ -85,7 +85,8 @@ body .page.presentation .text {
   margin-top: 0px;
   padding-top: 1px;
 }
-button {
+button,
+input[type='submit'] {
   position: relative;
   color: #000;
   border: 0;
@@ -103,39 +104,48 @@ border-bottom
   border-radius: 3px;
   outline: 0 none;
 }
-button.green {
+button.green,
+input[type='submit'].green {
   background-color: #2ecc71;
   border-bottom: 2px solid #1e874b;
 }
-button.disabled {
+button.disabled,
+input[type='submit'].disabled {
   background-color: #bdc3c7;
   border-bottom: 2px solid #8b959c;
   color: #808080;
   opacity: 0.5;
 }
-button.red {
+button.red,
+input[type='submit'].red {
   background-color: #ff5761;
   border-bottom: 2px solid #e2000d;
 }
-button:hover {
+button:hover,
+input[type='submit']:hover {
   transition: background-color 100ms ease-out;
   background-color: #36b8ff;
 }
-button:hover.green {
+button:hover.green,
+input[type='submit']:hover.green {
   background-color: #28b463;
 }
-button:hover.red {
+button:hover.red,
+input[type='submit']:hover.red {
   background-color: #ff2e3a;
 }
-button:hover.disabled {
+button:hover.disabled,
+input[type='submit']:hover.disabled {
   background-color: #bdc3c7;
   border-bottom: 2px solid #8b959c;
 }
-button:active {
+button:active,
+input[type='submit']:active {
   padding-top: 7px;
   margin-bottom: -1px;
 }
-button:active.disabled {
+button:active.disabled,
+input[type='submit']:active.disabled {
   padding-top: 8px;
   margin-bottom: 0px;
 }
