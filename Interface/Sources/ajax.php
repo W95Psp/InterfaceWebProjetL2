@@ -7,51 +7,27 @@
 		return $db->query('SELECT idEtu as id, (idGrEtu>0) as agree, CONCAT(prenomEtu, " ", nomEtu) as name FROM V_EtudiantPromo WHERE idGrEtu='.$gId.' OR idGrEtu='.(-intval($gId)));
 	}
 
+	$ajaxFunctions = array();
+	include("php_functions/ajax/updateOrder.php");
+	include("php_functions/ajax/opinionNeededChoices.php");
+	include("php_functions/ajax/decisionWithChoices.php");
+	include("php_functions/ajax/confirmChoices.php");
 
-	if(
-			isset($_POST['action'])				&&
-			isset($_POST['order'])				&&
-			$_POST['action']=='update-order'	&&
-			getGroupId()		&& $isWebsiteOpen
-		){
-		protect(ELEVE);
+	if(isset($_POST['order']) && @$_POST['action']=='update-order' && getGroupId() && $isWebsiteOpen && getUserType()==ELEVE){
 
-		$group = getGroupFromGroupId(getGroupId());
-
-		if($group['EtatCandidature']!=1)
-			die("La candidature est déjà validée, il est impossible de modifier l'ordre des choix.");
-		
-		$order = explode(';', $_POST['order']);
-		$db->query('DELETE FROM ChoixGroupe WHERE idG='.getGroupId()) or die(mysqli_error($db));;
-		$values = '';
-		$count = 0;
-
-		foreach ($order as $idProj)
-			$values .= ($count?',':'').'('.$idProj.', '.getGroupId().', '.(++$count).')';
-		
-		$db->query('INSERT INTO ChoixGroupe (idProj, idG, `index`) VALUES '.$values) or die(mysqli_error($db));;
+		$ajaxFunctions['update-order'](getGroupFromGroupId(getGroupId()), $_POST['order']);
 
 	}else if(@$_GET['action']=='opinion-needed-choices' && getGroupId()){
-		if(getGroupId()>0 &&
-			$db->query('SELECT (EtatCandidature=3) as need FROM Groupe WHERE idG='.getGroupId())->fetch_array()['need'] &&
-			$db->query('SELECT (accordChoixGroupe=0) as need FROM V_EtudiantPromo WHERE idEtu='.getUserId())->fetch_array()['need']){
-			echo 'true';
-		}else
-			echo 'false';
+		
+		$ajax['opinion-needed-choices']();
+
 	}else if(@$_GET['action']=='decision-with-choices' && $isWebsiteOpen && @$_GET['agree'] && getGroupId()){
-		$agree = intval($_GET['agree']=='true') + 1;
-		$db->query('UPDATE Etudiant SET accordChoixGroupe='.$agree.' WHERE idEtu'.getUserId());
-		$numberDisagreeOrDontKnow = $db->query('SELECT count(*) FROM V_EtudiantPromo WHERE `accordChoixGroupe`!=1 AND `idGrEtu`=5')->fetch_row()[0];
-		if($numberDisagreeOrDontKnow==0){
-			$db->query('DELETE FROM ChoixGroupe WHERE `index` > 6 AND idG='.getGroupId()) or die(mysqli_error($db));
-			$db->query('UPDATE Groupe SET EtatCandidature=2 WHERE idG='.getGroupId()) or die(mysqli_error($db));
-		}
+		
+		$ajax['decision-with-choices'](intval($_GET['agree']=='true')+1, );
+
 	}else if(@$_POST['action']=='confirm-choices' && $isWebsiteOpen && getGroupId()){
 
-		$group = getGroupFromGroupId(getGroupId());
-		if($group['EtatCandidature']!=1)
-			die("La candidature est déjà validée (ou en attente).");
-		$db->query('UPDATE Groupe SET EtatCandidature=3 WHERE idG='.getGroupId()) or die(mysqli_error($db));
+		$ajax['confirm-choices']();
 		
 	}else if(@$_GET['action']=='getState'	&&	getUserType()==ELEVE){
 		$result = array(

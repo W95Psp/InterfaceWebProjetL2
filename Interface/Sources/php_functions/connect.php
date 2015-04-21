@@ -6,17 +6,6 @@
 	define("ENCADRANT", 2);
 	define("ADMIN", 3);
 
-	function protect(){
-		$okay = false;
-		foreach (func_get_args() as $param) {
-	        if($param==getUserType())
-	        	$okay = true;
-	    }
-	    if(!$okay)
-	    	die("[error]");
-		return $okay;
-	}
-
 	function getGroupIdFromStudentId($studentId){
 		global $db;
 		$result = $db->query('SELECT idGrEtu FROM Etudiant WHERE idEtu='.intval($studentId)) or die(mysqli_error($db));

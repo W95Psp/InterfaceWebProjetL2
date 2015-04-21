@@ -179,7 +179,24 @@ echo '\'>';
 		</div>
 		<div class="panel">
 			<h2>Promos</h2>
-			<p>sqdsd</p>
+			<table>
+				<tr>
+					<th>Identifiant</th>
+					<th>Description</th>
+					<th>Responsable</th>
+					<th>Ouverture</th>
+					<th>Fermeture</th>
+					<th>Active ?</th>
+				</tr>
+				<tr>
+					<td>null</td>
+					<td>null</td>
+					<td>null</td>
+					<td>null</td>
+					<td>null</td>
+					<td>null</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </div><?php echo '</div>';
