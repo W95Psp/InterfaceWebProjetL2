@@ -86,7 +86,8 @@ body .page.presentation .text {
   padding-top: 1px;
 }
 button,
-input[type='submit'] {
+input[type='submit'],
+input[type='button'] {
   position: relative;
   color: #000;
   border: 0;
@@ -105,47 +106,56 @@ border-bottom
   outline: 0 none;
 }
 button.green,
-input[type='submit'].green {
+input[type='submit'].green,
+input[type='button'].green {
   background-color: #2ecc71;
   border-bottom: 2px solid #1e874b;
 }
 button.disabled,
-input[type='submit'].disabled {
+input[type='submit'].disabled,
+input[type='button'].disabled {
   background-color: #bdc3c7;
   border-bottom: 2px solid #8b959c;
   color: #808080;
   opacity: 0.5;
 }
 button.red,
-input[type='submit'].red {
+input[type='submit'].red,
+input[type='button'].red {
   background-color: #ff5761;
   border-bottom: 2px solid #e2000d;
 }
 button:hover,
-input[type='submit']:hover {
+input[type='submit']:hover,
+input[type='button']:hover {
   transition: background-color 100ms ease-out;
   background-color: #36b8ff;
 }
 button:hover.green,
-input[type='submit']:hover.green {
+input[type='submit']:hover.green,
+input[type='button']:hover.green {
   background-color: #28b463;
 }
 button:hover.red,
-input[type='submit']:hover.red {
+input[type='submit']:hover.red,
+input[type='button']:hover.red {
   background-color: #ff2e3a;
 }
 button:hover.disabled,
-input[type='submit']:hover.disabled {
+input[type='submit']:hover.disabled,
+input[type='button']:hover.disabled {
   background-color: #bdc3c7;
   border-bottom: 2px solid #8b959c;
 }
 button:active,
-input[type='submit']:active {
+input[type='submit']:active,
+input[type='button']:active {
   padding-top: 7px;
   margin-bottom: -1px;
 }
 button:active.disabled,
-input[type='submit']:active.disabled {
+input[type='submit']:active.disabled,
+input[type='button']:active.disabled {
   padding-top: 8px;
   margin-bottom: 0px;
 }
