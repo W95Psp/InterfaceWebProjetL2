@@ -71,8 +71,8 @@
 				 type="hidden">';
 			 }
 			?>
-			<p> <input id="btnValide" name="btnValide" value="Enregistrer" type="button" onclick="Valider()">
-			<input id="annuler" name="annuler" value="Annuler" type="button" onclick="Annuler()"> </p>
+			<p> <input id="btnValide" class='green' name="btnValide" value="Enregistrer" type="button" onclick="Valider()">
+			<input id="annuler" class='red' name="annuler" value="Annuler" type="button" onclick="Annuler()"> </p>
 		</form>
 	<?php
 	} else {
