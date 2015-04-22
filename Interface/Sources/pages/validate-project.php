@@ -41,8 +41,8 @@
 		<form name="form1" action="validate-project-db.php" method="post">
 			<input type="hidden" id="idProj" name="idProj" value="<?php echo $donnee['idProj']; ?>">
 			<input type="hidden" id="idReponse" name="idReponse" value="">
-		<p> <input id="btnValide" name="btnValide" value="Valider le projet" type="button" onclick="Valider(1)">
-			<input id="annuler" name="annuler" value="Refuser le projet" type="button" onclick="Valider(0)"> </p>
+		<p> <input id="btnValide" class="green" name="btnValide" value="Valider le projet" type="button" onclick="Valider(1)">
+			<input id="annuler" class="red" name="annuler" value="Refuser le projet" type="button" onclick="Valider(0)"> </p>
 		</form>
 	<?php
 	} else {

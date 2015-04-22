@@ -28,8 +28,8 @@
 	<form name="form1" action="delete-project-db.php" method="post">
 	<input type="hidden" id="idProj" name="idProj" value="<?php echo $donnee['idProj']; ?>">
 	
-	<p> <input id="btnValide" name="btnValide" value="Supprimer le projet" type="button" onclick="Valider()">
-		<input id="annuler" name="annuler" value="Annuler" type="button" onclick="Annuler()"> </p>
+	<p> <input id="btnValide" class="green" name="btnValide" value="Supprimer le projet" type="button" onclick="Valider()">
+		<input id="annuler" class="red" name="annuler" value="Annuler" type="button" onclick="Annuler()"> </p>
 	
 	</form>
 	<?php
