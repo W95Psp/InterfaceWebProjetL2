@@ -35,8 +35,8 @@
 			$sql = "UPDATE Projet SET nomProj='".$nomProj."',descProj='".$descProj."',allowedLanguages='".$allowedLanguages."',estValide=".$estValide." WHERE idProj=".$idProject;
 			$db->query($sql);
 		}
-		if(!file_exists("pdfs")){
-			mkdir("pdfs");	
+		if(!file_exists("../pdfs")){
+			mkdir("../pdfs");	
 		}
 		$pdfvalid = 1;
 		$pdf = basename($_FILES['uploadedfile']['name']);
