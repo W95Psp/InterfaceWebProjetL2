@@ -44,7 +44,7 @@
 		}
 		?>
 		
-		<form name="form1" action="edit-project-db.php" method="post" enctype="multipart/form-data">
+		<form name="form1" action="pages/edit-project-db.php" method="post" enctype="multipart/form-data">
 			<input type="hidden" id="idProject" name="idProject" value="<?php echo $idProject; ?>">
 			<h2> Nom du projet </h2>
 			<input type="text" id="nomProj" name="nomProj" value="<?php echo $nomProj; ?>" size="50">

@@ -1,8 +1,8 @@
 <?php
 	session_start();
-	include "php_functions/mysql.php";
-	include "php_functions/connect.php";
-	include "php_functions/mail-project.php";
+	include "../php_functions/mysql.php";
+	include "../php_functions/connect.php";
+	include "../php_functions/mail-project.php";
 	if (getUserType() == ADMIN) {
 		if ((!isset($_POST['idReponse'])) || (trim($_POST['idReponse'])=="")) {
 			$idReponse = "";
@@ -39,7 +39,7 @@
 			$sql2 = "DELETE FROM Responsable WHERE idPro=".$idProj;
 			$db->query($sql2);
 			if(file_exists("pdfs/".$idProj.".pdf")){
-				unlink("pdfs/".$idProj.".pdf");
+				unlink("../pdfs/".$idProj.".pdf");
 			}
 			projetRefuse($emailEns,$nomProj);
 		}

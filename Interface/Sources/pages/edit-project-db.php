@@ -1,8 +1,8 @@
 <?php
 	session_start();
-	include "php_functions/mysql.php";
-	include "php_functions/connect.php";
-	include "php_functions/mail-project.php";
+	include "../php_functions/mysql.php";
+	include "../php_functions/connect.php";
+	include "../php_functions/mail-project.php";
 	if (getUserType() >= ENCADRANT) {
 		if ((!isset($_POST['nomProj'])) || (trim($_POST['nomProj'])=="")) {
 			$nomProj = "";
@@ -46,7 +46,7 @@
 			$pdfvalid = 0;
 		}
 		if ((basename($_FILES['uploadedfile']['name']) != "") && ($pdfvalid == 1)) {
-			$target_path = "pdfs/" . $idProject . ".pdf";
+			$target_path = "../pdfs/" . $idProject . ".pdf";
 			move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path);
 		}
 		

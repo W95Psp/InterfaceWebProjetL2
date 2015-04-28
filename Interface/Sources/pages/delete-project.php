@@ -25,7 +25,7 @@
 	?>
 	<h1>Suppression d'un projet </h1>
 	<p> Etes-vous sûr de vouloir supprimer le projet <strong><?php echo $donnee['nomProj']; ?></strong> ? </p>
-	<form name="form1" action="delete-project-db.php" method="post">
+	<form name="form1" action="pages/delete-project-db.php" method="post">
 	<input type="hidden" id="idProj" name="idProj" value="<?php echo $donnee['idProj']; ?>">
 	
 	<p> <input id="btnValide" class="green" name="btnValide" value="Supprimer le projet" type="button" onclick="Valider()">

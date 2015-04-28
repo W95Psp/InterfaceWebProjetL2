@@ -38,7 +38,7 @@
 			echo $don['prenomEns']." ".strtoupper($don['nomEns'])." (<a href='mailto:".$don['emailEns']."'>".$don['emailEns']."</a>)<br>";
 		}
 		?>
-		<form name="form1" action="validate-project-db.php" method="post">
+		<form name="form1" action="pages/validate-project-db.php" method="post">
 			<input type="hidden" id="idProj" name="idProj" value="<?php echo $donnee['idProj']; ?>">
 			<input type="hidden" id="idReponse" name="idReponse" value="">
 		<p> <input id="btnValide" class="green" name="btnValide" value="Valider le projet" type="button" onclick="Valider(1)">
