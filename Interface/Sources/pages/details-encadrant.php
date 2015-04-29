@@ -10,6 +10,7 @@ if (@$urlParams[2]=='edit'){
 </style>
 <div ng-init="project = 0" class="page details-encadrant">
 	<?php
+	$idEns = intval(@$urlParams[1]);
 	$sql = "SELECT * FROM Enseignant WHERE idEns=" . $idEns;
 	$result = $db->query($sql);
 	$donnee = $result->fetch_array();
