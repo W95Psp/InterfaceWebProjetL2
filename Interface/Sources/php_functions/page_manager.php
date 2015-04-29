@@ -50,4 +50,10 @@
 			$route = 'details-project';
 		}
 	}
+	if(isset($urlParams[0]) && isset($urlParams[1]) && $urlParams[0]=="les-encadrants"){
+		if(preg_match_all('/^([0-9]+)\-.*/', $urlParams[1], $r)){
+			$idEns = +$r[1][0];
+			$route = 'details-encadrant';
+		}
+	}
 ?>
