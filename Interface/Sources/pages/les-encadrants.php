@@ -1,10 +1,13 @@
 
 <div class="page les-encadrants">
-	<h1>Liste des encadrants</h1><?php $res = $db->query('SELECT * FROM Enseignant') or die(mysqli_error($db));
-
-while (NULL !== ($row = $res->fetch_array())){ ?><a href="/?les-encadrants/&lt;?php echo $row[&quot;idEns&quot;]; ?&gt;" style="color: black; text-decoration: none; padding: 8px; display: inline-block; width: 40%;" class="encadrant">
-		<div class="surname"><?php echo $row['prenomEns']; ?>
-		</div>
-		<div class="name"><?php echo strtoupper($row['nomEns']); ?>
-		</div></a><?php } ?>
+	<h1>Liste des encadrants</h1>
+	<?php
+	$res = $db->query('SELECT * FROM Enseignant') or die(mysqli_error($db));
+	while (NULL !== ($row = $res->fetch_array())){
+		echo "<a href='/?les-encadrants/".$row['idEns']."' style='color: black; text-decoration: none; padding: 8px; display: inline-block; width: 40%;' class='encadrant'>";
+		echo "<div class='surname'>".$row['prenomEns']."</div>";
+		echo "<div class='name'>".strtoupper($row['nomEns'])."</div>";
+		echo "</a>";
+	}
+	?>
 </div>
