@@ -37,6 +37,8 @@ if ((@$urlParams[2]=='edit') || (intval($idProject)==0)){
 	while ($don = $res->fetch_array()) {
 		echo $don['prenomEns']." ".strtoupper($don['nomEns'])." (<a href='mailto:".$don['emailEns']."'>".$don['emailEns']."</a>)<br>";
 	}
+	echo "<p>&nbsp;</p>";
+	echo "<p><img src='images/icons/arrow-left.png' width='16px' height='16px'> <a href='/?liste-des-projets'>Retour à la liste des projets</a></p>";
 	?>
 </div>
 <?php
