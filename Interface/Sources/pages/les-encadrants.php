@@ -1,5 +1,5 @@
 <?php
-if (isset(@$urlParams[1])){
+if (NULL !== @$urlParams[1]){
 	include("pages/detail-encadrant.php");
 } else {
 ?>
