@@ -36,7 +36,7 @@
 		echo '<h1> Modification de la fiche encadrant </h1>';
 		?>
 		
-		<form name="form1" action="edit-encadrant-db.php" method="post" enctype="multipart/form-data">
+		<form name="form1" action="pages/edit-encadrant-db.php" method="post" enctype="multipart/form-data">
 			<input type="hidden" id="idEns" name="idEns" value="<?php echo $idEns; ?>">
 			<h2> Prénom </h2>
 			<input type="text" id="prenomEns" name="prenomEns" value="<?php echo $prenomEns; ?>" size="50">
