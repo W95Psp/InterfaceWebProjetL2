@@ -1,6 +1,6 @@
 <?php
 if (NULL !== @$urlParams[1]){
-	include("pages/detail-encadrant.php");
+	include("pages/details-encadrant.php");
 } else {
 ?>
 <div class="page les-encadrants">
