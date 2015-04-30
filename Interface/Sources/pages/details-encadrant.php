@@ -1,8 +1,4 @@
-<?php
-if (@$urlParams[2]=='edit'){
-	include("pages/edit-encadrant.php");
-} else {
-?>
+
 <style>
 	.details-project img{
 		width: 20px;
@@ -28,6 +24,3 @@ if (@$urlParams[2]=='edit'){
 	echo "<p><a href='mailto:".$donnee['emailEns']."'>".$donnee['emailEns']."</a></p>";
 	?>
 </div>
-<?php
-}
-?>

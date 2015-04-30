@@ -20,6 +20,7 @@
 		}
 		</script>
 		<?php
+		$idEns = intval(@$urlParams[1]);
 		if ((!isset($idEns)) || (trim($idEns)==0)) {
 			header("Location: /?les-encadrants");
 		} else {
