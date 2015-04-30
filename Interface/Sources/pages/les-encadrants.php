@@ -1,4 +1,8 @@
-
+<?php
+if (isset(@$urlParams[1])){
+	include("pages/detail-encadrant.php");
+} else {
+?>
 <div class="page les-encadrants">
 	<h1>Liste des encadrants</h1>
 	<?php
@@ -11,3 +15,6 @@
 	}
 	?>
 </div>
+<?php
+}
+?>

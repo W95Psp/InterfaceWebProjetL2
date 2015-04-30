@@ -4,7 +4,7 @@
 		width: 20px;
 	}
 </style>
-<div ng-init="project = 0" class="page edit-project">
+<div ng-init="project = 0" class="page edit-encadrant">
 	<?php
 	$retour = "<p><a href='/?les-encadrants'>Retour à la liste des encadrants</a></p>";
 	if (getUserType() >= ENCADRANT) {
@@ -45,8 +45,8 @@
 			<input type="text" id="webEns" name="webEns" value="<?php echo $webEns; ?>" size="50">
 			<h2> Email </h2>
 			<input type="text" id="emailEns" name="emailEns" value="<?php echo $emailEns; ?>" size="50">
-			<p> <input id="btnValide" name="btnValide" value="Enregistrer" type="button" onclick="Valider()">
-			<input id="annuler" name="annuler" value="Annuler" type="button" onclick="Annuler()"> </p>
+			<p> <input id="btnValide" class="green" name="btnValide" value="Enregistrer" type="button" onclick="Valider()">
+			<input id="annuler" class="red" name="annuler" value="Annuler" type="button" onclick="Annuler()"> </p>
 		</form>
 	<?php
 	} else {
