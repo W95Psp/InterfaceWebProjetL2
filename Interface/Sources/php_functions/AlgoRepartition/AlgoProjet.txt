@@ -1,0 +1,207 @@
+-------------------------------
+-------------------------------
+Algos Repartition des Groupes:
+-------------------------------
+-------------------------------
+
+-------------------------
+Algo creation des groupes
+--------------------------
+
+Données : BDD générale, intrerface web
+Resultats : Ecriture du groupe dans la BDD générale
+
+CreaGroupe():
+
+(demare au click de validation de la creation d'un groupe)
+
+Si (Personne n'est pas bloqué){
+	Ecrire dans BDD : nom du groupe, mot de passe, nom de l'etudiant createur du groupe
+	Bloquer la personne;
+}
+sinon (Renvoyer "Vous etes deja affecter a un groupe, veuillez le quitter votre groupe avant d'en crée un autre) 
+
+
+-------------------------
+Algo rejoindre un groupe
+--------------------------
+
+Données : BDD générale, intrerface web
+Resultats : Ecriture de la personne dans un groupe dans la BDD générale
+
+rejoindre():
+si (personne non bloqué){
+	si (Nom du groupe existe dans la BDD && Nb membre < 4){
+		si (Mot de passe = mot de passe du groupe){
+			Ajouter personne au groupe;
+			Bloquer personne;
+		}
+		sinon {Renvoyer "mdp incorrect"}
+	sinon si (nb membre >=4){
+		renvoyer ("Groupe plein")
+		}
+		sinon {
+			renvoyer " le groupe n'existe pas "
+		}
+	}
+sinon (Renvoyer "Vous etes deja affecter a un groupe, veuillez le quitter avant de vosu ajouter sur un autre groupe) 
+
+
+
+-------------------------
+Algo quitter un groupe
+--------------------------
+
+Données : BDD générale, intrerface web
+Resultats : Effacage de la personne dans un groupe dans la BDD générale
+
+Quitter():
+
+si (personne bloqué){
+	selectionner le groupe dans la base de donnée;
+	si (Nb membre = 1 ){
+		Suprimmer le groupe;
+	}
+	sinon{
+		suprimer la personne du groupe
+	}
+debloquer la personne;
+}
+
+sinon (renvoyer " vous n'etes affecté a aucun groupe")
+
+----------------------
+Algo Choix voeux
+-----------------------
+
+Données : BDD générale, BDD temporaire, Structure Groupe, Heure actuelle, 
+Resultat : Ecriture temporaire BDD
+
+ChoixVoeux(): 
+
+Creation Structure Groupe {
+	- tableau de nom des membres
+	- Heure courante
+	- tableau des voeux (par ordre croissant)
+}
+
+Envoi de la demande a la base de donnée pour chaque voeux du groupee
+/* voeux indisponible*/
+voeux indisponible si nb groupe affecter au projet < nbmax (5 pour le moment)
+
+/* Test Disponibilite */
+Tant que (Voeux indisponible())){
+
+	Affiche ("CE!! Voeu indisponible, Saissisez une autre liste de choix");
+	ChoixVoeux():  //Retour au debut de l'algo
+}
+
+Validation des choix par l'utilisateur()
+	si (non valider){
+		ChoixVoeux(): 
+	}
+Bloquage du groupe (on empeche un nouveau choix de sujet)
+continue;
+}
+
+
+/*Ecriture dans la BDD temporaire*/
+
+Decalage = 0;
+Pour chaque voeux dans le tableau de voeux faire {
+
+si taille groupe =2 alors compteur +0.5;
+sinon compteur +1;
+
+	Ecrire dans BDD (colonne timer) : Date Actuel+ delai de reponse prof + decalage;
+	Decalage + X; X=delai du decalage ( a voir)
+}(fin pour)
+
+----------------------------------------------------------------
+
+--------------
+Choix du prof
+--------------
+
+/* Le prof a deja décider de faire une modification*/
+
+Donnée : BDD tempo, base de donnée générale, proffesseur
+Resultat : Ecriture BDD générale OU Exclusion d'un groupe d'un projet
+
+ChoixProf():
+
+Si Choix d'un Groupe particulier {
+
+	Timer Groupe choisie = heureu acteulle;
+	Timer autre groupe += 10;
+}	
+
+Si Refus d'un groupe particulier {
+
+	Demande motif de refus au prof;
+	Suprimer dans Bdd tempo ce groupe (pour le sujet en cour)(et decrementer la taille du sujet);
+	Prevenir le groupe du refus pour le sujet en cour avec le motif du prof;
+	
+	Si plus de voeux dispo pour ce groupe{
+		Prevenir le groupe qu'il n'a plus de sujet;
+		Deblocage du groupe;
+	}
+	
+}
+
+----------------------------------------------------------------
+
+------------------------
+Affectation definitive
+------------------------
+
+Donnée : BDD tempo, BDD générale, Timer
+Resultat : Affectation definitive a un projet dans BDD générale 
+
+si ( un timer bdd tempo <= date actuelle ){
+	Affecter le groupe au projet (ecriture definitive BDD générale) ::ATTENTION SI TIMER EXTREMEMENT PROCHE
+	si (groupe > 2 ){
+		Suprimmer dans table temporaire ce projet;
+		
+		pour chaque groupe supprimé faire :
+			si (Groupe n'a plus de voeux){
+				Signalement au groupe;
+				Deblocage du groupe;
+			}
+		}(fin pour)
+	}(fin si)
+	sinon {
+		Suprimer groupe de taille > 2 pour ce projet)
+		Suprimer Groupe groupe déja affecté a ce projet
+	}
+}
+
+
+---------------------------------------------------------------------------------------------
+
+
+--------
+Main
+--------
+
+Données : Interface Web
+Resultat : ActionListeners
+
+Si (premiere validation des choix d'un groupe via l'interface web){
+	Choix Voeux(); // ALGO 1
+
+}
+
+si (prof demande a modifier l'affectation pour son sujet){
+	ChoixProf();// Algo 2
+}
+
+Tant que (Date actuelle < Date fermeture plateforme){
+
+	AffectationDefinitive;
+}
+
+	
+
+
+

@@ -6,9 +6,68 @@ app.filter('parseCsv', function() {
     }
 });
 
+
+var cache_orderByGroup = [];
+
+app.filter('orderByGroup', function() {
+    return function(input) {
+    	
+        return output;
+    }
+});
+
+var CC;
+
+$(function(){
+	var c = $('#pickDateClose').pickadate();
+	c = c.pickadate('picker');
+	console.log(c);
+	var o = $('#pickDateOpen').pickadate({
+		onSet: function(value){
+			c.set('min', $('#pickDateOpen')[0].value);
+			c.render();
+		}
+	});
+});
+
+
+app.controller('groupes', function($scope, $http) {
+	$scope.students = [];
+	$scope.groups = [];
+	$scope.isLoading = true;
+	$http.get('/ajax.php?action=enumerate-students').success(function(data){
+		if(typeof data == 'string')
+			data = JSON.parse(data);
+		while(data.length)
+			$scope.students.push(data.pop());
+		studentsToGroups();
+		$scope.isLoading = false;
+	});
+
+	function studentsToGroups(){
+		while($scope.groups.length)
+			$scope.groups.pop();
+    	var byId = {};
+    	for(var i in $scope.students){
+    		var o = $scope.students[i];
+    		o.group = Math.abs(parseInt(o.idGrEtu));
+    		o.accepted = parseInt(o.idGrEtu)>=0;
+    		if(!byId[o.group])
+    			byId[o.group] = [];
+    		byId[o.group].push(o);
+    	}
+    	for(var i in byId)
+    		$scope.groups.push({
+    			group: i,
+    			list: byId[i]
+    		});
+	}
+});
+
 var SC;
 app.controller('admin', function($scope, $parse) {
 	SC = $scope;
+	$scope.date = 0;
 	$scope.etudiantsMode = 0;
 	$scope.pages = ["Encadrants", "Groupes", "Présentation", "Notation", "Etudiants", "Promos"];
 	$scope.currentPage = 4;

@@ -2,6 +2,15 @@
 	include("php_functions/mysql.php");
 	include("php_functions/connect.php");
 
+	$isWebsiteOpen;
+	call_user_func(function(){
+		global $db, $isWebsiteOpen;
+		$lastPromo = $db->query('SELECT UNIX_TIMESTAMP(`dateOpen`) as dateOpen,UNIX_TIMESTAMP(`dateClose`) as dateClose FROM `Promo` ORDER BY idPromo DESC LIMIT 0,1')->fetch_array();
+		$dStart  = intval($lastPromo["dateOpen"]);
+		$dEnd = intval($lastPromo["dateClose"]);
+		$isWebsiteOpen = (time()>$dStart && time()<$dEnd);
+	});
+
 	function getPeopleInGroup($gId){
 		global $db;
 		return $db->query('SELECT idEtu as id, (idGrEtu>0) as agree, CONCAT(prenomEtu, " ", nomEtu) as name FROM V_EtudiantPromo WHERE idGrEtu='.$gId.' OR idGrEtu='.(-intval($gId)));
@@ -19,15 +28,23 @@
 
 	}else if(@$_GET['action']=='opinion-needed-choices' && getGroupId()){
 		
-		$ajax['opinion-needed-choices']();
+		$ajaxFunctions['opinion-needed-choices']();
+
+	}else if(@$_GET['action']=='enumerate-students' && getUserType()==ADMIN){
+		
+		$res = $db->query('SELECT * FROM V_EtudiantPromo');
+		$result = array();
+		while($row = $res->fetch_assoc())
+			$result[] = $row;
+		echo json_encode($result);
 
 	}else if(@$_GET['action']=='decision-with-choices' && $isWebsiteOpen && @$_GET['agree'] && getGroupId()){
-		
-		$ajax['decision-with-choices'](intval($_GET['agree']=='true')+1, );
+
+		$ajaxFunctions['decision-with-choices'](intval($_GET['agree']=='true')+1);
 
 	}else if(@$_POST['action']=='confirm-choices' && $isWebsiteOpen && getGroupId()){
 
-		$ajax['confirm-choices']();
+		$ajaxFunctions['confirm-choices']();
 		
 	}else if(@$_GET['action']=='getState'	&&	getUserType()==ELEVE){
 		$result = array(

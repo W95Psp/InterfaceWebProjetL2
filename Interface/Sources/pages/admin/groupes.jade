@@ -1,0 +1,10 @@
+h2 Groupes
+div#groups(ng-controller='groupes')
+	div(ng-if='isLoading')
+		| Chargement en cours...
+	div(ng-if='!isLoading')
+		div.group(ng-repeat='group in groups')
+			div.header
+				div()
+			div.person(ng-repeat='student in group.list')
+				{{student.prenomEtu.substr(0, 1)}}. {{student.nomEtu}}

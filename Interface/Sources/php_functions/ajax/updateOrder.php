@@ -1,8 +1,8 @@
 <?php
-	$ajaxFunctions['updateOrder'] = function($group, $order){
+	$ajaxFunctions['update-order'] = function($group, $order){
 		global $db;
 
-		if($group['EtatCandidature']!=1)
+		if($group['EtatCandidature']==2)
 			die("La candidature est déjà validée, il est impossible de modifier l'ordre des choix.");
 		
 		$order = explode(';', $order);
@@ -12,6 +12,8 @@
 
 		foreach ($order as $idProj)
 			$values .= ($count?',':'').'('.$idProj.', '.getGroupId().', '.(++$count).')';
+		
+		// var_dump($values);
 		
 		$db->query('INSERT INTO ChoixGroupe (idProj, idG, `index`) VALUES '.$values) or die(mysqli_error($db));
 	};

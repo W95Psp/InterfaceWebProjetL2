@@ -38,7 +38,13 @@ require("php_functions/projectsToJS.php");
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css"/>
 		<script src="scripts/ng-sortable/ng-sortable.js"></script>
 		<script src="scripts/jquery.js"></script>
-		<link rel="stylesheet" type="text/css" href="scripts/ng-sortable/ng-sortable.min.css"/><link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+		<script src="scripts/pickadate/picker.js"></script>
+		<script src="scripts/pickadate/picker.date.js"></script>
+		<script src="scripts/pickadate/picker.time.js"></script>
+		<script src="scripts/pickadate/translations/fr_FR.js"></script>
+		<link rel="stylesheet" type="text/css" href="scripts/ng-sortable/ng-sortable.min.css"/>
+		<link rel="stylesheet" type="text/css" href="scripts/pickadate/themes/classic.css"/>
+		<link rel="stylesheet" type="text/css" href="scripts/pickadate/themes/classic.date.css"/><link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
 		<link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
 		<link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
 		<link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">

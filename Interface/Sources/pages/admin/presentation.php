@@ -1,0 +1,31 @@
+
+<h2>Page de présentation</h2>
+<form method="POST" action="/?admin/presentation/update">
+	<textarea id="input" name="content" style="width:760px; height:400px; margin: auto;">
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300"/>
+		<style>*{font-family: 'Open Sans';}</style><?php echo file_get_contents('pages/presentation-content.html'); ?>
+	</textarea>
+	<script>
+		var editor = new TINY.editor.edit('editor',{
+			id:'input',
+			width:660,
+			height:300,
+			cssclass:'te',
+			controlclass:'tecontrol',
+			rowclass:'teheader',
+			dividerclass:'tedivider',
+			controls:['bold','italic','underline','strikethrough','|','subscript','superscript','|',
+					  'orderedlist','unorderedlist','|','outdent','indent','|','leftalign',
+					  'centeralign','rightalign','blockjustify','|','unformat','|','undo','redo','n',
+					  'image','hr','link','unlink','|','cut','copy','paste','print'],
+			footer:true,
+			fonts:['Open Sans','Arial','Georgia','Trebuchet MS'],
+			xhtml:true,
+			cssfile:'style.css',
+			bodyid:'editor',
+			footerclass:'tefooter',
+			resize:{cssclass:'resize'}
+		});
+	</script>
+	<button onclick="editor.post();">Mettre à jour</button>
+</form>

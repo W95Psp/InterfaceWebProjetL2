@@ -18,6 +18,8 @@
 			throw new Exception("groupId null", 1);
 		$result = $db->query('SELECT * FROM Groupe WHERE idG='.intval($groupId)) or die(mysqli_error($db));;
 		$result = $result->fetch_array();
+		if(!$result)
+			throw new Exception("Group not found!", 1);
 		return $result;
 	}
 

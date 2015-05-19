@@ -127,7 +127,9 @@ app.controller('listeProjets', function($scope, $http) {
 	$scope.confirmChoices = function(){
 		//Seul un ordre est donné, aucune donnée ne transite
 		$.post( "ajax.php", {action: "confirm-choices"}).done(function(data) {
-			if(data!=''){
+			if(data=='false'){
+				alert('Erreur : nombre d\'étudiiants dans le groupe incorrect.');
+			}else if(data!='' && data!='true'){
 				$scope.errorSpotted = [true, "La requête a échouée. Message d'erreur : "+data];
 			}else{
 				$scope.stateConfirm = $scope.textHowToStudent = 'already';

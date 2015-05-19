@@ -44,7 +44,10 @@ DisplayListProjects();
 	<!--Affichage des erreurs (ne devrait jamais se produire)-->
 	<div id="disp-error" ng-if="errorSpotted[0]" ng-init="refresh()">
 		<div class="content">
-			<div class="title">Erreur !</div><span>{{errorSpotted[1]}}</span>
+			<div class="title">
+				Erreur !
+				<button onclick="this.parentNode.parentNode.innerHTML = SC.errorSpotted[1];" class="red">Afficher en HTML (peut-être dangeureux!)</button>
+			</div><span>{{errorSpotted[1]}}</span>
 		</div>
 	</div>
 </div>

@@ -66,3 +66,8 @@ table.sumup tr:first-child {
 table.sumup tr:nth-child(2n) td {
   background-color: #eee;
 }
+#groups .group {
+  padding: 5px;
+  margin: 5px;
+  display: inline-block;
+}
